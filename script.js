@@ -1,6 +1,13 @@
 let sidebar = document.querySelector(".sidebar");
 let closeBtn = document.querySelector("#btn");
 let searchBtn = document.querySelector(".bx-search");
+let progress = document.getElementById('progressbar');
+
+let totalHeight = document.body.scrollHeight - window.innerHeight;
+window.onscroll = function(){
+    let progressHeight = (window.pageYOffset / totalHeight) * 100;
+progress.style.height = progressHeight + "%";
+}
 
 closeBtn.addEventListener("click", ()=>{
   sidebar.classList.toggle("open");
