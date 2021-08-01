@@ -1,6 +1,6 @@
 @font-face {
   font-family: neuropol;
-  src: url(neuropol.ttf);
+  src: url(./neuropol.ttf);
 }
 
 *
@@ -9,12 +9,12 @@
   padding: 0;
 }
 
-h2; h4
+h2
 {
   font-family: neuropol;
 }
 
-p; ul
+p
 {
   font-family: consolas;
 }
@@ -28,12 +28,6 @@ section
 section h2
 {
   font-size: 2.5em;
-  color: #fff;
-}
-
-section h4
-{
-  font-size: 1em;
   color: #fff;
 }
 
