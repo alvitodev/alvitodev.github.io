@@ -1,3 +1,7 @@
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
 @font-face {
   font-family: neuropol;
   src: url(./neuropol.ttf);
