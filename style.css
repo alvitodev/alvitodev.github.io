@@ -1,5 +1,3 @@
-
-
 @font-face {
   font-family: neuropol;
   src: url(./neuropol.ttf);
@@ -42,10 +40,6 @@ section p
 ::-webkit-scrollbar
 {
   width: 0;
-}
-
-.body {
-  scrollbar-width: none;  /* Firefox */
 }
 
 #scrollPath
