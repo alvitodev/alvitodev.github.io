@@ -1,7 +1,4 @@
-.body {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+
 
 @font-face {
   font-family: neuropol;
@@ -45,6 +42,10 @@ section p
 ::-webkit-scrollbar
 {
   width: 0;
+}
+
+.body {
+  scrollbar-width: none;  /* Firefox */
 }
 
 #scrollPath
