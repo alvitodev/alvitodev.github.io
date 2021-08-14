@@ -1,5 +1,6 @@
-body {
-  overflow: hidden; /* Hide scrollbars */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 @font-face {
