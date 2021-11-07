@@ -1,2 +1,2 @@
 # alvitodev.github.io
-My own personal pages
+Saya cupu bang, ajari suhu 🙏🏻
