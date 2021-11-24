@@ -1,2 +1,2 @@
 # alvitodev.github.io
-Saya cupu bang, ajari suhu 🙏🏻
+Tolong ajari saya suhu 🙏 Saya cupu 🙏
