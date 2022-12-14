@@ -1,2 +1,2 @@
 # alvitodev.github.io
-folder cuma gimmick doang
+i learn web developing and designing it
