@@ -8,6 +8,47 @@ const toast = document.getElementById("toast");
 
 function calculate(value) {
   // write your code here
+
+  // Memecah ekspresi berdasarkan operator
+  const parts = value.split(/\+|\-|\*|\//);
+
+  // Menangani kesalahan input
+  if (parts.length !== 2 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/")) {
+    res.value = "Invalid Input";
+    return;
+  }
+
+  // Mengambil angka dan operator
+  const num1 = parseFloat(parts[0]);
+  const operator = value.slice(parts[0].length, parts[0].length + 1);
+  const num2 = parseFloat(parts[1]);
+
+  // Melakukan perhitungan berdasarkan operator
+  let result;
+  switch (operator) {
+    case "+":
+      result = num1 + num2;
+      break;
+    case "-":
+      result = num1 - num2;
+      break;
+    case "*":
+      result = num1 * num2;
+      break;
+    case "/":
+      if (num2 === 0) {
+        res.value = "Cannot divide by zero";
+        return;
+      }
+      result = num1 / num2;
+      break;
+    default:
+      result = "Invalid operator";
+  }
+
+  // Menampilkan hasil di layar
+  res.value = result;
+    
   console.log(value)
 }
 
