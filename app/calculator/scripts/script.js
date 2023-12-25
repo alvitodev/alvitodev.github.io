@@ -8,7 +8,7 @@ const toast = document.getElementById("toast");
 
 function calculate(value) {
   // Memecah ekspresi berdasarkan operator
-  const parts = value.split(/\+|\-|\*|\//|"^");
+  const parts = value.split(/\+|\-|\*|\//|'^');
 
   // Menangani kesalahan input
   if (parts.length < 2 || parts.length > 3 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/") && !value.includes("^")) {
