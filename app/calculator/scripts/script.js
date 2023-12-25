@@ -8,7 +8,7 @@ const toast = document.getElementById("toast");
 
 function calculate(value) {
   // Memecah ekspresi berdasarkan operator
-  const parts = value.split( /\+ | \- | \* | \//);
+  const parts = value.split( /\+ | \- | \* | \// | '**');
 
   // Menangani kesalahan input
   if (!value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/")) {
@@ -42,6 +42,9 @@ function calculate(value) {
       break;
     case "%":
       result = num1 / 100;
+      break;
+    case "**":
+      result = Math.pow(num1, num2);
       break;
     default:
       result = "Invalid operator";
