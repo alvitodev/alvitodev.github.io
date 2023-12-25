@@ -8,10 +8,10 @@ const toast = document.getElementById("toast");
 
 function calculate(value) {
   // Memecah ekspresi berdasarkan operator
-  const parts = value.split(/\+|\-|\*|\//);
+  const parts = value.split(/\+|\-|\*|\//|"^");
 
   // Menangani kesalahan input
-  if (parts.length < 2 || parts.length > 3 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/")) {
+  if (parts.length < 2 || parts.length > 3 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/") && !value.includes("^")) {
     res.value = "Invalid Input";
     return;
   }
@@ -43,6 +43,8 @@ function calculate(value) {
     case "^":
       result = num1 ** num2;
       break;
+    case "%":
+      result = num1;
     default:
       result = "Invalid operator";
   }
