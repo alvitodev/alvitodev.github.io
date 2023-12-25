@@ -11,7 +11,7 @@ function calculate(value) {
   const parts = value.split(/\+|\-|\*|\//|'^');
 
   // Menangani kesalahan input
-  if (parts.length !== 2 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/")) {
+  if (parts.length < 3 || !value.includes("+") && !value.includes("-") && !value.includes("*") && !value.includes("/")) {
     res.value = "Invalid Input";
     return;
   }
