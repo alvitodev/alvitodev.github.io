@@ -32,8 +32,9 @@
       </div>
       <div class="another-row">
         <input type="button" value="^" onclick="liveScreen('^')" />
-
-        <input type="button" value="C" onclick="deleteOneChar()" id="clear-button" />
+        <input type="button" value="^" onclick="liveScreen('√')" />
+        <input type="button" value="^" onclick="liveScreen('%')" />
+        <input type="button" value="C" onclick="result.value.substring(0, resultInput.value.length - 1);" id="clear-button" />
       </div>
       <div class="second-row">
         <input type="button" value="1" onclick="liveScreen(1)" />

@@ -50,14 +50,6 @@ function calculate(value) {
   console.log(value)
 }
 
-// Menghapus 1 karakter di text
-function deleteOneChar() {
-  const resultInput = document.getElementById("result");
-  if (resultInput.value.length > 0) {
-    resultInput.value = resultInput.value.substring(0, resultInput.value.length - 1);
-  }
-}
-
 // Swaps the stylesheet to achieve dark mode.
 function changeTheme() {
   const theme = document.getElementById("theme");
