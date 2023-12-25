@@ -54,7 +54,7 @@ input {
   color: rgb(255, 255, 255);
   font-size: 1em;
   cursor: pointer;
-  width: 70px;
+  width: 50px;
   background-color: rgb(47, 51, 50);
   border: none;
   outline: none;
@@ -63,7 +63,6 @@ input {
 }
 
 .first-row,
-.another-row,
 .second-row,
 .third-row,
 .fourth-row,
@@ -81,7 +80,7 @@ input[type="button"]:hover {
   color: #fff;
 }
 
-#clear-button {
+#clear-button, #allclear-button {
   color: #fff;
   background-color: rgb(255, 42, 42);
 }

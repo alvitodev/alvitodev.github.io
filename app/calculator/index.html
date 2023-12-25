@@ -19,7 +19,7 @@
     <div class="container">
       <div class="header-container">
         <!-- This heading also notifies about the theme change.-->
-        <h1 id="toast">Calculator</h1>
+        <h1 id="toast">Calculator - Progate</h1>
         <div class="top-buttons">
           <button type="button" onclick="changeTheme()" class="theme-button">
             <img src="assets/SunIcon.svg" alt="Theme Icon" height="19" width="19" id="theme-icon">
@@ -28,12 +28,7 @@
       </div>
       <div class="first-row">
         <input type="text" name="result" id="result" placeholder="Result" readonly />
-        <input type="button" value="AC" onclick="result.value=''" id="clear-button" />
-      </div>
-      <div class="another-row">
-        <input type="button" value="^" onclick="liveScreen('**')" />
-        <input type="button" value="√" onclick="liveScreen('√')" />
-        <input type="button" value="%" onclick="liveScreen('%')" />
+        <input type="button" value="AC" onclick="result.value=''" id="allclear-button" />
         <input type="button" value="C" onclick="result.value = result.value.slice(0, result.value.length - 1)" id="clear-button" />
       </div>
       <div class="second-row">
