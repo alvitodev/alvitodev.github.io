@@ -8,7 +8,7 @@ A pages to put all my web projects.
 
  - [Kowla's Story](https://alvitodev.github.io/app/kowlastory) | A feature on the Kowla's Story book. Featuring sign language video with text and audio. Designed for visual, speech, and hearing empaired. 
 
- - [Calculator](https://alvitodev.github.io/app/calculator) | Just a simple calculator.
+ - [Calculator](https://alvitodev.github.io/app/calculator) | Just a simple calculator. (broken)
 
 ## Contributing
 
