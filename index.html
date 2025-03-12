@@ -1,46 +1,149 @@
 <!DOCTYPE html>
-<html lang="id">
-    <head>
-        <title>Alvito Devanova</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> 
-        <meta name="Description" content="In development" />
-        <meta name="theme-color" content="#4caf71">
-        <link rel="icon" type="image/x-icon" href="/src/laptop-code-solid.svg">
-        <style type="text/css">
-            body{
-                background-color:#34495e;
-            }
-            #dev {
-                font-family: "Courier new";
-                position: absolute;
-                top: 35%;
-                left: 50%;
-                font-size: 24px;
-                -webkit-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-                color: #c0c5ce;
-                 text-shadow: 2px 2px #272D2D;
-            }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alvito Devanova</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Atkinson Hyperlegible";
+      margin: 0;
+      background: #09466e;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
 
-           div > span {
-                display: block;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="dev">
-            <br><br><br><br><br>
-            <span style="color: gray;">//Ngoding ga kelar kelar</span>
-                <span><span style="color:#bf616a;">while</span>(!finished){
-            </span>
-            <span><span style="padding-left: 35px;">work()</span><span style="color: #a3be8c">;</span>
-                <br><span>}</span>
-            </span><br><br><br><br>
-            Read my <a href="https://id.quora.com/profile/Alvito-Devanova-1/posts" class="hre" style="color:#fff"><span style="color:#bf616a;">Quora's</span> favorite notes!</a><br><br>
-            You might be interested:<br>
-            <a href="https://alvitodev.github.io/projects/eatm" class="hre" style="color:#fff">EATM</a> - <a href="https://alvitodev.github.io/cv" class="hre" style="color:#fff">CV</a> - <a href="https://alvitodev.github.io/app/kowlastory" class="hre" style="color:#fff">KowlaStory</a><br><br><br>
-            <a href="https://instagram.com/alvitodev" class="hre" style="color:#fff">@alvitodev</a> | <a href="https://linkedin.com/in/alvitodev" class="hre" style="color:#fff">LinkedIn</a>
+    .parent {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 0fr 10fr 1fr;
+      grid-row-gap: 20px;
+      width: 100%;
+    }
+
+    .div1 { 
+      grid-area: 1 / 1 / 2 / 2; text-align: center; }
+    .div2 { 
+      grid-area: 2 / 1 / 3 / 2; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .div3 { grid-area: 3 / 1 / 4 / 2; text-align: center; }
+
+    .container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      max-width: 800px;
+      width: 90%;
+    }
+
+    .logo {
+      width: 220px;
+      height: 200px;
+      overflow: hidden;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      width: 100%; 
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 20px;
+    }
+
+    .text {
+      flex: 1;
+      text-align: left;
+    }
+
+    h1 {
+      margin: 0 0 5px; 
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .social-links a, .portofolio a {
+      margin-right: 10px;
+      text-decoration: underline;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .logo {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+      .text {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="parent">
+    <div class="div1">
+      <p>Look at my profile card!</p>
+    </div>
+    <div class="div2">
+      <div class="container">
+        <div class="logo">
+          <img src="https://avatars.githubusercontent.com/u/70482031?v=4" alt="IMPHNEN Logo">
         </div>
-    </body>
+        <div class="text">
+          <h1>M. Alvito Devanova</h1>
+          <p>Information Technology Student at UNY</p>
+          <hr>
+          <p>I am a system programmer and tech enthusiast. I love doing anything related to electronics and some technical stuff. If you have the same interest like me, let us catch some coffee by contacting my SNS below!</p>
+          <hr>
+          <div class="menu">
+            <div class="portofolio">
+              <a href="https://alvito.is-a.dev/cv" target="_blank">CV</a>
+              <a href="https://alvito.is-a.dev/projects/eatm" target="_blank">Projects</a>
+            </div>
+            <div class="social-links">
+              <a href="https://discord.gg/Y2UxbZGBzx" target="_blank">Discord</a>
+              <a href="https://instagram.com/alvitodev" target="_blank">Instagram</a>
+              <a href="https://github.com/alvitodev" target="_blank">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="div3">
+      <p>&copy; 2021 M. Alvito Devanova</p>
+    </div>
+  </div>
+</body>
 </html>
