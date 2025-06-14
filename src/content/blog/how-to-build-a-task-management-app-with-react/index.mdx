@@ -1,0 +1,227 @@
+---
+title: "How to build a task management app with react"
+description: "Discover how to build a task management app with react with this in-depth guide, providing actionable insights and practical tips to boost your knowledge and results."
+date: 2025-04-11
+tags:
+  - "build"
+  - "task"
+  - "management"
+  - "with"
+  - "react"
+authors:
+  - "Cojocaru David"
+  - "ChatGPT"
+slug: "how-to-build-a-task-management-app-with-react"
+updatedDate: 2025-05-02
+---
+
+# How to Build a Task Management App with React: A Step-by-Step Guide  
+
+Want to build a task management app with React? This step-by-step guide walks you through creating a fully functional app from scratch, covering component structure, state management with hooks, and user interactions. By the end, you’ll have a working app where users can add, edit, delete, and mark tasks as complete—perfect for sharpening your React skills.  
+
+> *"The best way to learn React is by building real projects. A task manager is a great place to start."*  
+
+## What You’ll Need Before Starting  
+
+Before coding, ensure you have:  
+
+- **Basic JavaScript and React knowledge** – Familiarity with JSX, components, and props.  
+- **Node.js and npm/yarn installed** – Required for managing dependencies.  
+- **A code editor** – VS Code (recommended) or any preferred IDE.  
+
+## Setting Up Your React Project  
+
+Kick things off by creating a new React project:  
+
+```bash
+npx create-react-app task-manager  
+cd task-manager  
+npm start  
+```  
+
+These commands:  
+1. Generate a new React project named `task-manager`.  
+2. Navigate into the project folder.  
+3. Launch the development server (opens in your browser).  
+
+Install `uuid` for generating unique task IDs:  
+
+```bash
+npm install uuid  
+```  
+
+## Structuring Your App: Key Components  
+
+Break the app into three reusable components:  
+
+### 1. The `Task` Component  
+Displays individual tasks and handles actions like deletion/completion.  
+
+```jsx
+import React from "react";  
+
+const Task = ({ task, onDelete, onToggle }) => {  
+  return (  
+    <div className={`task ${task.completed ? "completed" : ""}`}>  
+      <h3>{task.text}</h3>  
+      <button onClick={() => onDelete(task.id)}>Delete</button>  
+      <button onClick={() => onToggle(task.id)}>  
+        {task.completed ? "Undo" : "Complete"}  
+      </button>  
+    </div>  
+  );  
+};  
+
+export default Task;  
+```  
+
+- Uses dynamic class names for styling completed tasks.  
+- Receives `task`, `onDelete`, and `onToggle` as props.  
+
+### 2. The `TaskList` Component  
+Renders a list of tasks by mapping through the `tasks` array.  
+
+```jsx
+import React from "react";  
+import Task from "./Task";  
+
+const TaskList = ({ tasks, onDelete, onToggle }) => {  
+  return (  
+    <div className="task-list">  
+      {tasks.map((task) => (  
+        <Task key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} />  
+      ))}  
+    </div>  
+  );  
+};  
+
+export default TaskList;  
+```  
+
+### 3. The `TaskForm` Component  
+Handles adding new tasks via a form.  
+
+```jsx
+import React, { useState } from "react";  
+
+const TaskForm = ({ onAdd }) => {  
+  const [text, setText] = useState("");  
+
+  const handleSubmit = (e) => {  
+    e.preventDefault();  
+    if (!text.trim()) return;  
+    onAdd(text);  
+    setText("");  
+  };  
+
+  return (  
+    <form onSubmit={handleSubmit}>  
+      <input  
+        type="text"  
+        value={text}  
+        onChange={(e) => setText(e.target.value)}  
+        placeholder="Add a new task..."  
+      />  
+      <button type="submit">Add Task</button>  
+    </form>  
+  );  
+};  
+
+export default TaskForm;  
+```  
+
+## Managing State in the `App` Component  
+
+The `App` component holds the core logic:  
+
+```jsx
+import React, { useState } from "react";  
+import { v4 as uuidv4 } from "uuid";  
+import TaskForm from "./TaskForm";  
+import TaskList from "./TaskList";  
+
+function App() {  
+  const [tasks, setTasks] = useState([]);  
+
+  const addTask = (text) => {  
+    setTasks([...tasks, { id: uuidv4(), text, completed: false }]);  
+  };  
+
+  const deleteTask = (id) => {  
+    setTasks(tasks.filter((task) => task.id !== id));  
+  };  
+
+  const toggleComplete = (id) => {  
+    setTasks(  
+      tasks.map((task) =>  
+        task.id === id ? { ...task, completed: !task.completed } : task  
+      )  
+    );  
+  };  
+
+  return (  
+    <div className="app">  
+      <h1>Task Manager</h1>  
+      <TaskForm onAdd={addTask} />  
+      <TaskList tasks={tasks} onDelete={deleteTask} onToggle={toggleComplete} />  
+    </div>  
+  );  
+}  
+
+export default App;  
+```  
+
+- **`useState`**: Manages the `tasks` array.  
+- **`addTask`**: Appends new tasks with unique IDs.  
+- **`deleteTask`**: Filters out tasks by ID.  
+- **`toggleComplete`**: Toggles task completion status.  
+
+## Styling Your App  
+
+Add basic CSS for a clean interface:  
+
+```css
+.app {  
+  max-width: 600px;  
+  margin: 0 auto;  
+  padding: 20px;  
+}  
+
+.task {  
+  background: #f4f4f4;  
+  margin: 10px 0;  
+  padding: 10px;  
+  border-radius: 5px;  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+}  
+
+.task.completed {  
+  text-decoration: line-through;  
+  opacity: 0.7;  
+}  
+
+button {  
+  background: #333;  
+  color: white;  
+  border: none;  
+  padding: 5px 10px;  
+  border-radius: 3px;  
+  cursor: pointer;  
+}  
+
+input {  
+  padding: 8px;  
+  width: 70%;  
+}  
+```  
+
+## Next Steps: Enhance Your App  
+
+Level up your task manager with:  
+- **Local Storage**: Save tasks between sessions.  
+- **Drag-and-Drop**: Reorder tasks visually.  
+- **Categories/Deadlines**: Add labels or due dates.  
+
+#React #TaskManager #WebDevelopment #LearnToCode

@@ -1,0 +1,134 @@
+---
+title: "How to create a cli tool with node.js"
+description: "Discover how to create a cli tool with node.js with this in-depth guide, providing actionable insights and practical tips to boost your knowledge and results."
+date: 2025-04-11
+tags:
+  - "create"
+  - "tool"
+  - "with"
+  - "nodejs"
+authors:
+  - "Cojocaru David"
+  - "ChatGPT"
+slug: "how-to-create-a-cli-tool-with-nodejs"
+updatedDate: 2025-05-02
+---
+
+# How to Create a CLI Tool with Node.js: A Step-by-Step Guide  
+
+Want to build a custom CLI tool with Node.js? This guide walks you through the entire process—from setting up your project to publishing it on NPM. Whether you're automating tasks or creating developer utilities, Node.js makes it easy with its rich ecosystem and JavaScript simplicity.  
+
+## Why Use Node.js for CLI Development?  
+
+Node.js is a top choice for CLI tools because of its speed, flexibility, and vast package ecosystem. Here’s why developers love it:  
+
+- **JavaScript Familiarity:** Skip learning a new language—use your existing JS skills.  
+- **Powerful NPM Packages:** Libraries like `commander` and `yargs` simplify argument parsing.  
+- **Cross-Platform Support:** Run your tool on Windows, macOS, or Linux without major changes.  
+- **Fast Execution:** Node.js handles lightweight CLI tasks efficiently.  
+
+> *"The command line is the most efficient way to interact with a computer—master it, and you master productivity."*  
+
+## Prerequisites  
+
+Before diving in, ensure you have:  
+- Node.js (v16 or later recommended)  
+- NPM or Yarn for package management  
+- A terminal or command prompt  
+
+## Setting Up Your Project  
+
+1. **Initialize a Node.js Project:**  
+   ```bash  
+   mkdir my-cli-tool  
+   cd my-cli-tool  
+   npm init -y  
+   ```  
+
+2. **Install Key Dependencies:**  
+   ```bash  
+   npm install commander chalk  
+   ```  
+   - `commander`: Simplifies command and option parsing.  
+   - `chalk`: Adds color to terminal output for better UX.  
+
+## Building the CLI Entry Point  
+
+Create an `index.js` file with this starter code:  
+```javascript  
+#!/usr/bin/env node  
+const { program } = require("commander");  
+const chalk = require("chalk");  
+
+program  
+  .version("1.0.0")  
+  .description("A simple CLI tool built with Node.js")  
+  .option("-n, --name <name>", "Specify a name to greet")  
+  .parse(process.argv);  
+
+const options = program.opts();  
+
+if (options.name) {  
+  console.log(chalk.green(`Hello, ${options.name}!`));  
+} else {  
+  console.log(chalk.yellow("Please provide a name using --name."));  
+}  
+```  
+
+### Making Your Tool Executable  
+
+1. **Update `package.json`:**  
+   ```json  
+   "bin": {  
+     "my-cli": "./index.js"  
+   }  
+   ```  
+
+2. **Link for Local Testing:**  
+   ```bash  
+   npm link  
+   ```  
+
+3. **Test It:**  
+   ```bash  
+   my-cli --name Alice  
+   ```  
+
+## Adding Commands and User Input  
+
+Expand functionality with subcommands. For example, add a calculator:  
+```javascript  
+program  
+  .command("add <num1> <num2>")  
+  .description("Add two numbers")  
+  .action((num1, num2) => {  
+    const sum = parseInt(num1) + parseInt(num2);  
+    console.log(chalk.blue(`Result: ${sum}`));  
+  });  
+```  
+
+Run it with:  
+```bash  
+my-cli add 5 10  
+```  
+
+## Publishing to NPM  
+
+1. **Sign Up:** Create an account at [npmjs.com](https://www.npmjs.com/).  
+2. **Log In:** Run `npm login` in your terminal.  
+3. **Publish:** Execute `npm publish` from your project folder.  
+
+Install globally with:  
+```bash  
+npm install -g my-cli-tool  
+```  
+
+## CLI Development Best Practices  
+
+- **Documentation:** Add `--help` flags and a detailed README.  
+- **Error Handling:** Validate inputs and provide clear error messages.  
+- **Testing:** Use `jest` or `mocha` for reliability.  
+- **Performance:** Optimize frequently used commands for speed.  
+- **Conventions:** Follow standard CLI patterns for usability.  
+
+#nodejs #clitools #developer #automation #javascript
