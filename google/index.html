@@ -95,18 +95,26 @@
   </head>
   <body class="bg-white text-gray-800 flex flex-col min-h-screen">
   <script>
-    // Check if opened from Instagram in-app browser
     function isInstagramInAppBrowser() {
-      return navigator.userAgent.includes('Instagram');
+      return /Instagram/.test(navigator.userAgent);
     }
-
-    // Redirect to native browser if opened from Instagram
+    
     if (isInstagramInAppBrowser()) {
-      window.location.href = "googlechrome://navigate?url=https://alvito.dev/google";
-      // Fallback for iOS
-      setTimeout(function() {
-        window.location.href = "https://alvito.dev/google";
-      }, 2000);
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const targetUrl = 'https://alvito.dev/google';
+        
+        // Redirect for Android
+        if (/android/i.test(userAgent)) {
+            window.location.href = 'intent:' + targetUrl + '#Intent;scheme=https;package=com.android.chrome;end';
+        }
+        
+        // Redirect for iOS
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            window.location.href = 'googlechrome://' + targetUrl; // This will open in Chrome if installed
+            setTimeout(function() {
+                window.location.href = targetUrl; // Fallback to open in Safari
+            }, 500);
+        }
     }
   </script>
 
