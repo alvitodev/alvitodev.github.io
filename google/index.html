@@ -96,37 +96,51 @@
   <body class="bg-white text-gray-800 flex flex-col min-h-screen">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const popupHTML = `
-      <div id="ios-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: 'Google Sans', sans-serif;">
-        <div style="background-color: white; padding: 24px; border-radius: 12px; text-align: center; max-width: 90%; width: 320px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-          <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Perhatian Pengguna iOS</h3>
-          <p style="color: #4b5563; margin-top: 12px; font-size: 0.9rem; line-height: 1.5;">
-            Untuk pengalaman terbaik, silakan buka halaman ini di browser utama Anda (Safari/Chrome) agar dapat login dengan mudah.
-          </p>
-          <p style="margin-top: 16px; font-size: 0.8rem; color: #6b7280;">
-            Anda bisa menyalin tautan atau menggunakan fitur "Buka di Browser".
-          </p>
-          <button onclick="document.getElementById('ios-popup').style.display = 'none';" style="display: block; width: 100%; background-color: #3b82f6; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; margin-top: 20px; border: none; cursor: pointer; font-weight: 500;">
-            Saya Mengerti
-          </button>
-        </div>
-      </div>`;
-      
-      document.body.insertAdjacentHTML('beforeend', popupHTML);
-
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
       const isInstagram = /Instagram/.test(userAgent);
 
-      if (isInstagram) {
-        if (isIOS) {
-          document.getElementById('ios-popup').style.display = 'flex';
-        } else if (/android/i.test(userAgent)) {
-          if (!sessionStorage.getItem('appRedirected')) {
-            sessionStorage.setItem('appRedirected', 'true');
-            const targetUrl = 'https://alvito.dev/google';
-            window.location.href = 'intent:' + targetUrl + '#Intent;scheme=https;package=com.android.chrome;end';
-          }
+      // Only proceed if it's an iOS device inside Instagram
+      if (isIOS && isInstagram) {
+        // Add Google Fonts for icons
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0';
+        document.head.appendChild(fontLink);
+
+        const popupHTML = `
+        <div id="ios-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: 'Google Sans', sans-serif;">
+          
+          <svg style="position: absolute; top: 15px; right: 15px; width: 80px; height: 80px; filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M62.5166 23.3833C61.0222 21.8889 61.0222 19.4444 62.5166 17.95L75.4833 5C76.9777 3.50556 79.4222 3.50556 80.9166 5L95 19.0833C96.4944 20.5778 96.4944 23.0222 95 24.5166L82.0333 37.4833C80.5389 38.9778 78.0944 38.9778 76.6 37.4833L62.5166 23.3833Z" fill="white"/>
+            <path d="M88 22L22 88" stroke="white" stroke-width="6" stroke-linecap="round"/>
+          </svg>
+
+          <div style="background-color: #2d2d2d; color: white; padding: 24px; border-radius: 16px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #444;">
+            <h3 style="font-size: 1.3rem; font-weight: 600;">Buka di Browser Lain</h3>
+            <p style="color: #e5e5e5; margin-top: 16px; font-size: 1rem; line-height: 1.6;">
+              Untuk melanjutkan, klik ikon titik tiga
+              <span class="material-symbols-outlined" style="font-size: 1.4rem; vertical-align: middle; display: inline-block; margin: 0 2px; transform: translateY(-2px);">more_horiz</span>
+              di pojok kanan atas, lalu pilih "Buka di Browser".
+            </p>
+            
+            <img src="img/userios.jpg" alt="Instruksi untuk iOS" style="width: 100%; max-width: 300px; margin: 20px auto; border-radius: 8px; border: 1px solid #555;">
+
+            <button onclick="document.getElementById('ios-popup').style.display = 'none';" style="display: block; width: 100%; background-color: #3b82f6; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; margin-top: 16px; border: none; cursor: pointer; font-weight: 600; font-size: 1.1rem;">
+              Saya Mengerti
+            </button>
+          </div>
+        </div>`;
+        
+        document.body.insertAdjacentHTML('beforeend', popupHTML);
+        document.getElementById('ios-popup').style.display = 'flex';
+
+      } else if (/android/i.test(userAgent) && isInstagram) {
+        // Android redirect logic
+        if (!sessionStorage.getItem('appRedirected')) {
+          sessionStorage.setItem('appRedirected', 'true');
+          const targetUrl = 'https://alvito.dev/google';
+          window.location.href = 'intent:' + targetUrl + '#Intent;scheme=https;package=com.android.chrome;end';
         }
       }
     });
