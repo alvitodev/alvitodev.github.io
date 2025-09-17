@@ -92,118 +92,39 @@
         animation-delay: 500ms;
       }
     </style>
-  <style>
-      /* In-App Browser Popup Styles */
-      #inAppBrowserPopup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.85);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Google Sans', sans-serif;
-      }
-      #inAppBrowserPopup .popup-content {
-        background-color: #2d2d2d;
-        color: white;
-        padding: 24px;
-        border-radius: 16px;
-        text-align: center;
-        max-width: 90%;
-        width: 350px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        border: 1px solid #444;
-      }
-      #inAppBrowserPopup h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-      #inAppBrowserPopup p {
-        color: #e5e5e5;
-        margin-top: 16px;
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-      #inAppBrowserPopup button {
-        display: block;
-        width: 100%;
-        background-color: #3b82f6;
-        color: white;
-        padding: 14px 20px;
-        border-radius: 8px;
-        text-decoration: none;
-        margin-top: 24px;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 1.1rem;
-      }
-    </style>
+  
   </head>
   <body class="bg-white text-gray-800 flex flex-col min-h-screen">
     <script>
     document.addEventListener('DOMContentLoaded', () => {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-      const isAndroid = /android/i.test(userAgent);
       const isInstagram = /Instagram/.test(userAgent);
 
       if (isInstagram) {
-        if (isIOS) {
-          // Add Google Fonts for icons
-          const fontLink = document.createElement('link');
-          fontLink.rel = 'stylesheet';
-          fontLink.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0';
-          document.head.appendChild(fontLink);
+        // Add Google Fonts for icons
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0';
+        document.head.appendChild(fontLink);
 
-          const popupHTML = `
-          <div id="ios-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: 'Google Sans', sans-serif;">
-            <div style="background-color: #2d2d2d; color: white; padding: 24px; border-radius: 16px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #444;">
-              <h3 style="font-size: 1.3rem; font-weight: 600;">Kamu user iOS?</h3>
-              <p style="color: #e5e5e5; margin-top: 16px; font-size: 1rem; line-height: 1.6;">
-                Untuk melanjutkan, klik ikon titik tiga
-                <span class="material-symbols-outlined" style="font-size: 1.4rem; vertical-align: middle; display: inline-block; margin: 0 2px; transform: translateY(-2px);">more_horiz</span>
-                di pojok kanan atas, lalu pilih "Buka di Browser". Hal ini supaya kamu bisa langsung login pake akun google yang sudah ada di ponsel kamu, tanpa perlu login lagi di browser IG😉.
-              </p>
-              <img src="img/userios.jpg" alt="Instruksi untuk iOS" style="width: 100%; max-width: 300px; margin: 20px auto; border-radius: 8px; border: 1px solid #555;">
-              <button onclick="document.getElementById('ios-popup').style.display = 'none';" style="display: block; width: 100%; background-color: #3b82f6; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; margin-top: 16px; border: none; cursor: pointer; font-weight: 600; font-size: 1.1rem;">
-                Saya Mengerti
-              </button>
-            </div>
-          </div>`;
-          
-          document.body.insertAdjacentHTML('beforeend', popupHTML);
-          document.getElementById('ios-popup').style.display = 'flex';
-
-        } else if (isAndroid) {
-          // Show the custom Android popup first
-          const androidPopup = document.getElementById('inAppBrowserPopup');
-          if (androidPopup) {
-            androidPopup.style.display = 'flex';
-          }
-
-          // Set up the button to hide the popup and then attempt to open externally
-          const continueButton = document.getElementById('androidContinueButton');
-          if (continueButton) {
-            continueButton.addEventListener('click', () => {
-              if (androidPopup) {
-                androidPopup.style.display = 'none';
-              }
-              
-              // Attempt to open in Chrome
-              if (!sessionStorage.getItem('appRedirected')) {
-                sessionStorage.setItem('appRedirected', 'true');
-                const fullUrl = 'https://alvito.dev/google';
-                const urlWithoutProtocol = fullUrl.replace(/^https?:\/\//, '');
-                window.location.href = 'intent://' + urlWithoutProtocol + '#Intent;scheme=https;package=com.android.chrome;end';
-              }
-            });
-          }
-        }
+        const popupHTML = `
+        <div id="instagram-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 1000; display: flex; justify-content: center; align-items: center; font-family: 'Google Sans', sans-serif;">
+          <div style="background-color: #2d2d2d; color: white; padding: 24px; border-radius: 16px; text-align: center; max-width: 90%; width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #444;">
+            <h3 style="font-size: 1.3rem; font-weight: 600;">Buka di Browser Eksternal</h3>
+            <p style="color: #e5e5e5; margin-top: 16px; font-size: 1rem; line-height: 1.6;">
+              Untuk melanjutkan, klik ikon titik tiga
+              <span class="material-symbols-outlined" style="font-size: 1.4rem; vertical-align: middle; display: inline-block; margin: 0 2px; transform: translateY(-2px);">more_horiz</span>
+              di pojok kanan atas, lalu pilih "Buka di Browser". Ini penting karena browser Instagram tidak menyimpan akun Google Anda, sehingga Anda dapat login dengan mudah.
+            </p>
+            <img src="img/userios.jpg" alt="Instruksi" style="width: 100%; max-width: 300px; margin: 20px auto; border-radius: 8px; border: 1px solid #555;">
+            <button onclick="document.getElementById('instagram-popup').style.display = 'none';" style="display: block; width: 100%; background-color: #3b82f6; color: white; padding: 14px 20px; border-radius: 8px; text-decoration: none; margin-top: 16px; border: none; cursor: pointer; font-weight: 600; font-size: 1.1rem;">
+              Saya Mengerti
+            </button>
+          </div>
+        </div>`;
+        
+        document.body.insertAdjacentHTML('beforeend', popupHTML);
+        document.getElementById('instagram-popup').style.display = 'flex';
       }
     });
   </script>
@@ -304,7 +225,7 @@
             class="text-xs text-gray-500 mt-4 animate-fade-in-up stagger-3"
             style="opacity: 0"
           >
-            Bukan scam kok guys ya😔, link mengarah langsung ke situs resmi
+            No scam scam ya guys ya😜, link mengarah langsung ke situs resmi
             Google
           </p>
         </div>
@@ -867,13 +788,7 @@
       </div>
     </footer>
 
-    <div id="inAppBrowserPopup">
-      <div class="popup-content">
-        <h3>Buka di Browser untuk Login Mudah</h3>
-        <p>Agar bisa login dengan akun Google-mu secara otomatis, klik "Lanjutkan" untuk membuka halaman ini di browser utama (seperti Chrome/Safari). Browser bawaan Instagram tidak menyimpan history loginmu.</p>
-        <button id="androidContinueButton">Lanjutkan</button>
-      </div>
-    </div>
+    
 
     <div
       id="image-popup"
