@@ -135,13 +135,18 @@
         document.getElementById('ios-popup').style.display = 'flex';
 
       } else if (/android/i.test(userAgent) && isInstagram) {
-        // Android redirect logic
-        if (!sessionStorage.getItem('appRedirected')) {
-          sessionStorage.setItem('appRedirected', 'true');
-          const targetUrl = 'https://alvito.dev/google';
-          window.location.href = 'intent:' + targetUrl + '#Intent;scheme=https;package=com.android.chrome;end';
-        }
-      }
+    // Android redirect logic
+         if (!sessionStorage.getItem('appRedirected')) {
+        sessionStorage.setItem('appRedirected', 'true');
+        const fullUrl = 'https://alvito.dev/google';
+        
+        // Hapus protokol (http:// atau https://) dari URL
+        const urlWithoutProtocol = fullUrl.replace(/^https?:\/\//, '');
+
+        // Gunakan format intent yang benar
+        window.location.href = 'intent://' + urlWithoutProtocol + '#Intent;scheme=https;package=com.android.chrome;end';
+    }
+}
     });
   </script>
 
