@@ -9,10 +9,12 @@ import { SITE } from '@/consts'
 import { cn } from '@/lib/utils'
 
 interface Props {
-  class?: string
+	class?: string;
+	title?: string; // Tambahkan ini
+	description?: string; // Tambahkan ini (opsional, bagus untuk SEO)
 }
 
-const { class: className } = Astro.props
+const { class: className, title, description } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,9 +22,8 @@ const { class: className } = Astro.props
   class="bg-background text-foreground scheme-light-dark"
   lang={SITE.locale}
 >
-  <Head>
-    <slot name="head" />
-  </Head>
+  <Head title={title} description={description}> <slot name="head" />
+    </Head>
   <body class="flex h-fit min-h-screen flex-col gap-y-6 font-sans">
     <header
       class="bg-background/50 sticky top-0 z-50 divide-y backdrop-blur-sm xl:divide-none"

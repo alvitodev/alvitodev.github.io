@@ -67,11 +67,20 @@
 }
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    @apply border-border outline-ring/50 tracking-tight;
+  :root {
+    /* Pakai warna Zinc-950 sebagai base dark mode */
+    --background: 24 9.8% 10%; /* Konversi HSL dari Zinc-950 */
+    --foreground: 0 0% 98%;
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-200 antialiased;
+    /* Membuat background grid halus */
+    background-image: 
+      linear-gradient(to right, #27272a 1px, transparent 1px),
+      linear-gradient(to bottom, #27272a 1px, transparent 1px);
+    background-size: 40px 40px; /* Ukuran kotak grid */
+    /* Membuat efek vignette (gelap di pinggir) */
+    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
   }
 }

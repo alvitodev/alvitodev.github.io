@@ -39,7 +39,8 @@ export async function getStaticPaths() {
 const post = Astro.props
 const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
-const authors = await parseAuthors(post.data.authors ?? [])
+// const authors = await parseAuthors(post.data.authors ?? [])
+const authors: any[] = [];
 
 const isCurrentSubpost = isSubpost(currentPostId)
 const navigation = await getAdjacentPosts(currentPostId)
@@ -109,9 +110,9 @@ const tocSections = await getTOCSections(currentPostId)
     </div>
 
     {
-      post.data.image && (
+      post.data.heroImage && (
         <Image
-          src={post.data.image}
+          src={post.data.heroImage}
           alt={post.data.title}
           width={1200}
           height={630}
@@ -164,7 +165,7 @@ const tocSections = await getTOCSections(currentPostId)
           <div
             class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0"
           >
-            <span>{formatDate(post.data.date)}</span>
+            <span>{formatDate(post.data.publishDate)}</span>
           </div>
 
           <div

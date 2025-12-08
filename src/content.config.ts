@@ -102,16 +102,22 @@ const gallery = defineCollection({
 
 // 7. AUTHORS (Biarkan dulu untuk kompatibilitas template)
 const authors = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/authors' }),
-  schema: z.object({
-    name: z.string(),
-    avatar: z.string().optional(),
-    about: z.string().optional(),
-    email: z.string().optional(),
-    twitter: z.string().optional(),
-    github: z.string().optional(),
-  }),
-})
+    loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/authors" }),
+    schema: z.object({
+        name: z.string(),
+        avatar: z.string().optional(),
+        about: z.string().optional(),
+        email: z.string().optional(),
+        // Tambahan baru untuk fix error AuthorCard:
+        mail: z.string().optional(), // Kadang template pakai 'mail' bukan 'email'
+        bio: z.string().optional(),
+        pronouns: z.string().optional(),
+        website: z.string().optional(),
+        linkedin: z.string().optional(),
+        twitter: z.string().optional(),
+        github: z.string().optional(),
+    }),
+});
 
 export const collections = {
   writing,

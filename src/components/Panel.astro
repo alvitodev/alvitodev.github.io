@@ -1,0 +1,45 @@
+---
+// src/components/Panel.astro
+const { class: className, title } = Astro.props;
+---
+
+<div class:list={[
+  "relative group border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm p-6 overflow-hidden",
+  className
+]}>
+  
+  {/* Dekorasi: Garis Oranye di kiri (Accent) */}
+  <div class="absolute top-0 left-0 w-1 h-full bg-amber-500/0 group-hover:bg-amber-500 transition-colors duration-300"></div>
+
+  {/* Dekorasi: Kotak kecil di pojok kanan atas */}
+  <div class="absolute top-0 right-0 w-4 h-4 border-b border-l border-zinc-700"></div>
+  
+  {/* Dekorasi: Scanline halus */}
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-800/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none animate-scan"></div>
+
+  {/* Header Panel (Jika ada judul) */}
+  {title && (
+    <div class="flex items-center gap-2 mb-4 border-b border-zinc-800 pb-2">
+      <div class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+      <h2 class="font-mono text-sm text-zinc-400 uppercase tracking-widest">
+        {title}
+      </h2>
+    </div>
+  )}
+
+  {/* Isi Konten */}
+  <div class="relative z-10">
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Animasi Scanline kebawah */
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  .animate-scan {
+    animation: scan 2s linear infinite;
+  }
+</style>

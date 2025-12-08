@@ -1,85 +1,73 @@
 ---
-import BlogCard from '@/components/BlogCard.astro'
-import Link from '@/components/Link.astro'
-import PageHead from '@/components/PageHead.astro'
-import { buttonVariants } from '@/components/ui/button'
-import { SITE } from '@/consts'
-import Layout from '@/layouts/Layout.astro'
-import { getRecentPosts } from '@/lib/data-utils'
+import Layout from '../layouts/Layout.astro';
+import Panel from '../components/Panel.astro'; // Import komponen baru
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components'; // Pastikan sudah install astro-icon
 
-const blog = await getRecentPosts(SITE.featuredPostCount)
+const recentWriting: CollectionEntry<'writing'>[] = (await getCollection('writing')).slice(0, 3);
+const recentWork: CollectionEntry<'work'>[] = (await getCollection('work')).slice(0, 3);
 ---
 
-<Layout class="max-w-3xl">
-  <PageHead slot="head" title="Home" />
-  <section class="rounded-lg border">
-    <div class="flex flex-col space-y-1.5 p-6">
-      <h3 class="text-3xl leading-none font-medium">al·vi·to·dev</h3>
-      <p class="text-muted-foreground text-sm">
-       /alˈfito/  &bull; <span class="font-medium">adjective</span>
-      </p>
-    </div>
-    <div class="p-6 pt-0">
-      <p class="text-muted-foreground mb-2 text-sm">
-        alvito is an opinionated, unstyled static blogging template built
-        with <Link
-          href="https://astro.build"
-          class="text-foreground"
-          external
-          underline>Astro</Link
-        >, <Link
-          href="https://tailwindcss.com"
-          class="text-foreground"
-          external
-          underline>Tailwind</Link
-        >, and <Link
-          href="https://ui.shadcn.com"
-          class="text-foreground"
-          external
-          underline>shadcn/ui</Link
-        >. Extraordinarily loosely based on the <Link
-          href="https://astro-micro.vercel.app/"
-          class="text-foreground"
-          external
-          underline>Astro Micro</Link
-        > theme.
-      </p>
-      <p class="text-muted-foreground text-sm">
-        To use this template, check out the <Link
-          href="https://github.com/jktrn/astro-erudite"
-          class="text-foreground"
-          underline
-          external>GitHub</Link
-        > repository. To learn more about why this template exists, read this blog
-        post: <Link
-          href="/blog/the-state-of-static-blogs"
-          class="text-foreground"
-          underline>The State of Static Blogs in 2024</Link
-        >.
-      </p>
-    </div>
-  </section>
-  <section class="flex flex-col gap-y-4">
-    <h2 class="text-2xl font-medium">Latest posts</h2>
-    <ul class="flex flex-col gap-y-4">
-      {
-        blog.map((post) => (
-          <li>
-            <BlogCard entry={post} />
+<Layout title="Command Center">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 min-h-[80vh] content-center">
+    
+    {/* HEADER / WELCOME MODULE (Lebar penuh) */}
+    <Panel class="md:col-span-12 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-mono font-bold text-white tracking-tighter">
+          ALVITO<span class="text-amber-500">.DEV</span>
+        </h1>
+        <p class="text-zinc-400 font-mono text-xs mt-1">
+          > SYSTEM_STATUS: <span class="text-green-500">ONLINE</span>
+        </p>
+      </div>
+      <div class="text-right hidden md:block">
+        <p class="text-xs text-zinc-500 font-mono">LOCATION: YOGYAKARTA, ID</p>
+        <p class="text-xs text-zinc-500 font-mono">LAT: -7.7956 // LONG: 110.3695</p>
+      </div>
+    </Panel>
+
+    {/* WRITING MODULE (Kiri, lebar 7 kolom) */}
+    <Panel title="// RECENT_LOGS" class="md:col-span-7">
+      <ul class="space-y-3">
+        {recentWriting.map(post => (
+          <li class="group/item flex items-baseline justify-between border-b border-zinc-800/50 pb-2 last:border-0 hover:pl-2 transition-all cursor-pointer">
+            <a href={`/writing/${post.id}`} class="text-zinc-300 hover:text-amber-500 font-mono text-sm truncate pr-4 transition-colors">
+              {post.data.title}
+            </a>
+            <span class="text-[10px] text-zinc-600 font-mono whitespace-nowrap">
+              {post.data.publishDate.toLocaleDateString('en-GB')}
+            </span>
           </li>
-        ))
-      }
-    </ul>
-    <div class="flex justify-center">
-      <Link
-        href="/blog"
-        class={buttonVariants({ variant: 'ghost' }) + ' group'}
-      >
-        See all posts <span
-          class="ml-1.5 transition-transform group-hover:translate-x-1"
-          >&rarr;</span
-        >
-      </Link>
-    </div>
-  </section>
+        ))}
+      </ul>
+    </Panel>
+
+    {/* WORK MODULE (Kanan, lebar 5 kolom) */}
+    <Panel title="// ACTIVE_TASKS" class="md:col-span-5">
+      <div class="space-y-4">
+        {recentWork.map(project => (
+          <div class="flex items-center justify-between bg-zinc-950/50 p-3 border border-zinc-800">
+            <div class="flex flex-col">
+              <span class="text-zinc-200 text-sm font-bold">{project.data.title}</span>
+              <span class="text-[10px] text-zinc-500 font-mono uppercase">{project.data.techStack[0]}</span>
+            </div>
+            <div class={`px-2 py-1 text-[10px] font-mono border ${project.data.status === 'completed' ? 'border-green-900 text-green-500 bg-green-900/20' : 'border-amber-900 text-amber-500 bg-amber-900/20'}`}>
+              {project.data.status}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Panel>
+
+    {/* FOOTER STATS (Lebar penuh) */}
+    <Panel class="md:col-span-12 py-2 flex justify-between items-center bg-black/40">
+       <div class="flex gap-4 text-[10px] text-zinc-600 font-mono">
+         <span>CPU: 12%</span>
+         <span>MEM: 4.2GB</span>
+         <span>NET: CONNECTED</span>
+       </div>
+    </Panel>
+
+  </div>
 </Layout>
