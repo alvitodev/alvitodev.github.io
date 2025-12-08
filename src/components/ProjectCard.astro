@@ -38,9 +38,9 @@ const { project } = Astro.props
       {/* Tech Stack (Tags) */}
       <div class="flex flex-wrap gap-1 mt-2">
         {project.data.techStack.map((tech) => (
-          <Badge variant="secondary" className="text-xs px-1.5 py-0">
-            {tech}
-          </Badge>
+        <Badge variant="outline" className="text-xs px-1.5 py-0">
+          {tech}
+        </Badge>  
         ))}
       </div>
     </div>
