@@ -101,10 +101,10 @@ export async function getAdjacentPosts(currentId: string): Promise<{
 // }
 
 export async function getPostsByTag(
-  tag: string,
+  _tag: string,
 ): Promise<CollectionEntry<'writing'>[]> {
   const posts = await getAllPosts()
-  return posts.filter((post) => true) // post.data.tags?.includes(tag)
+  return posts.filter((_) => true) // post.data.tags?.includes(tag)
 }
 
 export async function getRecentPosts(

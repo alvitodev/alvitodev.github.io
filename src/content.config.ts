@@ -1,32 +1,26 @@
 import { defineCollection, z } from 'astro:content'
 import { glob } from 'astro/loaders' // Pastikan import ini ada untuk Astro v5
 
-// 1. WRITING (Artikel Panjang & Tutorial)
+// 1. Koleksi WRITING
 const writing = defineCollection({
-  // Pola ini SUDAH BENAR untuk membaca folder/index.mdx
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/writing' }),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      publishDate: z.coerce.date(),
-      updatedDate: z.coerce.date().optional(),
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/writing" }),
+    // Pastikan ada ({ image }) di sini 👇
+	schema: ({ image }) => z.object({
+		title: z.string(),
+		description: z.string(),
+		publishDate: z.coerce.date(),
+		updatedDate: z.coerce.date().optional(),
+		
+        // Pastikan pakai image() di sini 👇
+        heroImage: image().optional(), 
+        // Jika file lama pakai 'banner', handle juga:
+        banner: image().optional(),
 
-      // UPDATE 1: Menangani Banner/Hero Image dari template lama
-      // Kita terima string path atau object image
-      heroImage: image().optional(),
-      banner: image().optional(), // Tambahkan ini jika file lama pakai key 'banner'
-
-      tags: z.array(z.string()).optional(),
-
-      // UPDATE 2: Default Value
-      // Supaya file lama yang belum punya 'category' & 'isFeatured' tidak error
-      isFeatured: z.boolean().default(false),
-      category: z
-        .enum(['technical', 'opinion', 'tutorial'])
-        .default('technical'),
-    }),
-})
+		tags: z.array(z.string()).optional(),
+		isFeatured: z.boolean().default(false),
+		category: z.enum(['technical', 'opinion', 'tutorial']).default('technical'),
+	}),
+});
 
 // 2. NOTES (TIL, Ide Kasar)
 const notes = defineCollection({
@@ -40,20 +34,22 @@ const notes = defineCollection({
 
 // 3. WORK (Proyek & Studi Kasus)
 const work = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/work' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    publishDate: z.coerce.date(),
-    heroImage: z.string().optional(),
-    techStack: z.array(z.string()).default([]), // Contoh: ['Astro', 'React']
-    repoLink: z.string().url().optional(),
-    demoLink: z.string().url().optional(),
-    status: z
-      .enum(['completed', 'in-progress', 'maintained'])
-      .default('completed'),
-  }),
-})
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/work" }),
+    // Pastikan ada ({ image }) di sini 👇
+	schema: ({ image }) => z.object({
+		title: z.string(),
+		description: z.string(),
+		publishDate: z.coerce.date(),
+		
+        // Pastikan pakai image() di sini 👇
+        heroImage: image().optional(),
+        
+		techStack: z.array(z.string()).default([]),
+		repoLink: z.string().url().optional(),
+		demoLink: z.string().url().optional(),
+		status: z.enum(['completed', 'in-progress', 'maintained']).default('completed'),
+	}),
+});
 
 // 4. FEED (Microblogging/Status)
 const feed = defineCollection({
