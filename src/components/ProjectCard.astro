@@ -1,48 +1,60 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import { Image } from 'astro:assets'
-import Link from '@/components/Link.astro'
-import { Badge } from '@/components/ui/badge'
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
-  // Update tipe ke 'work'
-  project: CollectionEntry<'work'>
+  project: CollectionEntry<'work'>;
 }
 
-const { project } = Astro.props
+const { project } = Astro.props;
 ---
 
-<div class="flex flex-col border border-zinc-800 bg-zinc-900/50 rounded-lg overflow-hidden hover:border-zinc-700 transition-all">
-  <Link href={project.data.demoLink || project.data.repoLink || '#'}>
-    {/* Update image -> heroImage */}
+<a href={`/work/${project.id}`} class="block group h-full">
+  <div class="flex flex-col h-full border border-zinc-800 bg-zinc-900/50 rounded-lg overflow-hidden hover:border-amber-500/50 hover:bg-zinc-900 transition-all duration-300">
+    
+    {/* Image Section */}
     {project.data.heroImage && (
-      <Image
-        src={project.data.heroImage}
-        alt={project.data.title}
-        width={400}
-        height={225}
-        class="w-full h-48 object-cover"
-      />
+      <div class="relative w-full h-48 border-b border-zinc-800 overflow-hidden">
+        <div class="absolute inset-0 bg-zinc-900/20 group-hover:bg-transparent transition-colors z-10"></div>
+        <Image 
+          src={project.data.heroImage} 
+          alt={project.data.title} 
+          width={400} 
+          height={225} 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0" 
+        />
+      </div>
     )}
-    <div class="p-4 flex flex-col gap-2">
+
+    {/* Content Section */}
+    <div class="p-5 flex flex-col flex-grow gap-3">
       <div class="flex justify-between items-start">
-        <h3 class="font-bold text-zinc-200">{project.data.title}</h3>
-        {project.data.status && (
-            <span class="text-[10px] uppercase border px-1 rounded text-zinc-500 border-zinc-700">
-                {project.data.status}
-            </span>
+        <h3 class="text-lg font-bold font-mono text-zinc-200 group-hover:text-amber-500 transition-colors">
+          {project.data.title}
+        </h3>
+        <span class={`text-[10px] font-mono uppercase px-1.5 py-0.5 border rounded ${
+          project.data.status === 'completed' ? 'border-green-900 text-green-600' : 'border-amber-900 text-amber-600'
+        }`}>
+          {project.data.status}
+        </span>
+      </div>
+      
+      <p class="text-sm text-zinc-400 line-clamp-2">
+        {project.data.description}
+      </p>
+      
+      <div class="mt-auto pt-4 flex flex-wrap gap-2">
+        {project.data.techStack.slice(0, 3).map(t => (
+          <span class="text-[10px] uppercase px-1.5 py-0.5 border border-zinc-700 rounded text-zinc-500 bg-zinc-950">
+            {t}
+          </span>
+        ))}
+        {project.data.techStack.length > 3 && (
+          <span class="text-[10px] text-zinc-600 px-1 py-0.5">
+            +{project.data.techStack.length - 3}
+          </span>
         )}
       </div>
-      <p class="text-sm text-zinc-400 line-clamp-3">{project.data.description}</p>
-      
-      {/* Tech Stack (Tags) */}
-      <div class="flex flex-wrap gap-1 mt-2">
-        {project.data.techStack.map((tech) => (
-        <Badge variant="outline" className="text-xs px-1.5 py-0">
-          {tech}
-        </Badge>  
-        ))}
-      </div>
     </div>
-  </Link>
-</div>
+  </div>
+</a>
