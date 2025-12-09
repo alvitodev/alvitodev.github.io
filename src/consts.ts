@@ -3,9 +3,11 @@
 
 export const SITE = {
   title: 'Alvito.dev',
-  description: 'Command Center for Muhammad Alvito Devanova. A digital garden containing technical logs, projects, and visual databanks.',
+  description:
+    'Command Center for Muhammad Alvito Devanova. A digital garden containing technical logs, projects, and visual databanks.',
   locale: 'en-us', // Ganti 'id-id' jika konten utama bahasa Indonesia
   url: 'https://alvito.dev', // URL website Anda
+  href: 'https://alvito.dev',
   author: 'Muhammad Alvito Devanova',
   twitter: '@alvitodev', // Ganti dengan username Twitter/X Anda jika ada
 }
@@ -21,3 +23,12 @@ export const NAV_ITEMS = [
   { href: '/gallery', label: 'GALLERY' },
   { href: '/about', label: 'ABOUT' },
 ]
+
+// Icon map for social links
+export const ICON_MAP: Record<string, string> = {
+  GitHub: 'mdi:github',
+  Twitter: 'mdi:twitter',
+  LinkedIn: 'mdi:linkedin',
+  Email: 'mdi:email',
+  // Add more as needed
+}
