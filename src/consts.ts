@@ -1,55 +1,23 @@
-import type { IconMap, SocialLink, Site } from '@/types'
+// Place any global data in this file.
+// You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE: Site = {
-  title: 'alvito.dev',
-  description:
-    'astro-erudite is a opinionated, unstyled blogging template—built with Astro, Tailwind, and shadcn/ui.',
-  href: 'https://astro-erudite.vercel.app',
-  author: 'alvito',
-  locale: 'en-US',
-  featuredPostCount: 2,
-  postsPerPage: 3,
+export const SITE = {
+  title: 'Alvito.dev',
+  description: 'Command Center for Muhammad Alvito Devanova. A digital garden containing technical logs, projects, and visual databanks.',
+  locale: 'en-us', // Ganti 'id-id' jika konten utama bahasa Indonesia
+  url: 'https://alvito.dev', // URL website Anda
+  author: 'Muhammad Alvito Devanova',
+  twitter: '@alvitodev', // Ganti dengan username Twitter/X Anda jika ada
 }
 
-export const NAV_LINKS: SocialLink[] = [
-  {
-    href: '/blog',
-    label: 'blog',
-  },
-  {
-    href: '/authors',
-    label: 'authors',
-  },
-  {
-    href: '/about',
-    label: 'about',
-  },
+// Navigasi Global (Opsional, jika ingin dipusatkan di sini)
+export const NAV_ITEMS = [
+  { href: '/', label: 'HOME' },
+  { href: '/writing', label: 'WRITING' },
+  { href: '/work', label: 'WORK' },
+  { href: '/notes', label: 'NOTES' },
+  { href: '/feed', label: 'FEED' },
+  { href: '/library', label: 'LIBRARY' },
+  { href: '/gallery', label: 'GALLERY' },
+  { href: '/about', label: 'ABOUT' },
 ]
-
-export const SOCIAL_LINKS: SocialLink[] = [
-  {
-    href: 'https://github.com/alvitodev',
-    label: 'GitHub',
-  },
-  {
-    href: 'https://alvito.dev/discord',
-    label: 'Discord',
-  },
-  {
-    href: 'mailto:mail@alvito.dev',
-    label: 'Email',
-  },
-  {
-    href: '/rss.xml',
-    label: 'RSS',
-  },
-]
-
-export const ICON_MAP: IconMap = {
-  Website: 'lucide:globe',
-  GitHub: 'lucide:github',
-  LinkedIn: 'lucide:linkedin',
-  Twitter: 'lucide:twitter',
-  Email: 'lucide:mail',
-  RSS: 'lucide:rss',
-}
