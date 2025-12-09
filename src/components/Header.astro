@@ -1,9 +1,6 @@
 ---
-import Link from '@/components/Link.astro'
-import { Icon } from 'astro-icon/components'
-import { SITE } from '@/consts'
+import ThemeToggle from '@/components/ThemeToggle.astro' /* IMPORT INI */
 
-// Menu Navigasi
 const navItems = [
   { href: '/', label: 'HOME' },
   { href: '/writing', label: 'WRITING' },
@@ -11,49 +8,37 @@ const navItems = [
   { href: '/about', label: 'ABOUT' },
 ]
 
-// Mendapatkan path saat ini untuk highlight menu aktif
 const pathname = Astro.url.pathname
 ---
 
 <div class="flex items-center justify-between px-4 py-3 max-w-7xl mx-auto w-full">
   
-  {/* LOGO / BRAND (Kiri) */}
+  {/* LOGO (Kiri) */}
   <a href="/" class="flex items-center gap-2 group">
-    <div class="relative w-6 h-6 border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden group-hover:border-amber-500 transition-colors">
-      {/* Logo sederhana atau inisial */}
-      <span class="font-mono font-bold text-xs text-amber-500 group-hover:text-white">A</span>
-      
-      {/* Dekorasi sudut */}
-      <div class="absolute top-0 right-0 w-1.5 h-1.5 border-l border-b border-zinc-700 bg-zinc-950"></div>
+    <div class="relative w-6 h-6 border border-zinc-400 dark:border-zinc-700 bg-zinc-200 dark:bg-zinc-900 flex items-center justify-center overflow-hidden group-hover:border-amber-500 transition-colors">
+      <span class="font-mono font-bold text-xs text-amber-600 dark:text-amber-500 group-hover:text-amber-700 dark:group-hover:text-white">A</span>
+      <div class="absolute top-0 right-0 w-1.5 h-1.5 border-l border-b border-zinc-400 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-950"></div>
     </div>
-    <span class="font-mono font-bold text-sm tracking-tighter text-zinc-300 group-hover:text-white transition-colors">
-      ALVITO<span class="text-amber-500">.DEV</span>
+    <span class="font-mono font-bold text-sm tracking-tighter text-zinc-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white transition-colors">
+      ALVITO<span class="text-amber-600 dark:text-amber-500">.DEV</span>
     </span>
   </a>
 
   {/* NAVIGASI (Kanan) */}
-  <nav class="flex items-center gap-1 sm:gap-4">
+  <nav class="flex items-center gap-2 sm:gap-4">
     {navItems.map((item) => {
-      // Cek apakah link ini aktif (sedang dibuka)
-      const isActive = 
-        item.href === '/' 
-          ? pathname === '/' 
-          : pathname.startsWith(item.href)
-
+      const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href)
       return (
         <a 
           href={item.href}
           class={`
             relative px-3 py-1.5 text-[10px] sm:text-xs font-mono tracking-widest transition-all duration-300
             ${isActive 
-              ? 'text-amber-500 font-bold bg-amber-500/10 border border-amber-500/50' 
-              : 'text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/50 border border-transparent'}
+              ? 'text-amber-600 dark:text-amber-500 font-bold bg-amber-500/10 border border-amber-500/50' 
+              : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50 border border-transparent'}
           `}
         >
-          {/* Teks Label */}
           {item.label}
-
-          {/* Indikator Aktif (Titik kedip di pojok) */}
           {isActive && (
             <span class="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span>
           )}
@@ -61,11 +46,14 @@ const pathname = Astro.url.pathname
       )
     })}
     
-    {/* (Opsional) Tombol RSS atau Social kecil */}
-    <div class="w-[1px] h-4 bg-zinc-800 mx-2 hidden sm:block"></div>
-    <a href="/rss.xml" class="hidden sm:flex items-center justify-center w-6 h-6 text-zinc-600 hover:text-amber-500 transition-colors">
-      <Icon name="lucide:rss" class="size-3" />
-    </a>
+    {/* Divider */}
+    <div class="w-[1px] h-4 bg-zinc-300 dark:bg-zinc-800 mx-1 hidden sm:block"></div>
+    
+    {/* THEME TOGGLE BUTTON */}
+    <div class="scale-90">
+      <ThemeToggle />
+    </div>
+
   </nav>
 
 </div>

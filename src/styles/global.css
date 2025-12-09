@@ -1,110 +1,148 @@
 @import 'tailwindcss';
-
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@plugin 'tailwindcss-animate';
 
 @theme inline {
+  /* FONT CONFIG: Jakarta untuk Teks, JetBrains untuk Code/Header */
   --font-sans:
-    Geist, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-mono:
-        'JetBrains Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        'Liberation Mono', 'Courier New', monospace;
+    'Plus Jakarta Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  
+  --font-mono:
+    'JetBrains Mono', 'Geist Mono', ui-monospace, monospace;
 
+  /* Mapping CSS Variables ke Utility Tailwind */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-
-  --color-border: var(--border);
   --color-ring: var(--ring);
 }
 
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/GeistVF.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMonoVF.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-}
-
-[data-theme='dark'] {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --ring: oklch(0.556 0 0);
-}
-
 @layer base {
+  /* --- LIGHT MODE (Default) --- */
   :root {
-    /* Base Color: Zinc-950 (Hampir Hitam) */
-    --background: 24 9.8% 10%; 
-    --foreground: 0 0% 98%;
+    /* Background Putih Bersih / Abu-abu sangat muda */
+    --background: 0 0% 98%; 
+    --foreground: 240 10% 3.9%; /* Teks Hampir Hitam */
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    /* Primary: Amber Gelap agar kontras di background putih */
+    --primary: 35 90% 40%; 
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 35 90% 40%; /* Ring Amber */
+
+    /* Grid Color untuk Light Mode (Abu-abu tipis) */
+    --grid-color: rgba(0, 0, 0, 0.05);
     
-    /* Warna aksen (Amber) dan border */
+    /* Vignette Light Mode (Sangat halus atau transparan agar tidak kotor) */
+    --vignette-color: rgba(0,0,0,0.03); 
+  }
+
+  /* --- DARK MODE --- */
+  .dark {
+    /* Background Zinc-950 (Hampir Hitam) */
+    --background: 24 9.8% 10%; 
+    --foreground: 0 0% 98%; /* Teks Putih */
+
     --card: 24 9.8% 10%;
     --card-foreground: 0 0% 98%;
+
     --popover: 24 9.8% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 45 93% 47%; /* Amber-500 */
+
+    /* Primary: Amber Terang (Sci-Fi Glow) */
+    --primary: 45 93% 47%;
     --primary-foreground: 24 9.8% 10%;
+
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
+
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
+
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
+
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 45 93% 47%;
+
+    /* Grid Color Dark Mode */
+    --grid-color: #27272a;
+
+    /* Vignette Dark Mode (Hitam pekat di pinggir) */
+    --vignette-color: rgba(0,0,0,0.8);
+  }
+
+  * {
+    @apply border-border;
   }
 
   body {
-    @apply bg-zinc-950 text-zinc-200 antialiased;
+    @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     
-    /* Background Grid Halus */
+    /* Background Grid Pattern - Menggunakan variable agar adaptif */
     background-image: 
-      linear-gradient(to right, #27272a 1px, transparent 1px),
-      linear-gradient(to bottom, #27272a 1px, transparent 1px);
+      linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
     background-size: 40px 40px;
-    
-    /* Efek Vignette (Pinggiran Gelap) */
-    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-    
-    /* Supaya grid tidak goyang saat scroll */
-    background-attachment: fixed;
+    background-attachment: fixed; /* Grid diam saat scroll */
+  }
+
+  /* CLASS KHUSUS VIGNETTE (Dipanggil di Layout.astro) */
+  .vignette-layer {
+    /* Radial Gradient: Tengah transparan, Pinggir gelap */
+    background: radial-gradient(
+      circle at center, 
+      transparent 50%, 
+      var(--vignette-color) 100%
+    );
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-400 dark:bg-zinc-700 rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-amber-500;
   }
 }
