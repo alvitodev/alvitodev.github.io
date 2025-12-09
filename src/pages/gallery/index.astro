@@ -1,0 +1,94 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+import { formatDate } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+// Ambil data gallery
+const galleryItems = await getCollection('gallery')
+const sortedGallery = galleryItems.sort((a, b) => b.data.dateTaken.valueOf() - a.data.dateTaken.valueOf())
+---
+
+<Layout title="Visuals // Gallery">
+  <div class="max-w-7xl mx-auto p-4 md:p-8 min-h-screen">
+    
+    {/* --- HEADER --- */}
+    <header class="mb-10 mt-8 flex justify-between items-end border-b border-zinc-800 pb-6">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+          <span class="text-xs font-mono text-purple-500 tracking-[0.2em]">VISUALS // DATABANKS</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black font-mono text-white tracking-tighter uppercase">
+          OPTICAL_SENSORS
+        </h1>
+      </div>
+      <div class="hidden md:block text-right text-xs font-mono text-zinc-500">
+        <p>CAPACITY: 12TB</p>
+        <p>STATUS: RECORDING</p>
+      </div>
+    </header>
+
+    {/* --- GALLERY GRID --- */}
+    {sortedGallery.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {sortedGallery.map((photo) => (
+          <div class="group relative aspect-square bg-zinc-900 border border-zinc-800 overflow-hidden cursor-pointer">
+            
+            {/* Image */}
+            <img 
+              src={photo.data.image} 
+              alt={photo.data.title} 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+            />
+
+            {/* Viewfinder Overlay (Muncul saat Hover) */}
+            <div class="absolute inset-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between bg-gradient-to-t from-black/80 via-transparent to-black/40">
+              
+              {/* Top Info */}
+              <div class="flex justify-between items-start text-[10px] font-mono text-white/80">
+                <span class="border border-white/30 px-1">REC</span>
+                <span>{formatDate(photo.data.dateTaken)}</span>
+              </div>
+
+              {/* Crosshair Center */}
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border border-white/50 rounded-full flex items-center justify-center">
+                <div class="w-0.5 h-0.5 bg-white"></div>
+              </div>
+
+              {/* Bottom Info */}
+              <div class="space-y-1">
+                <h3 class="text-sm font-bold font-mono text-white">{photo.data.title}</h3>
+                {photo.data.location && (
+                  <div class="flex items-center gap-1 text-[10px] text-zinc-300 font-mono">
+                    <Icon name="lucide:map-pin" class="size-3" />
+                    {photo.data.location}
+                  </div>
+                )}
+                {photo.data.camera && (
+                  <div class="flex items-center gap-1 text-[10px] text-zinc-400 font-mono">
+                    <Icon name="lucide:camera" class="size-3" />
+                    {photo.data.camera}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Corner Brackets (Hiasan Viewfinder) */}
+            <div class="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="absolute top-2 right-2 w-2 h-2 border-t border-r border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="h-64 flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded bg-zinc-900/20 text-zinc-500 font-mono">
+        <p>// NO_VISUALS_LOGGED</p>
+        <p class="text-xs mt-2">Add entries in src/content/gallery/</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

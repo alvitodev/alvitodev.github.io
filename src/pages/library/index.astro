@@ -1,0 +1,137 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Panel from '@/components/Panel.astro'
+import { getCollection } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+
+// Ambil data library dan urutkan: yang sedang aktif (reading/watching) di atas, sisanya berdasarkan tanggal selesai
+const libraryItems = await getCollection('library')
+
+const sortedLibrary = libraryItems.sort((a, b) => {
+  // Prioritaskan item yang sedang aktif
+  const activeStatuses = ['reading', 'watching', 'playing']
+  const aActive = activeStatuses.includes(a.data.status)
+  const bActive = activeStatuses.includes(b.data.status)
+  
+  if (aActive && !bActive) return -1
+  if (!aActive && bActive) return 1
+  
+  // Jika sama-sama aktif atau tidak, urutkan berdasarkan tanggal (terbaru di atas)
+  const dateA = a.data.dateFinished?.valueOf() ?? 0
+  const dateB = b.data.dateFinished?.valueOf() ?? 0
+  return dateB - dateA
+})
+
+// Helper untuk ikon tipe media
+const getTypeIcon = (type: string) => {
+  switch (type) {
+    case 'book': return 'lucide:book'
+    case 'movie': return 'lucide:film'
+    case 'tv': return 'lucide:tv'
+    case 'game': return 'lucide:gamepad-2'
+    default: return 'lucide:file'
+  }
+}
+
+// Helper untuk warna status
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'finished': return 'text-green-500 border-green-900/50 bg-green-900/10'
+    case 'reading': 
+    case 'watching': 
+    case 'playing': return 'text-amber-500 border-amber-900/50 bg-amber-900/10 animate-pulse'
+    case 'dropped': return 'text-red-500 border-red-900/50 bg-red-900/10'
+    default: return 'text-zinc-500 border-zinc-800 bg-zinc-900'
+  }
+}
+---
+
+<Layout title="Database // Library">
+  <div class="max-w-6xl mx-auto p-4 md:p-8 min-h-screen">
+    
+    {/* --- HEADER TERMINAL --- */}
+    <header class="mb-10 border-b border-zinc-800 pb-8 mt-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-3 h-3 bg-blue-500 rounded-sm"></div>
+        <span class="text-xs font-mono text-blue-500 tracking-[0.2em]">ARCHIVE // MEDIA_LOG</span>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-black font-mono text-white tracking-tighter mb-2 uppercase">
+        CONSUMPTION_LOGS
+      </h1>
+      <p class="text-zinc-500 font-mono text-xs md:text-sm">
+        &gt; INDEXING_MEDIA_ENTRIES... ({sortedLibrary.length} items)
+      </p>
+    </header>
+
+    {/* --- LIBRARY GRID --- */}
+    {sortedLibrary.length > 0 ? (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedLibrary.map((item) => (
+          <Panel class="flex flex-col h-full hover:border-blue-500/50 transition-colors group">
+            
+            {/* Header Kartu: Type & Status */}
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                <Icon name={getTypeIcon(item.data.type)} class="size-4" />
+                <span class="uppercase">{item.data.type}</span>
+              </div>
+              <span class={`text-[10px] font-mono uppercase px-1.5 py-0.5 border rounded ${getStatusColor(item.data.status)}`}>
+                {item.data.status}
+              </span>
+            </div>
+
+            {/* Cover Image (Opsional) */}
+            {item.data.coverImage && (
+               <div class="w-full h-40 bg-zinc-950 border border-zinc-800 mb-4 overflow-hidden relative">
+                  <img 
+                    src={item.data.coverImage} 
+                    alt={item.data.title} 
+                    class="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                  />
+                  {/* Scanline Overlay */}
+                  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none"></div>
+               </div>
+            )}
+
+            {/* Info Utama */}
+            <div class="flex-grow">
+              <h3 class="text-lg font-bold text-zinc-100 font-mono leading-tight mb-1 group-hover:text-blue-400 transition-colors">
+                {item.data.title}
+              </h3>
+              {item.data.creator && (
+                <p class="text-xs text-zinc-500 font-mono">By {item.data.creator}</p>
+              )}
+            </div>
+
+            {/* Footer Kartu: Rating & Date */}
+            <div class="mt-6 pt-4 border-t border-zinc-800 flex justify-between items-end">
+              {/* Star Rating Visual */}
+              <div class="flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <div class={`w-1.5 h-3 rounded-sm ${
+                    i < (item.data.rating || 0) ? 'bg-blue-500' : 'bg-zinc-800'
+                  }`}></div>
+                ))}
+              </div>
+              
+              <span class="text-[10px] font-mono text-zinc-600">
+                {item.data.dateFinished 
+                  ? new Date(item.data.dateFinished).toLocaleDateString('en-GB') 
+                  : 'IN_PROGRESS'}
+              </span>
+            </div>
+
+          </Panel>
+        ))}
+      </div>
+    ) : (
+      /* State Kosong */
+      <div class="h-64 flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded bg-zinc-900/20 text-zinc-500 font-mono">
+        <p>// DATABASE_EMPTY</p>
+        <p class="text-xs mt-2">Add .json entries in src/content/library/</p>
+      </div>
+    )}
+
+  </div>
+</Layout>
