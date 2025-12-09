@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import { execSync } from 'child_process'
 
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
@@ -17,6 +18,9 @@ import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from '@tailwindcss/vite'
+
+// Ambil Git Hash (Commit terakhir)
+const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 
 export default defineConfig({
   site: 'https://astro-erudite.vercel.app',
@@ -71,6 +75,10 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss() as any],
+    define: {
+      // Buat variabel global yang bisa diakses di komponen
+      'import.meta.env.PUBLIC_GIT_HASH': JSON.stringify(commitHash),
+    },
   },
   server: {
     port: 1234,

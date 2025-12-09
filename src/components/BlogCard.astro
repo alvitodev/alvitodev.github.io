@@ -1,19 +1,17 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { getCombinedReadingTime, getSubpostCount, isSubpost } from '@/lib/data-utils'
+import { getCombinedReadingTime } from '@/lib/data-utils'
 import { formatDate } from '@/lib/utils'
 import { Image } from 'astro:assets'
 import Link from '@/components/Link.astro'
 import { Badge } from '@/components/ui/badge'
 
 interface Props {
-  // PENTING: Ganti 'blog' jadi 'writing'
   entry: CollectionEntry<'writing'>
 }
 
 const { entry } = Astro.props
 
-// PENTING: Ganti .date jadi .publishDate
 const formattedDate = formatDate(entry.data.publishDate)
 const readTime = await getCombinedReadingTime(entry.id)
 ---
@@ -24,7 +22,6 @@ const readTime = await getCombinedReadingTime(entry.id)
     class="flex flex-col gap-4"
   >
     <div class="flex flex-col gap-2">
-      {/* PENTING: Ganti .image jadi .heroImage */}
       {entry.data.heroImage && (
         <div class="relative w-full aspect-video overflow-hidden rounded-md border border-zinc-800">
             <Image

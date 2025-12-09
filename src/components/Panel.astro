@@ -1,45 +1,68 @@
 ---
 // src/components/Panel.astro
+// Komponen Container Utama untuk gaya Industrial Sci-Fi
+
+interface Props {
+  class?: string;
+  title?: string;
+}
+
 const { class: className, title } = Astro.props;
 ---
 
 <div class:list={[
-  "relative group border border-zinc-800 bg-zinc-900/80 backdrop-blur-sm p-6 overflow-hidden",
+  "relative group border border-zinc-800 bg-zinc-900/80 backdrop-blur-md p-6 overflow-hidden",
   className
 ]}>
   
-  {/* Dekorasi: Garis Oranye di kiri (Accent) */}
-  <div class="absolute top-0 left-0 w-1 h-full bg-amber-500/0 group-hover:bg-amber-500 transition-colors duration-300"></div>
+  {/* --- DEKORASI VISUAL --- */}
 
-  {/* Dekorasi: Kotak kecil di pojok kanan atas */}
-  <div class="absolute top-0 right-0 w-4 h-4 border-b border-l border-zinc-700"></div>
+  {/* 1. Accent Line (Kiri): Menyala Oranye saat Hover */}
+  <div class="absolute top-0 left-0 w-[2px] h-full bg-zinc-800 group-hover:bg-amber-500 transition-colors duration-300 ease-out z-20"></div>
+
+  {/* 2. Corner Accent (Kanan Atas): Kotak kecil teknis */}
+  <div class="absolute top-0 right-0 w-4 h-4 border-b border-l border-zinc-700 z-20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
   
-  {/* Dekorasi: Scanline halus */}
-  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-800/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none animate-scan"></div>
+  {/* 3. Corner Accent (Kiri Bawah): Kotak kecil teknis */}
+  <div class="absolute bottom-0 left-0 w-4 h-4 border-t border-r border-zinc-700 z-20 opacity-50 group-hover:opacity-100 transition-opacity"></div>
 
-  {/* Header Panel (Jika ada judul) */}
+  {/* 4. Scanline Animation: Efek garis scan berjalan ke bawah */}
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none animate-scan z-10"></div>
+
+  {/* 5. Background Grid Halus (Opsional, menambah tekstur) */}
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none z-0"></div>
+
+
+  {/* --- HEADER PANEL (Jika ada title) --- */}
   {title && (
-    <div class="flex items-center gap-2 mb-4 border-b border-zinc-800 pb-2">
-      <div class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
-      <h2 class="font-mono text-sm text-zinc-400 uppercase tracking-widest">
+    <div class="relative flex items-center gap-3 mb-6 border-b border-zinc-800 pb-3 z-20">
+      {/* Lampu Indikator Berkedip */}
+      <div class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+      </div>
+      
+      {/* Teks Judul Monospace */}
+      <h2 class="font-mono text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] group-hover:text-zinc-200 transition-colors">
         {title}
       </h2>
     </div>
   )}
 
-  {/* Isi Konten */}
-  <div class="relative z-10">
+  {/* --- ISI KONTEN --- */}
+  <div class="relative z-20">
     <slot />
   </div>
 </div>
 
 <style>
-  /* Animasi Scanline kebawah */
+  /* Keyframes untuk animasi Scanline */
   @keyframes scan {
     0% { transform: translateY(-100%); }
     100% { transform: translateY(100%); }
   }
+  
   .animate-scan {
-    animation: scan 2s linear infinite;
+    animation: scan 2.5s linear infinite;
   }
 </style>

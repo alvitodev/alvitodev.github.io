@@ -10,6 +10,7 @@ import TOCSidebar from '@/components/TOCSidebar.astro'
 import { badgeVariants } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Layout from '@/layouts/Layout.astro'
+import Panel from '@/components/Panel.astro' /* IMPORT PANEL */
 import {
   getAdjacentPosts,
   getAllPostsAndSubposts,
@@ -21,12 +22,14 @@ import {
   getTOCSections,
   hasSubposts,
   isSubpost,
+  parseAuthors,
 } from '@/lib/data-utils'
 import { formatDate } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
 
+// 1. Ambil data (Logika tetap dipertahankan)
 export async function getStaticPaths() {
   const posts = await getAllPostsAndSubposts()
   return posts.map((post) => ({
@@ -38,8 +41,8 @@ export async function getStaticPaths() {
 const post = Astro.props
 const currentPostId = Astro.params.id
 const { Content, headings } = await render(post)
-// const authors = await parseAuthors(post.data.authors ?? [])
-const authors: any[] = [];
+// parseAuthors akan return [] (aman), jadi logika authors di bawah tidak akan render apa2
+const authors = await parseAuthors(post.data.authors ?? [])
 
 const isCurrentSubpost = isSubpost(currentPostId)
 const navigation = await getAdjacentPosts(currentPostId)
@@ -58,8 +61,10 @@ const combinedReadingTime =
 const tocSections = await getTOCSections(currentPostId)
 ---
 
-<Layout>
+<Layout title={post.data.title} description={post.data.description}>
   <PostHead slot="head" post={post} />
+  
+  {/* Slot Navigasi Subpost Mobile */}
   {
     (hasChildPosts || isCurrentSubpost) && (
       <SubpostsHeader
@@ -68,6 +73,8 @@ const tocSections = await getTOCSections(currentPostId)
       />
     )
   }
+  
+  {/* Slot TOC Header Mobile */}
   {
     headings?.length > 0 &&
       !(
@@ -77,29 +84,31 @@ const tocSections = await getTOCSections(currentPostId)
       ) && <TOCHeader slot="table-of-contents" headings={headings} />
   }
 
+  {/* GRID UTAMA - DIPERTAHANKAN */}
   <section
-    class="grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-6"
+    class="grid grid-cols-[minmax(0px,1fr)_min(calc(var(--breakpoint-md)-2rem),100%)_minmax(0px,1fr)] gap-y-6 lg:gap-y-8"
   >
-    <div class="col-start-2">
+    {/* Breadcrumbs */}
+    <div class="col-start-2 pt-6">
       <Breadcrumbs
         items={[
-          { href: '/writing', label: 'Writings', icon: 'lucide:library-big' },
+          { href: '/writing', label: 'Writing', icon: 'lucide:terminal' }, /* FIX: /blog -> /writing */
           ...(isCurrentSubpost && parentPost
             ? [
                 {
-                  href: `/writing/${parentPost.id}`,
+                  href: `/writing/${parentPost.id}`, /* FIX: URL */
                   label: parentPost.data.title,
                   icon: 'lucide:book-open',
                 },
                 {
-                  href: `/writing/${currentPostId}`,
+                  href: `/writing/${currentPostId}`, /* FIX: URL */
                   label: post.data.title,
                   icon: 'lucide:file-text',
                 },
               ]
             : [
                 {
-                  href: `/writing/${currentPostId}`,
+                  href: `/writing/${currentPostId}`, /* FIX: URL */
                   label: post.data.title,
                   icon: 'lucide:book-open-text',
                 },
@@ -108,65 +117,57 @@ const tocSections = await getTOCSections(currentPostId)
       />
     </div>
 
+    {/* Hero Image (Updated to use heroImage) */}
     {
       post.data.heroImage && (
-        <Image
-          src={post.data.heroImage}
-          alt={post.data.title}
-          width={1200}
-          height={630}
-          class="col-span-full mx-auto w-full max-w-5xl object-cover"
-        />
+        <div class="col-span-full mx-auto w-full max-w-5xl border-y border-zinc-800 bg-zinc-900/50">
+            <Image
+            src={post.data.heroImage} /* FIX: image -> heroImage */
+            alt={post.data.title}
+            width={1200}
+            height={630}
+            class="w-full object-cover max-h-[500px] opacity-90"
+            />
+        </div>
       )
     }
 
-    <section class="col-start-2 flex flex-col gap-y-6 text-center">
+    {/* Header Section (Title, Meta) */}
+    <section class="col-start-2 flex flex-col gap-y-6 text-center pt-2">
       <div class="flex flex-col">
         <h1
-          class="mb-2 scroll-mt-31 text-3xl leading-tight font-medium sm:text-4xl"
+          class="mb-4 scroll-mt-31 text-3xl font-bold font-mono tracking-tight sm:text-5xl text-zinc-100"
           id="post-title"
         >
           {post.data.title}
         </h1>
 
         <div
-          class="text-muted-foreground divide-border mb-4 flex flex-col items-center justify-center divide-y text-xs sm:flex-row sm:flex-wrap sm:divide-x sm:divide-y-0 sm:text-sm"
+          class="text-muted-foreground divide-border mb-6 flex flex-col items-center justify-center divide-y text-xs font-mono sm:flex-row sm:flex-wrap sm:divide-x sm:divide-y-0"
         >
+          {/* Authors (Logic kept, but will be empty for now) */}
           {
             authors.length > 0 && (
               <div class="flex w-full items-center justify-center gap-x-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
                 {authors.map((author) => (
                   <div class="flex items-center gap-x-1.5">
-                    <Image
-                      src={author.avatar}
-                      alt={author.name}
-                      width={20}
-                      height={20}
-                      class="rounded-full"
-                    />
-                    {author.isRegistered ? (
-                      <Link
-                        href={`/authors/${author.id}`}
-                        underline
-                        class="text-foreground"
-                      >
-                        <span>{author.name}</span>
-                      </Link>
-                    ) : (
-                      <span>{author.name}</span>
-                    )}
+                    {/* ... author logic ... */}
+                    <span>{author.name}</span>
                   </div>
                 ))}
               </div>
             )
           }
 
+          {/* Date (Updated field) */}
           <div
-            class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0"
+            class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0 text-amber-500"
           >
-            <span>{formatDate(post.data.publishDate)}</span>
+            <Icon name="lucide:calendar" class="size-3" />
+            <span>{formatDate(post.data.publishDate)}</span> /* FIX: date -> publishDate */
           </div>
 
+          {/* Reading Time */}
           <div
             class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0"
           >
@@ -184,29 +185,31 @@ const tocSections = await getTOCSections(currentPostId)
             </span>
           </div>
 
+          {/* Subposts Count */}
           {
             subpostCount > 0 && (
               <div class="flex w-full items-center justify-center gap-1 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0">
-                <Icon name="lucide:file-text" class="size-3" />
+                <Icon name="lucide:layers" class="size-3" />
                 {subpostCount} subpost{subpostCount === 1 ? '' : 's'}
               </div>
             )
           }
         </div>
+
+        {/* Tags */}
         <div class="flex flex-wrap justify-center gap-2">
-                  {
-                    (post.data.tags && post.data.tags.length > 0) &&
-                      ((post.data.tags ?? []) as string[]).map((tag) => (
-                        <a
-                          href={`/tags/${tag}`}
-                          class={badgeVariants({ variant: 'muted' })}
-                        >
-                          <Icon name="lucide:hash" class="size-3" />
-                          {tag}
-                        </a>
-                      ))
-                  }
-                </div>
+          {
+            (post.data.tags ?? []).map((tag) => (
+                <span
+                  class={badgeVariants({ variant: 'outline' }) + " font-mono text-xs border-zinc-700 text-zinc-400"}
+                >
+                  <Icon name="lucide:hash" class="size-3 mr-1" />
+                  {tag}
+                </span>
+              ))
+          }
+        </div>
+      </div>
 
       <PostNavigation
         newerPost={navigation.newer}
@@ -215,16 +218,19 @@ const tocSections = await getTOCSections(currentPostId)
       />
     </section>
 
+    {/* Sidebar TOC Desktop */}
     {
       tocSections.length > 0 && (
         <TOCSidebar sections={tocSections} currentPostId={currentPostId} />
       )
     }
 
-    <article class="prose col-start-2 max-w-none">
+    {/* ARTIKEL KONTEN */}
+    <article class="prose prose-invert prose-zinc col-start-2 max-w-none prose-headings:font-mono prose-headings:tracking-tight prose-a:text-amber-500 prose-code:text-amber-300 prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-950/50">
       <Content />
     </article>
 
+    {/* Sidebar Subposts Desktop */}
     {
       (hasChildPosts || isCurrentSubpost) && (
         <SubpostsSidebar
@@ -236,24 +242,28 @@ const tocSections = await getTOCSections(currentPostId)
       )
     }
 
-    <PostNavigation
-      newerPost={navigation.newer}
-      olderPost={navigation.older}
-      parentPost={isCurrentSubpost ? navigation.parent : undefined}
-    />
+    {/* Footer Navigation */}
+    <div class="col-start-2 pb-12">
+        <PostNavigation
+        newerPost={navigation.newer}
+        olderPost={navigation.older}
+        parentPost={isCurrentSubpost ? navigation.parent : undefined}
+        />
+    </div>
   </section>
 
+  {/* Scroll to Top Button */}
   <Button
     variant="outline"
     size="icon"
-    className="group fixed right-8 bottom-8 z-50 hidden"
+    className="group fixed right-8 bottom-8 z-50 hidden bg-zinc-900 border-zinc-700 hover:border-amber-500"
     id="scroll-to-top"
     title="Scroll to top"
     aria-label="Scroll to top"
   >
     <Icon
       name="lucide:arrow-up"
-      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
+      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5 text-zinc-400 group-hover:text-amber-500"
     />
   </Button>
 
@@ -282,6 +292,7 @@ const tocSections = await getTOCSections(currentPostId)
 </Layout>
 
 <script>
+  // KaTeX Logic (Matematika)
   if (document.querySelector('.katex')) {
     if (!document.querySelector('link[href*="katex.min.css"]')) {
       const link = document.createElement('link')

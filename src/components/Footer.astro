@@ -1,26 +1,26 @@
 ---
-import { Separator } from '@/components/ui/separator'
-import { SOCIAL_LINKS } from '@/consts'
-import Link from './Link.astro'
-import SocialIcons from './SocialIcons.astro'
+const today = new Date();
+const revision = import.meta.env.PUBLIC_GIT_HASH || 'DEV-MODE';
 ---
 
-<footer
-  class="mx-auto mb-8 flex w-full max-w-3xl flex-col items-center justify-center gap-y-2 px-4 sm:mb-4 sm:flex-row sm:justify-between"
->
-  <div class="flex flex-wrap items-center justify-center gap-x-2 text-center">
-    <span class="text-muted-foreground text-sm">
-      &copy; {new Date().getFullYear()} All rights reserved.
-    </span>
-    <Separator orientation="vertical" className="hidden h-4! sm:block" />
-    <p class="text-muted-foreground text-sm">
-      Made with 🤍 by <Link
-        href="https://github.com/alvito"
-        class="text-foreground"
-        external
-        underline>Alvito</Link
-      >!
-    </p>
+<footer class="border-t border-zinc-800 bg-zinc-950 py-8 mt-12 text-center md:text-left">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-zinc-600">
+    
+    <div class="flex flex-col gap-1">
+      <span>&copy; {today.getFullYear()} ALVITO.DEV. ALL SYSTEMS NOMINAL.</span>
+      <span>BUILT WITH ASTRO // DEPLOYED VIA GITHUB ACTIONS</span>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a href="https://github.com/alvitodev" target="_blank" class="hover:text-amber-500 transition-colors">[GITHUB]</a>
+      <a href="https://linkedin.com/in/alvito" target="_blank" class="hover:text-amber-500 transition-colors">[LINKEDIN]</a>
+      <a href="/rss.xml" class="hover:text-amber-500 transition-colors">[RSS_FEED]</a>
+    </div>
+
+    <div class="text-right">
+      <p>SITE_REVISION: <span class="text-amber-500">{revision}</span></p>
+      <p>LATENCY: <span class="text-green-500">LOW</span></p>
+    </div>
+
   </div>
-  <SocialIcons links={SOCIAL_LINKS} />
 </footer>
