@@ -1,0 +1,60 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getAllWork } from '@/lib/data-utils';
+
+// Ambil semua proyek
+const projects = await getAllWork();
+---
+
+<Layout title="Work // Projects">
+  <div class="max-w-7xl mx-auto p-4 md:p-8 min-h-screen">
+    
+    {/* --- HEADER TERMINAL --- */}
+    <header class="mb-12 border-b border-zinc-800 pb-8 mt-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-3 h-3 bg-amber-500 rounded-sm animate-pulse"></div>
+        <span class="text-xs font-mono text-amber-500 tracking-[0.2em]">DATABASE // WORK</span>
+      </div>
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="text-4xl md:text-6xl font-black font-mono text-white tracking-tighter mb-2">
+            ACTIVE_PROTOCOLS
+          </h1>
+          <p class="text-zinc-500 font-mono text-xs md:text-sm">
+            &gt; EXEC_LIST_ALL_PROJECTS... <span class="animate-pulse">_</span>
+          </p>
+        </div>
+        
+        {/* Statistik Sederhana */}
+        <div class="flex gap-8 text-right font-mono text-xs text-zinc-600 border-l border-zinc-800 pl-6">
+          <div>
+            <span class="block text-zinc-400">TOTAL_ENTRIES</span>
+            <span class="text-xl text-white">{projects.length}</span>
+          </div>
+          <div>
+            <span class="block text-zinc-400">DEPLOYED</span>
+            <span class="text-xl text-green-500">{projects.filter(p => p.data.status === 'completed').length}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* --- PROJECT GRID --- */}
+    {projects.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    ) : (
+      /* State Kosong (Jaga-jaga) */
+      <div class="h-64 flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded bg-zinc-900/20 text-zinc-500 font-mono">
+        <p>// NO_DATA_FOUND</p>
+        <p class="text-xs mt-2">Initialize new projects in src/content/work/</p>
+      </div>
+    )}
+
+  </div>
+</Layout>
