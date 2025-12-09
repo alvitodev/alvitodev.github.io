@@ -4,29 +4,37 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <Layout title="404 // Signal Lost">
-  <div class="flex flex-col items-center justify-center min-h-[80vh] text-center p-4">
-    
+  <div
+    class="flex min-h-[80vh] flex-col items-center justify-center p-4 text-center"
+  >
     <div class="relative mb-8">
-      <Icon name="lucide:alert-triangle" class="size-24 text-red-500 animate-pulse" />
-      <div class="absolute inset-0 bg-red-500/20 blur-xl rounded-full animate-pulse"></div>
+      <Icon
+        name="lucide:alert-triangle"
+        class="size-24 animate-pulse text-red-500"
+      />
+      <div
+        class="absolute inset-0 animate-pulse rounded-full bg-red-500/20 blur-xl"
+      >
+      </div>
     </div>
 
-    <h1 class="text-6xl md:text-8xl font-black font-mono text-white tracking-tighter mb-4">
+    <h1
+      class="text-foreground mb-4 font-mono text-6xl font-black tracking-tighter md:text-8xl"
+    >
       404
     </h1>
-    
-    <div class="space-y-2 font-mono text-zinc-500 mb-8">
+
+    <div class="mb-8 space-y-2 font-mono text-zinc-500">
       <p>&gt; ERROR: SIGNAL_LOST</p>
       <p>&gt; TARGET_COORDINATES_NOT_FOUND</p>
       <p>&gt; INITIATING_EMERGENCY_PROTOCOL...</p>
     </div>
 
-    <a 
-      href="/" 
-      class="px-6 py-3 bg-red-600 hover:bg-red-500 text-black font-bold font-mono text-sm uppercase tracking-widest rounded transition-colors shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+    <a
+      href="/"
+      class="rounded bg-red-600 px-6 py-3 font-mono text-sm font-bold tracking-widest text-black uppercase shadow-[0_0_20px_rgba(220,38,38,0.4)] transition-colors hover:bg-red-500"
     >
       Return_To_Base
     </a>
-
   </div>
 </Layout>

@@ -1,10 +1,10 @@
 ---
-import { getCollection, render } from 'astro:content'
-import Layout from '@/layouts/Layout.astro'
 import Panel from '@/components/Panel.astro'
-import { Image } from 'astro:assets'
 import { Badge } from '@/components/ui/badge'
+import Layout from '@/layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import { getCollection, render } from 'astro:content'
 
 // 1. Generate Static Paths untuk semua item di koleksi 'work'
 export async function getStaticPaths() {
@@ -20,63 +20,74 @@ const { Content } = await render(project)
 ---
 
 <Layout title={project.data.title} description={project.data.description}>
-  <div class="max-w-7xl mx-auto p-4 md:p-8 min-h-screen">
-    
+  <div class="mx-auto min-h-screen max-w-7xl p-4 md:p-8">
     {/* Navigasi Kembali */}
     <div class="mb-6 flex items-center justify-between">
-      <a 
-        href="/" 
-        class="group flex items-center gap-2 text-xs font-mono text-zinc-500 hover:text-amber-500 transition-colors"
+      <a
+        href="/"
+        class="group flex items-center gap-2 font-mono text-xs text-zinc-500 transition-colors hover:text-amber-500"
       >
-        <Icon name="lucide:arrow-left" class="size-3 group-hover:-translate-x-1 transition-transform" />
+        <Icon
+          name="lucide:arrow-left"
+          class="size-3 transition-transform group-hover:-translate-x-1"
+        />
         RETURN_TO_BASE
       </a>
-      <span class="text-[10px] font-mono text-zinc-600">
+      <span class="font-mono text-[10px] text-zinc-600">
         PROJECT_ID: {project.id.toUpperCase()}
       </span>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-      
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
       {/* --- KOLOM KIRI: DATA TEKNIS (4 Kolom) --- */}
-      <div class="lg:col-span-4 flex flex-col gap-6">
+      <div class="flex flex-col gap-6 lg:col-span-4">
         <Panel title="// PROJECT_SPECS" class="h-fit">
-          
           {/* Thumbnail Image */}
-          {project.data.heroImage && (
-            <div class="mb-6 rounded border border-zinc-800 bg-zinc-950 overflow-hidden relative group">
-              <div class="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 mix-blend-overlay"></div>
-              <Image 
-                src={project.data.heroImage} 
-                alt={project.data.title}
-                width={600}
-                height={400}
-                class="w-full h-auto object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500"
-              />
-            </div>
-          )}
+          {
+            project.data.heroImage && (
+              <div class="group relative mb-6 overflow-hidden rounded border border-zinc-800 bg-zinc-950">
+                <div class="pointer-events-none absolute inset-0 z-10 bg-amber-500/10 opacity-0 mix-blend-overlay transition-opacity group-hover:opacity-100" />
+                <Image
+                  src={project.data.heroImage}
+                  alt={project.data.title}
+                  width={600}
+                  height={400}
+                  class="h-auto w-full object-cover grayscale-[0.2] transition-all duration-500 group-hover:grayscale-0"
+                />
+              </div>
+            )
+          }
 
           <div class="space-y-6 font-mono text-sm">
-            
             {/* Status Status */}
             <div>
-              <span class="text-xs text-zinc-500 block mb-2">CURRENT_STATUS</span>
-              <div class={`inline-flex items-center gap-2 px-3 py-1.5 border rounded-md ${
-                project.data.status === 'completed' 
-                  ? 'border-green-900/50 bg-green-900/10 text-green-500' 
-                  : project.data.status === 'in-progress'
-                  ? 'border-amber-900/50 bg-amber-900/10 text-amber-500'
-                  : 'border-zinc-800 bg-zinc-900 text-zinc-400'
-              }`}>
+              <span class="mb-2 block text-xs text-zinc-500"
+                >CURRENT_STATUS</span
+              >
+              <div
+                class={`inline-flex items-center gap-2 px-3 py-1.5 border rounded-md ${
+                  project.data.status === 'completed'
+                    ? 'border-green-900/50 bg-green-900/10 text-green-500'
+                    : project.data.status === 'in-progress'
+                      ? 'border-amber-900/50 bg-amber-900/10 text-amber-500'
+                      : 'border-zinc-800 bg-zinc-900 text-zinc-400'
+                }`}
+              >
                 <span class={`relative flex h-2 w-2`}>
-                  <span class={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                    project.data.status === 'completed' ? 'bg-green-400' : 'bg-amber-400'
-                  }`}></span>
-                  <span class={`relative inline-flex rounded-full h-2 w-2 ${
-                    project.data.status === 'completed' ? 'bg-green-500' : 'bg-amber-500'
-                  }`}></span>
+                  <span
+                    class={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                      project.data.status === 'completed'
+                        ? 'bg-green-400'
+                        : 'bg-amber-400'
+                    }`}></span>
+                  <span
+                    class={`relative inline-flex rounded-full h-2 w-2 ${
+                      project.data.status === 'completed'
+                        ? 'bg-green-500'
+                        : 'bg-amber-500'
+                    }`}></span>
                 </span>
-                <span class="uppercase tracking-wider text-xs font-bold">
+                <span class="text-xs font-bold tracking-wider uppercase">
                   {project.data.status}
                 </span>
               </div>
@@ -84,43 +95,53 @@ const { Content } = await render(project)
 
             {/* Tech Stack */}
             <div>
-              <span class="text-xs text-zinc-500 block mb-2">TECHNOLOGY_STACK</span>
+              <span class="mb-2 block text-xs text-zinc-500"
+                >TECHNOLOGY_STACK</span
+              >
               <div class="flex flex-wrap gap-1.5">
-                {project.data.techStack.map(t => (
-                  <Badge variant="outline" className="rounded-md border-zinc-700 bg-zinc-900/50 text-zinc-300 text-[10px] uppercase tracking-wider hover:border-amber-500/50 transition-colors">
-                    {t}
-                  </Badge>
-                ))}
+                {
+                  project.data.techStack.map((t) => (
+                    <Badge
+                      variant="outline"
+                      className="rounded-md border-zinc-700 bg-zinc-900/50 text-zinc-300 text-[10px] uppercase tracking-wider hover:border-amber-500/50 transition-colors"
+                    >
+                      {t}
+                    </Badge>
+                  ))
+                }
               </div>
             </div>
 
             {/* Action Buttons (Repo / Demo) */}
-            <div class="pt-6 border-t border-zinc-800 flex flex-col gap-3">
-              {project.data.demoLink && (
-                <a 
-                  href={project.data.demoLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-center gap-2 w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-zinc-950 font-bold text-xs uppercase tracking-widest rounded-sm transition-all shadow-[0_0_10px_rgba(245,158,11,0.2)] hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
-                >
-                  <Icon name="lucide:external-link" class="size-3" />
-                  Launch_System
-                </a>
-              )}
-              
-              {project.data.repoLink && (
-                <a 
-                  href={project.data.repoLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="flex items-center justify-center gap-2 w-full py-2.5 border border-zinc-700 hover:border-zinc-500 bg-zinc-900/50 text-zinc-400 hover:text-zinc-200 font-medium text-xs uppercase tracking-widest rounded-sm transition-all"
-                >
-                  <Icon name="lucide:github" class="size-3" />
-                  Source_Code
-                </a>
-              )}
-            </div>
+            <div class="flex flex-col gap-3 border-t border-zinc-800 pt-6">
+              {
+                project.data.demoLink && (
+                  <a
+                    href={project.data.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex w-full items-center justify-center gap-2 rounded-sm bg-amber-600 py-2.5 text-xs font-bold tracking-widest text-zinc-950 uppercase shadow-[0_0_10px_rgba(245,158,11,0.2)] transition-all hover:bg-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                  >
+                    <Icon name="lucide:external-link" class="size-3" />
+                    Launch_System
+                  </a>
+                )
+              }
 
+              {
+                project.data.repoLink && (
+                  <a
+                    href={project.data.repoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex w-full items-center justify-center gap-2 rounded-sm border border-zinc-700 bg-zinc-900/50 py-2.5 text-xs font-medium tracking-widest text-zinc-400 uppercase transition-all hover:border-zinc-500 hover:text-zinc-200"
+                  >
+                    <Icon name="lucide:github" class="size-3" />
+                    Source_Code
+                  </a>
+                )
+              }
+            </div>
           </div>
         </Panel>
       </div>
@@ -128,43 +149,56 @@ const { Content } = await render(project)
       {/* --- KOLOM KANAN: KONTEN DOKUMENTASI (8 Kolom) --- */}
       <div class="lg:col-span-8">
         <Panel title="// CLASSIFIED_DOCUMENT" class="min-h-full">
-          
-          <header class="mb-8 pb-6 border-b border-zinc-800">
-            <h1 class="text-3xl md:text-4xl font-black font-mono text-white tracking-tight mb-4 uppercase">
+          <header class="mb-8 border-b border-zinc-800 pb-6">
+            <h1
+              class="text-foreground mb-4 font-mono text-3xl font-black tracking-tight uppercase md:text-4xl"
+            >
               {project.data.title}
             </h1>
-            <p class="text-zinc-400 font-mono text-sm leading-relaxed border-l-2 border-amber-500/50 pl-4 py-1">
+            <p
+              class="border-l-2 border-amber-500/50 py-1 pl-4 font-mono text-sm leading-relaxed text-zinc-400"
+            >
               {project.data.description}
             </p>
           </header>
-          
-          <article class="prose prose-invert prose-zinc max-w-none 
-            prose-headings:font-mono prose-headings:uppercase prose-headings:tracking-tight 
-            prose-h2:text-amber-500 prose-h2:border-b prose-h2:border-zinc-800 prose-h2:pb-2 prose-h2:mt-10
-            prose-a:text-amber-500 hover:prose-a:text-amber-400 prose-a:no-underline hover:prose-a:underline
-            prose-code:text-amber-200 prose-code:bg-zinc-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-            prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-950/80
-            prose-img:rounded prose-img:border prose-img:border-zinc-800">
+
+          <article
+            class="prose prose-invert prose-zinc prose-headings:font-mono prose-headings:uppercase prose-headings:tracking-tight prose-h2:text-amber-500 prose-h2:border-b prose-h2:border-zinc-800 prose-h2:pb-2 prose-h2:mt-10 prose-a:text-amber-500 hover:prose-a:text-amber-400 prose-a:no-underline hover:prose-a:underline prose-code:text-amber-200 prose-code:bg-zinc-900 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-950/80 prose-img:rounded prose-img:border prose-img:border-zinc-800 max-w-none"
+          >
             <Content />
           </article>
 
           {/* Footer Document */}
-          <div class="mt-16 pt-8 border-t border-zinc-800 flex justify-between items-end">
+          <div
+            class="mt-16 flex items-end justify-between border-t border-zinc-800 pt-8"
+          >
             <div class="flex flex-col gap-1">
-              <span class="text-[10px] text-zinc-600 font-mono">AUTHORIZED_BY</span>
-              <span class="text-xs text-zinc-400 font-mono">ALVITO.DEV ADMIN</span>
+              <span class="font-mono text-[10px] text-zinc-600"
+                >AUTHORIZED_BY</span
+              >
+              <span class="font-mono text-xs text-zinc-400"
+                >ALVITO.DEV ADMIN</span
+              >
             </div>
             <div class="flex flex-col gap-1 text-right">
-              <span class="text-[10px] text-zinc-600 font-mono">DATE_LOGGED</span>
-              <span class="text-xs text-zinc-400 font-mono">
-                {project.data.publishDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase()}
+              <span class="font-mono text-[10px] text-zinc-600"
+                >DATE_LOGGED</span
+              >
+              <span class="font-mono text-xs text-zinc-400">
+                {
+                  project.data.publishDate
+                    .toLocaleDateString('en-GB', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                    .toUpperCase()
+                }
               </span>
             </div>
           </div>
-
         </Panel>
       </div>
-
     </div>
   </div>
 </Layout>

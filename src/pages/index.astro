@@ -1,8 +1,8 @@
 ---
-import Layout from '@/layouts/Layout.astro'
 import Panel from '@/components/Panel.astro'
-import { getAllWriting, getAllWork, formatDate } from '@/lib/data-utils'
-import { getCollection, type CollectionEntry } from 'astro:content'
+import Layout from '@/layouts/Layout.astro'
+import { formatDate, getAllWork, getAllWriting } from '@/lib/data-utils'
+import { getCollection } from 'astro:content'
 
 // Ambil 5 tulisan terbaru
 const recentWriting = (await getAllWriting()).slice(0, 5)
@@ -14,136 +14,198 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
 ---
 
 <Layout title="Command Center" class="max-w-7xl">
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-4 min-h-[80vh] content-center py-10">
-    
+  <div
+    class="grid min-h-[80vh] grid-cols-1 content-center gap-4 py-10 md:grid-cols-12"
+  >
     {/* HEADER MODULE (12 Columns) */}
-    <Panel class="md:col-span-12 flex flex-col md:flex-row items-center justify-between gap-4 py-8">
+    <Panel
+      class="flex flex-col items-center justify-between gap-4 py-8 md:col-span-12 md:flex-row"
+    >
       <div>
-        <h1 class="text-4xl font-mono font-bold text-foreground tracking-tighter">
+        <h1
+          class="text-foreground font-mono text-4xl font-bold tracking-tighter"
+        >
           ALVITO<span class="text-amber-500">.DEV</span>
         </h1>
-        <div class="flex gap-4 mt-2 text-xs font-mono text-muted-foreground">
-          <p>&gt; SYSTEM_STATUS: <span class="text-green-500 animate-pulse">ONLINE</span></p>
+        <div class="text-muted-foreground mt-2 flex gap-4 font-mono text-xs">
+          <p>
+            &gt; SYSTEM_STATUS: <span class="animate-pulse text-green-500"
+              >ONLINE</span>
+          </p>
           <p>&gt; LAST_LOGIN: {new Date().toLocaleTimeString()}</p>
         </div>
       </div>
-      <div class="text-right hidden md:block space-y-1">
-        <p class="text-xs text-muted-foreground font-mono">LOCATION: YOGYAKARTA, ID</p>
-        <p class="text-xs text-muted-foreground font-mono">LAT: -7.7956 // LONG: 110.3695</p>
+      <div class="hidden space-y-1 text-right md:block">
+        <p class="text-muted-foreground font-mono text-xs">
+          LOCATION: YOGYAKARTA, ID
+        </p>
+        <p class="text-muted-foreground font-mono text-xs">
+          LAT: -7.7956 // LONG: 110.3695
+        </p>
       </div>
     </Panel>
 
     {/* WRITING MODULE (7 Columns) */}
-    <Panel title="// RECENT_LOGS" class="md:col-span-7 h-full">
+    <Panel title="// RECENT_LOGS" class="h-full md:col-span-7">
       <ul class="space-y-1">
-        {recentWriting.map((post) => (
-          <li class="group/item">
-            <a 
-              href={`/writing/${post.id}`} 
-              class="flex items-baseline justify-between py-2 border-b border-border/50 hover:pl-2 transition-all cursor-pointer"
-            >
-              <div class="flex items-center gap-2 overflow-hidden">
-                <span class="text-amber-500 opacity-0 group-hover/item:opacity-100 transition-opacity text-xs">&gt;</span>
-                <span class="text-foreground/80 hover:text-amber-500 font-mono text-sm truncate transition-colors">
-                  {post.data.title}
+        {
+          recentWriting.map((post) => (
+            <li class="group/item">
+              <a
+                href={`/writing/${post.id}`}
+                class="border-border/50 flex cursor-pointer items-baseline justify-between border-b py-2 transition-all hover:pl-2"
+              >
+                <div class="flex items-center gap-2 overflow-hidden">
+                  <span class="text-xs text-amber-500 opacity-0 transition-opacity group-hover/item:opacity-100">
+                    &gt;
+                  </span>
+                  <span class="text-foreground/80 truncate font-mono text-sm transition-colors hover:text-amber-500">
+                    {post.data.title}
+                  </span>
+                </div>
+                <span class="text-muted-foreground pl-4 font-mono text-[10px] whitespace-nowrap">
+                  {formatDate(post.data.publishDate)}
                 </span>
-              </div>
-              <span class="text-[10px] text-muted-foreground font-mono whitespace-nowrap pl-4">
-                {formatDate(post.data.publishDate)}
-              </span>
-            </a>
-          </li>
-        ))}
+              </a>
+            </li>
+          ))
+        }
       </ul>
-      <div class="mt-4 pt-2 border-t border-border/50 text-right">
-        <a href="/writing" class="text-xs font-mono text-amber-500 hover:underline">
+      <div class="border-border/50 mt-4 border-t pt-2 text-right">
+        <a
+          href="/writing"
+          class="font-mono text-xs text-amber-500 hover:underline"
+        >
           [VIEW_ALL_LOGS]
         </a>
       </div>
     </Panel>
 
     {/* WORK MODULE (5 Columns) */}
-    <Panel title="// ACTIVE_TASKS" class="md:col-span-5 h-full flex flex-col">
-      <div class="space-y-3 grow">
-        {recentWork.map((project) => (
-          <a href={project.data.demoLink || project.data.repoLink || '#'} class="block group">
-            <div class="flex items-center justify-between bg-secondary/20 p-3 border border-border group-hover:border-amber-500/50 transition-colors">
-              <div class="flex flex-col gap-1">
-                <span class="text-foreground text-sm font-bold truncate">{project.data.title}</span>
-                <span class="text-[10px] text-muted-foreground font-mono uppercase">
-                  {project.data.techStack?.[0] ?? 'UNKNOWN'}
-                </span>
+    <Panel title="// ACTIVE_TASKS" class="flex h-full flex-col md:col-span-5">
+      <div class="grow space-y-3">
+        {
+          recentWork.map((project) => (
+            <a
+              href={project.data.demoLink || project.data.repoLink || '#'}
+              class="group block"
+            >
+              <div class="bg-secondary/20 border-border flex items-center justify-between border p-3 transition-colors group-hover:border-amber-500/50">
+                <div class="flex flex-col gap-1">
+                  <span class="text-foreground truncate text-sm font-bold">
+                    {project.data.title}
+                  </span>
+                  <span class="text-muted-foreground font-mono text-[10px] uppercase">
+                    {project.data.techStack?.[0] ?? 'UNKNOWN'}
+                  </span>
+                </div>
+                <div
+                  class={`border px-2 py-1 font-mono text-[10px] ${
+                    project.data.status === 'completed'
+                      ? 'border-green-500/30 bg-green-500/10 text-green-500'
+                      : 'border-amber-500/30 bg-amber-500/10 text-amber-500'
+                  }`}
+                >
+                  {project.data.status}
+                </div>
               </div>
-              <div class={`px-2 py-1 text-[10px] font-mono border ${
-                project.data.status === 'completed' 
-                  ? 'border-green-500/30 text-green-500 bg-green-500/10' 
-                  : 'border-amber-500/30 text-amber-500 bg-amber-500/10'
-              }`}>
-                {project.data.status}
-              </div>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))
+        }
       </div>
-      <div class="mt-4 pt-2 border-t border-border/50 text-right">
-        <a href="/about" class="text-xs font-mono text-amber-500 hover:underline">
+      <div class="border-border/50 mt-4 border-t pt-2 text-right">
+        <a
+          href="/about"
+          class="font-mono text-xs text-amber-500 hover:underline"
+        >
           [ACCESS_ARCHIVES]
         </a>
       </div>
     </Panel>
 
-
     {/* MODULE: NOTES (4 Cols) */}
-        <Panel title="// QUICK_SNIPPETS" class="md:col-span-4 h-full">
-            <ul class="space-y-3">
-                {recentNotes.map(note => (
-                     <li class="font-mono text-xs text-zinc-400 border-b border-zinc-800 pb-2 hover:pl-2 transition-all">
-                        <a href={`/notes/${note.id}`} class="hover:text-amber-500">
-                            {note.data.title}
-                        </a>
-                     </li>
-                ))}
-            </ul>
-            <div class="mt-4 pt-2 border-t border-border/50 text-right">
-                <a href="/notes" class="text-xs font-mono text-amber-500 hover:underline">[VIEW_ALL_SNIPPETS]</a>
-            </div>
-        </Panel>
-        
-        {/* MODULE: LIBRARY (4 Cols) */}
-        <Panel title="// MEDIA_LOG" class="md:col-span-4 h-full">
-            <div class="space-y-3">
-                {libraryLogs.map(item => (
-                    <div class="font-mono text-xs text-zinc-400 flex justify-between p-2 border border-zinc-800">
-                        <span class="text-white font-bold uppercase">{item.data.title}</span>
-                        <span class="text-amber-500 uppercase">{item.data.type}</span>
-                    </div>
-                ))}
-            </div>
-             <div class="mt-4 pt-2 border-t border-border/50 text-right">
-                <a href="/library" class="text-xs font-mono text-amber-500 hover:underline">[ACCESS_LIBRARY]</a>
-            </div>
-        </Panel>
-        
-        {/* MODULE: GALLERY & FEED (4 Cols) */}
-        <Panel title="// SYSTEM_STATS_&_LINKS" class="md:col-span-4 h-full flex flex-col justify-between">
-            <div class="space-y-3">
-                <p class="text-xs font-mono text-zinc-500">
-                    &gt; CORE_TEMPERATURE: <span class="text-green-500">35C</span>
-                </p>
-                 <p class="text-xs font-mono text-zinc-500">
-                    &gt; NEXT_UPDATE_CYCLE: <span class="text-amber-500">T-30 DAYS</span>
-                </p>
-            </div>
-            
-            <div class="pt-4 border-t border-border/50 flex flex-col gap-2">
-                <a href="/gallery" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[VIEW_GALLERY_DATABANKS]</a>
-                <a href="/feed" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[VIEW_LIVE_FEED]</a>
-                <a href="/cv" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[ACCESS_RESUME]</a>
-            </div>
-        </Panel>
-        
-        {/* FOOTER STATS (Paling Bawah, 12 Cols) - Pindahkan kode stats lama ke sini jika perlu */}
-        {/* (Di sini kita kosongkan/buat minimalis agar tidak bertumpuk dengan footer global) */}
+    <Panel title="// QUICK_SNIPPETS" class="h-full md:col-span-4">
+      <ul class="space-y-3">
+        {
+          recentNotes.map((note) => (
+            <li class="border-b border-zinc-800 pb-2 font-mono text-xs text-zinc-400 transition-all hover:pl-2">
+              <a href={`/notes/${note.id}`} class="hover:text-amber-500">
+                {note.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="border-border/50 mt-4 border-t pt-2 text-right">
+        <a
+          href="/notes"
+          class="font-mono text-xs text-amber-500 hover:underline"
+          >[VIEW_ALL_SNIPPETS]</a
+        >
+      </div>
+    </Panel>
 
+    {/* MODULE: LIBRARY (4 Cols) */}
+    <Panel title="// MEDIA_LOG" class="h-full md:col-span-4">
+      <div class="space-y-3">
+        {
+          libraryLogs.map((item) => (
+            <div class="flex justify-between border border-zinc-800 p-2 font-mono text-xs text-zinc-400">
+              <span class="text-foreground font-bold uppercase">
+                {item.data.title}
+              </span>
+              <span class="text-amber-500 uppercase">{item.data.type}</span>
+            </div>
+          ))
+        }
+      </div>
+      <div class="border-border/50 mt-4 border-t pt-2 text-right">
+        <a
+          href="/library"
+          class="font-mono text-xs text-amber-500 hover:underline"
+          >[ACCESS_LIBRARY]</a
+        >
+      </div>
+    </Panel>
+
+    {/* MODULE: GALLERY & FEED (4 Cols) */}
+    <Panel
+      title="// SYSTEM_STATS_&_LINKS"
+      class="flex h-full flex-col justify-between md:col-span-4"
+    >
+      <div class="space-y-3">
+        <p class="font-mono text-xs text-zinc-500">
+          &gt; CORE_TEMPERATURE: <span class="text-green-500">35C</span>
+        </p>
+        <p class="font-mono text-xs text-zinc-500">
+          &gt; NEXT_UPDATE_CYCLE: <span class="text-amber-500">T-30 DAYS</span>
+        </p>
+      </div>
+
+      <div class="border-border/50 flex flex-col gap-2 border-t pt-4">
+        <a
+          href="/gallery"
+          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          >[VIEW_GALLERY_DATABANKS]</a
+        >
+        <a
+          href="/feed"
+          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          >[VIEW_LIVE_FEED]</a
+        >
+        <a
+          href="/cv"
+          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          >[ACCESS_RESUME]</a
+        >
+      </div>
+    </Panel>
+
+    {
+      /* FOOTER STATS (Paling Bawah, 12 Cols) - Pindahkan kode stats lama ke sini jika perlu */
+    }
+    {
+      /* (Di sini kita kosongkan/buat minimalis agar tidak bertumpuk dengan footer global) */
+    }
   </div>
 </Layout>

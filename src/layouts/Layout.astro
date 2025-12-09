@@ -26,6 +26,24 @@ const { class: className, title, description } = Astro.props
   <Head title={title} description={description}>
     <slot name="head" />
   </Head>
+
+  {/* --- THEME SCRIPT (EARLY EXECUTION) --- */}
+  {/* Script ini WAJIB di <head> agar tidak ada flash light mode */}
+  {/* Ini mencegah flash of unstyled theme saat page load/navigate */}
+  <script is:inline>
+    (function() {
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    })();
+  </script>
   
   {/* Body: Font default Sans (Plus Jakarta), Background & Text mengikuti variabel CSS */}
   <body class="flex h-fit min-h-screen flex-col font-sans bg-background text-foreground antialiased relative selection:bg-amber-500/30">
@@ -53,19 +71,5 @@ const { class: className, title, description } = Astro.props
     </main>
 
     <Footer />
-
-    {/* --- THEME SCRIPT --- */}
-    {/* Script ini wajib ada di body agar theme tersimpan (LocalStorage) */}
-    <script is:inline>
-      const getThemePreference = () => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      };
-      const isDark = getThemePreference() === 'dark';
-      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    </script>
   </body>
 </html>
