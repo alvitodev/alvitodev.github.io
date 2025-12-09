@@ -1,0 +1,103 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Panel from '@/components/Panel.astro'
+import { getCollection, render } from 'astro:content'
+import { formatDate } from '@/lib/data-utils'
+import { Icon } from 'astro-icon/components'
+
+// Ambil semua feed, urutkan berdasarkan tanggal terbaru
+const allFeed = await getCollection('feed')
+const recentFeed = allFeed.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+
+// Render konten untuk setiap feed item (karena micro-blogging, kontennya mungkin langsung di-render)
+const feedItemsWithContent = await Promise.all(
+    recentFeed.map(async (item) => ({
+        ...item,
+        // Render Content-nya di server agar bisa ditampilkan
+        content: (await render(item)).Content
+    }))
+)
+---
+
+<Layout title="Database // Live Feed">
+  <div class="max-w-3xl mx-auto p-4 md:p-8 min-h-screen">
+    
+    {/* --- HEADER TERMINAL --- */}
+    <header class="mb-12 border-b border-zinc-800 pb-8 mt-8">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+        <span class="text-xs font-mono text-green-500 tracking-[0.2em]">LIVE_LOG // SYSTEM_FEED</span>
+      </div>
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 class="text-4xl md:text-5xl font-black font-mono text-white tracking-tighter mb-2 uppercase">
+            STATUS_UPDATES
+          </h1>
+          <p class="text-zinc-500 font-mono text-xs md:text-sm">
+            &gt; FETCHING_REALTIME_DATA... ({recentFeed.length} entries) <span class="animate-pulse">_</span>
+          </p>
+        </div>
+      </div>
+    </header>
+
+    {/* --- FEED TIMELINE --- */}
+    {feedItemsWithContent.length > 0 ? (
+      <div class="relative pl-12 space-y-10">
+        
+        {/* Garis Vertikal Timeline */}
+        <div class="absolute top-0 left-[23px] bottom-0 w-[1px] bg-zinc-800 border-l border-dashed border-zinc-700"></div>
+
+        {feedItemsWithContent.map((item) => (
+            <div class="relative group">
+                
+                {/* Titik Timeline */}
+                <div class="absolute left-[-26px] top-1 w-2 h-2 bg-zinc-950 border border-zinc-600 group-hover:border-amber-500 group-hover:bg-amber-500/20 transition-colors rounded-full z-10"></div>
+                
+                {/* Panel Konten */}
+                <Panel class="p-6">
+                    <div class="flex justify-between items-start mb-4 pb-2 border-b border-zinc-800">
+                        <span class="text-xs font-mono text-zinc-600 uppercase">
+                            LOGGED_AT
+                        </span>
+                        <span class="text-xs font-mono text-amber-500">
+                            {formatDate(item.data.publishDate)}
+                        </span>
+                    </div>
+
+                    {/* Konten Utama (Text Body dari MDX) */}
+                    <article class="prose prose-invert prose-zinc max-w-none prose-p:text-zinc-300 prose-p:leading-relaxed text-sm">
+                        <item.content />
+                    </article>
+                    
+                    {/* Media: Image / Spotify Embed */}
+                    {(item.data.image || item.data.spotifyEmbed) && (
+                        <div class="mt-4 pt-4 border-t border-zinc-800 flex flex-col gap-4">
+                            {item.data.image && (
+                                <img src={item.data.image} alt="Media" class="w-full h-auto rounded border border-zinc-800" />
+                            )}
+                            
+                            {item.data.spotifyEmbed && (
+                                <div class="w-full">
+                                    <span class="text-[10px] font-mono text-green-500 block mb-1">// NOW_PLAYING</span>
+                                    {/* Memasukkan embed Spotify */}
+                                    <Fragment set:html={item.data.spotifyEmbed} />
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                </Panel>
+            </div>
+        ))}
+      </div>
+    ) : (
+      /* State Kosong */
+      <div class="h-64 flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded bg-zinc-900/20 text-zinc-500 font-mono">
+        <p>// FEED_OFFLINE</p>
+        <p class="text-xs mt-2">No status updates found in src/content/feed/</p>
+      </div>
+    )}
+
+  </div>
+</Layout>

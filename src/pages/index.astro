@@ -2,12 +2,15 @@
 import Layout from '@/layouts/Layout.astro'
 import Panel from '@/components/Panel.astro'
 import { getAllWriting, getAllWork, formatDate } from '@/lib/data-utils'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
 // Ambil 5 tulisan terbaru
 const recentWriting = (await getAllWriting()).slice(0, 5)
 
 // Ambil 3 proyek terbaru
 const recentWork = (await getAllWork()).slice(0, 3)
+const recentNotes = (await getCollection('notes')).slice(0, 3)
+const libraryLogs = (await getCollection('library')).slice(0, 2)
 ---
 
 <Layout title="Command Center" class="max-w-7xl">
@@ -89,18 +92,58 @@ const recentWork = (await getAllWork()).slice(0, 3)
       </div>
     </Panel>
 
-    {/* FOOTER STATS / QUICK LINKS (12 Columns) */}
-    <Panel class="md:col-span-12 py-3 flex justify-between items-center bg-black/20">
-       <div class="flex gap-6 text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
-         <span>CPU: 12%</span>
-         <span>MEM: 4.2GB</span>
-         <span>NET: CONNECTED</span>
-       </div>
-       <div class="flex gap-4 text-xs font-mono">
-          <a href="/cv" class="text-muted-foreground hover:text-amber-500">[RESUME]</a>
-          <a href="https://github.com/alvitodev" class="text-muted-foreground hover:text-amber-500">[GITHUB]</a>
-       </div>
-    </Panel>
+
+    {/* MODULE: NOTES (4 Cols) */}
+        <Panel title="// QUICK_SNIPPETS" class="md:col-span-4 h-full">
+            <ul class="space-y-3">
+                {recentNotes.map(note => (
+                     <li class="font-mono text-xs text-zinc-400 border-b border-zinc-800 pb-2 hover:pl-2 transition-all">
+                        <a href={`/notes/${note.id}`} class="hover:text-amber-500">
+                            {note.data.title}
+                        </a>
+                     </li>
+                ))}
+            </ul>
+            <div class="mt-4 pt-2 border-t border-border/50 text-right">
+                <a href="/notes" class="text-xs font-mono text-amber-500 hover:underline">[VIEW_ALL_SNIPPETS]</a>
+            </div>
+        </Panel>
+        
+        {/* MODULE: LIBRARY (4 Cols) */}
+        <Panel title="// MEDIA_LOG" class="md:col-span-4 h-full">
+            <div class="space-y-3">
+                {libraryLogs.map(item => (
+                    <div class="font-mono text-xs text-zinc-400 flex justify-between p-2 border border-zinc-800">
+                        <span class="text-white font-bold uppercase">{item.data.title}</span>
+                        <span class="text-amber-500 uppercase">{item.data.type}</span>
+                    </div>
+                ))}
+            </div>
+             <div class="mt-4 pt-2 border-t border-border/50 text-right">
+                <a href="/library" class="text-xs font-mono text-amber-500 hover:underline">[ACCESS_LIBRARY]</a>
+            </div>
+        </Panel>
+        
+        {/* MODULE: GALLERY & FEED (4 Cols) */}
+        <Panel title="// SYSTEM_STATS_&_LINKS" class="md:col-span-4 h-full flex flex-col justify-between">
+            <div class="space-y-3">
+                <p class="text-xs font-mono text-zinc-500">
+                    &gt; CORE_TEMPERATURE: <span class="text-green-500">35C</span>
+                </p>
+                 <p class="text-xs font-mono text-zinc-500">
+                    &gt; NEXT_UPDATE_CYCLE: <span class="text-amber-500">T-30 DAYS</span>
+                </p>
+            </div>
+            
+            <div class="pt-4 border-t border-border/50 flex flex-col gap-2">
+                <a href="/gallery" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[VIEW_GALLERY_DATABANKS]</a>
+                <a href="/feed" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[VIEW_LIVE_FEED]</a>
+                <a href="/cv" class="text-xs font-mono text-zinc-400 hover:text-amber-500">[ACCESS_RESUME]</a>
+            </div>
+        </Panel>
+        
+        {/* FOOTER STATS (Paling Bawah, 12 Cols) - Pindahkan kode stats lama ke sini jika perlu */}
+        {/* (Di sini kita kosongkan/buat minimalis agar tidak bertumpuk dengan footer global) */}
 
   </div>
 </Layout>
