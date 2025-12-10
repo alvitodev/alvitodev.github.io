@@ -4,7 +4,7 @@ on:
   push:
     # CI/CD hanya akan berjalan saat ada push ke branch 'dev'
     branches:
-      - dev
+      - main
   workflow_dispatch:
 
 jobs:
@@ -43,6 +43,6 @@ jobs:
           # Menentukan direktori hasil build
           publish_dir: ./dist
           # Menentukan branch tujuan deployment (branch utama yang dibaca GH Pages)
-          publish_branch: main 
+          publish_branch: build
           # Mengatur direktori build agar selalu di-overwrite
           force_orphan: true
