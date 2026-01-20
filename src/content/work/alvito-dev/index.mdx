@@ -1,0 +1,100 @@
+---
+title: 'alvito.dev'
+description: 'Personal portfolio and digital archive built with Astro and React.'
+publishDate: 2021-01-15
+updatedDate: 2026-01-20
+techStack: ['Astro', 'React', 'Tailwind CSS', 'GitHub Pages', 'TypeScript']
+status: 'in-progress'
+heroImage: ''
+---
+
+import { Image } from 'astro:assets'
+
+## Overview
+
+**alvito.dev** is my personal portfolio website and digital archive, serving as a central hub for showcasing my projects, technical writing, and professional journey. Built with modern web technologies, the site emphasizes performance and user experience.
+
+## Key Features
+
+- **Blog & Articles**: Technical writing on web development, IoT, and software engineering
+- **Project Showcase**: Detailed case studies and portfolio pieces
+- **Digital Archive**: Organized collection of notes, resources, and learning materials
+- **Responsive Design**: Fully responsive layout optimized for all devices
+- **Fast Performance**: Leveraging Astro's island architecture for optimal loading speeds
+
+![alvito.dev Interface](/images/projects/alvitodev-interface.png)
+
+## Technical Implementation
+
+### Architecture
+
+The project utilizes **Astro's island architecture** to deliver only the necessary JavaScript to the browser, resulting in exceptionally fast page loads and improved SEO performance.
+
+```astro
+// Example: Selective hydration with Astro islands
+<WritingDashboard client:load />
+<ThemeToggle client:idle />
+```
+
+### Technology Stack
+
+- **Framework**: Astro 4.x with static site generation
+- **Styling**: Tailwind CSS with custom design tokens
+- **Components**: React for interactive UI elements
+- **Hosting**: GitHub Pages with custom domain
+- **CMS**: Content collection using Astro's content APIs
+
+## Development Journey
+
+Started as a simple portfolio in 2021, the project has evolved significantly:
+
+1. **Phase 1 (2021)**: Basic HTML/CSS portfolio
+2. **Phase 2 (2022)**: Migrated to Next.js with MDX support
+3. **Phase 3 (2024)**: Transitioned to Astro for better performance
+4. **Phase 4 (2025-Present)**: Enhanced with React islands and improved content architecture
+
+## Content Organization
+
+```
+src/
+├── content/
+│   ├── writing/        # Blog posts and articles
+│   ├── work/          # Project case studies
+│   ├── notes/         # Learning notes and snippets
+│   └── gallery/       # Project screenshots and media
+├── components/        # Reusable UI components
+├── layouts/          # Page templates
+└── pages/            # Dynamic routes
+```
+
+## Performance Metrics
+
+- **Lighthouse Score**: 95+ across all metrics
+- **Core Web Vitals**: All green
+- **First Contentful Paint**: < 0.8s
+- **Lighthouse Performance**: 98/100
+
+## Future Enhancements
+
+- [ ] Advanced search functionality
+- [ ] Dark mode improvements
+- [ ] Portfolio filtering system
+- [ ] Interactive project timeline
+- [ ] Analytics dashboard
+
+## Lessons Learned
+
+This project has been instrumental in learning:
+
+- Modern static site generation patterns
+- Content-driven architecture design
+- Performance optimization techniques
+- UI/UX design principles
+- TypeScript best practices
+
+---
+
+**Repository**: [github.com/alvitodev/alvitodev.github.io](https://github.com/alvitodev/alvitodev.github.io)  
+**Live Site**: [alvito.dev](https://alvito.dev)  
+**Started**: January 2021  
+**Status**: Actively maintained

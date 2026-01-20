@@ -1,0 +1,551 @@
+---
+title: 'AGSPlaystation'
+description: 'Playstation rental management system built with C# for streamlined business operations.'
+publishDate: 2024-05-20
+updatedDate: 2024-12-15
+techStack:
+  ['C#', 'Visual Studio', '.NET Framework', 'SQL Server', 'Windows Forms']
+status: 'completed'
+heroImage: ''
+---
+
+import { Image } from 'astro:assets'
+
+## Overview
+
+**AGSPlaystation** is a comprehensive rental management system designed for Playstation gaming rental businesses. Developed in C#, the application streamlines rental operations, manages inventory, tracks customers, and handles payment processing. It provides business owners with an efficient platform to manage their rental operations while offering customers a seamless rental experience.
+
+## Business Context
+
+Gaming rental businesses need specialized tools to:
+
+- Track game and console inventory
+- Manage customer rentals and returns
+- Process payments and late fees
+- Generate business reports
+- Monitor rental history and trends
+
+AGSPlaystation addresses these needs with an integrated, user-friendly system.
+
+## Key Features
+
+### 1. Inventory Management
+
+```
+Rental Inventory:
+├── Games catalog
+│   ├── Game details (title, genre, platform)
+│   ├── Stock tracking
+│   ├── Condition monitoring
+│   └── Availability status
+├── Consoles
+│   ├── Console types (PS4, PS5, etc.)
+│   ├── Serial tracking
+│   ├── Warranty management
+│   └── Rental status
+└── Accessories
+    ├── Controllers
+    ├── Headsets
+    └── Other peripherals
+```
+
+### 2. Customer Management
+
+- **Customer Database**: Comprehensive customer profiles
+- **Rental History**: Track all customer transactions
+- **Membership Levels**: Tiered membership system
+- **Contact Management**: Email, phone, address tracking
+- **Customer Preferences**: Favorite games and rental patterns
+
+![AGSPlaystation Customer Management](/images/projects/agsplaystation-customers.png)
+
+### 3. Rental Operations
+
+```
+Rental Process:
+1. Search available inventory
+2. Select item(s) and rental duration
+3. Confirm customer information
+4. Process payment
+5. Issue rental receipt
+6. Set return reminder
+```
+
+Key Rental Features:
+
+- Flexible rental periods (1-7 days)
+- Multiple item rental in single transaction
+- Automatic late fee calculation
+- Return status tracking
+- Damage assessment and processing
+
+### 4. Payment Processing
+
+```
+Payment Methods:
+├── Cash
+├── Credit/Debit Card
+├── Digital wallets
+└── Membership credits
+
+Charges:
+├── Base rental fee
+├── Late fees (per day)
+├── Damage charges
+├── Accessories fees
+└── Promotional discounts
+```
+
+### 5. Business Analytics
+
+- **Rental Reports**: Daily, weekly, monthly summaries
+- **Popular Items**: Track most-rented games
+- **Revenue Analysis**: Income breakdown by category
+- **Customer Analytics**: Customer lifetime value
+- **Inventory Health**: Stock turnover rates
+- **Performance Metrics**: KPIs and trends
+
+![AGSPlaystation Analytics Dashboard](/images/projects/agsplaystation-analytics.png)
+
+## Technical Architecture
+
+### Technology Stack
+
+| Component        | Technology                 |
+| ---------------- | -------------------------- |
+| **Language**     | C# (.NET Framework 4.7+)   |
+| **IDE**          | Visual Studio 2022         |
+| **UI Framework** | Windows Forms              |
+| **Database**     | SQL Server 2019+           |
+| **ORM**          | Entity Framework / ADO.NET |
+| **Reporting**    | Crystal Reports / SSRS     |
+
+### Application Architecture
+
+```
+┌─────────────────────────────────────────┐
+│         User Interface Layer            │
+│  (Windows Forms, Forms, Dialogs)        │
+└──────────────────┬──────────────────────┘
+                   │
+┌──────────────────▼──────────────────────┐
+│      Business Logic Layer               │
+│  (Services, Managers, Validators)       │
+└──────────────────┬──────────────────────┘
+                   │
+┌──────────────────▼──────────────────────┐
+│        Data Access Layer                │
+│  (Repository, Entity Framework)         │
+└──────────────────┬──────────────────────┘
+                   │
+┌──────────────────▼──────────────────────┐
+│    Database Layer                       │
+│  (SQL Server Database)                  │
+└─────────────────────────────────────────┘
+```
+
+### Project Structure
+
+```
+AGSPlaystation/
+├── Models/
+│   ├── Game.cs
+│   ├── Console.cs
+│   ├── Customer.cs
+│   ├── Rental.cs
+│   ├── Payment.cs
+│   └── RentalItem.cs
+├── Services/
+│   ├── RentalService.cs
+│   ├── CustomerService.cs
+│   ├── InventoryService.cs
+│   ├── PaymentService.cs
+│   └── ReportService.cs
+├── Repositories/
+│   ├── GameRepository.cs
+│   ├── CustomerRepository.cs
+│   ├── RentalRepository.cs
+│   └── PaymentRepository.cs
+├── Forms/
+│   ├── MainForm.cs
+│   ├── RentalForm.cs
+│   ├── ReturnForm.cs
+│   ├── CustomerForm.cs
+│   ├── InventoryForm.cs
+│   └── ReportsForm.cs
+├── Utilities/
+│   ├── DatabaseHelper.cs
+│   ├── ValidationHelper.cs
+│   └── CalculationHelper.cs
+└── Config/
+    └── AppSettings.config
+```
+
+## Core Models
+
+### Game
+
+```csharp
+public class Game
+{
+    public int GameID { get; set; }
+    public string Title { get; set; }
+    public string Platform { get; set; }  // PS4, PS5
+    public string Genre { get; set; }     // Action, RPG, etc.
+    public DateTime ReleaseDate { get; set; }
+    public decimal RentalPrice { get; set; }
+    public int StockQuantity { get; set; }
+    public int AvailableQuantity { get; set; }
+    public string Condition { get; set; }  // Excellent, Good, Fair
+    public bool IsActive { get; set; }
+    public DateTime DateAdded { get; set; }
+}
+```
+
+### Rental Transaction
+
+```csharp
+public class Rental
+{
+    public int RentalID { get; set; }
+    public int CustomerID { get; set; }
+    public DateTime RentalDate { get; set; }
+    public DateTime DueDate { get; set; }
+    public DateTime? ReturnDate { get; set; }
+    public decimal TotalAmount { get; set; }
+    public decimal LateFee { get; set; }
+    public RentalStatus Status { get; set; }
+    public List<RentalItem> Items { get; set; }
+    public Payment Payment { get; set; }
+}
+```
+
+### Customer
+
+```csharp
+public class Customer
+{
+    public int CustomerID { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public string Address { get; set; }
+    public MembershipLevel MembershipLevel { get; set; }
+    public decimal AccountBalance { get; set; }
+    public DateTime DateJoined { get; set; }
+    public List<Rental> RentalHistory { get; set; }
+}
+```
+
+## Business Logic
+
+### Rental Process Flow
+
+```
+START
+  ↓
+[Search Inventory] ← Check available items
+  ↓
+[Select Items] ← Choose games/consoles
+  ↓
+[Validate Stock] ← Confirm availability
+  ↓
+[Enter Customer] ← Existing or new customer
+  ↓
+[Calculate Fees] ← Base + member discount
+  ↓
+[Process Payment] ← Validate and process
+  ↓
+[Generate Receipt] ← Print/Email receipt
+  ↓
+[Update Inventory] ← Mark items as rented
+  ↓
+[Create Rental Record] ← Store transaction
+  ↓
+END
+```
+
+### Late Fee Calculation
+
+```csharp
+public decimal CalculateLateFee(Rental rental)
+{
+    if (rental.ReturnDate <= rental.DueDate)
+        return 0;
+
+    var daysLate = (rental.ReturnDate - rental.DueDate).Days;
+    var lateRatePerDay = 50000; // IDR per day
+
+    return daysLate * lateRatePerDay;
+}
+```
+
+### Membership Discount
+
+```
+Gold Member:    15% discount on rentals
+Silver Member:  10% discount on rentals
+Bronze Member:   5% discount on rentals
+Standard User:   0% discount (full price)
+```
+
+## User Interface
+
+### Main Dashboard
+
+![AGSPlaystation Main Interface](/images/projects/agsplaystation-interface.png)
+
+The dashboard provides:
+
+- Quick rental form for frequent operations
+- Inventory status overview
+- Customer search functionality
+- Today's returns alert
+- Recent transactions log
+- Navigation to all modules
+
+### Key Forms
+
+**Rental Form**
+
+- Search and select items
+- Set rental duration
+- Customer lookup
+- Price calculation
+- Payment processing
+
+**Return Form**
+
+- Scan rental ID or customer
+- Inspect item condition
+- Calculate late fees
+- Process refunds
+- Update inventory
+
+**Inventory Management**
+
+- Add new games/consoles
+- Update stock levels
+- Mark damaged items
+- Manage suppliers
+- Generate stock reports
+
+**Customer Management**
+
+- Create customer profiles
+- View rental history
+- Manage memberships
+- Track payment status
+- Send renewal reminders
+
+## Database Schema
+
+### Core Tables
+
+```sql
+Games
+- GameID (PK)
+- Title
+- Platform
+- Genre
+- RentalPrice
+- StockQuantity
+- AvailableQuantity
+- Condition
+- DateAdded
+
+Customers
+- CustomerID (PK)
+- Name
+- Email
+- PhoneNumber
+- Address
+- MembershipLevel
+- AccountBalance
+- DateJoined
+
+Rentals
+- RentalID (PK)
+- CustomerID (FK)
+- RentalDate
+- DueDate
+- ReturnDate
+- TotalAmount
+- Status
+
+RentalItems
+- RentalItemID (PK)
+- RentalID (FK)
+- GameID (FK)
+- Quantity
+- ItemPrice
+```
+
+## Reporting Capabilities
+
+### Built-in Reports
+
+```
+Business Reports:
+├── Daily Sales Summary
+├── Weekly Revenue Report
+├── Monthly Performance Analysis
+├── Popular Items Report
+├── Inventory Status
+├── Customer Activity Report
+├── Late Return Report
+└── Financial Report (P&L)
+```
+
+### Report Generation
+
+- Multiple export formats (PDF, Excel, Print)
+- Customizable date ranges
+- Filter by category, customer, or status
+- Charts and graphs for visualization
+- Email distribution options
+
+## Advanced Features
+
+### 1. Membership System
+
+```
+Benefits:
+├── Rental discounts (5-15%)
+├── Priority availability
+├── Late fee waivers (monthly)
+├── Exclusive promotions
+└── Loyalty points
+```
+
+### 2. Return Reminders
+
+- Automated SMS/Email reminders 1 day before due
+- Late return notifications
+- Promotional offers via reminders
+
+### 3. Damage Assessment
+
+- Condition evaluation system
+- Automatic damage fee calculation
+- Photo documentation capability
+- Repair tracking
+
+### 4. Inventory Alerts
+
+- Low stock warnings
+- Expiring game notifications (by console generation)
+- Slow-moving item identification
+- Overstock alerts
+
+## Implementation Timeline
+
+| Phase           | Duration | Activities                                |
+| --------------- | -------- | ----------------------------------------- |
+| **Design**      | 2 weeks  | Database design, UI mockups, architecture |
+| **Database**    | 1 week   | SQL schema creation, initial data         |
+| **Backend**     | 3 weeks  | Services, repositories, business logic    |
+| **Frontend**    | 2 weeks  | Forms, controls, UI implementation        |
+| **Integration** | 1 week   | Testing all components together           |
+| **Testing**     | 1 week   | QA, bug fixes, optimizations              |
+| **Deployment**  | 3 days   | Setup, training, go-live                  |
+
+## Testing & Quality Assurance
+
+### Test Coverage
+
+- **Unit Tests**: Business logic validation
+- **Integration Tests**: Database operations
+- **UI Tests**: Form interactions and workflows
+- **Performance Tests**: Database query optimization
+- **Acceptance Tests**: Business requirements validation
+
+### Test Scenarios
+
+```
+✓ Rental creation with multiple items
+✓ Late fee calculation accuracy
+✓ Inventory stock updates
+✓ Payment processing
+✓ Customer lookup and history
+✓ Report generation
+✓ Membership discount application
+✓ Damage assessment
+✓ Concurrent transaction handling
+```
+
+## Performance Optimization
+
+### Database Optimization
+
+- Proper indexing on frequently queried columns
+- Query optimization for reports
+- Connection pooling for performance
+- Caching of frequently accessed data
+
+### UI Optimization
+
+- Asynchronous database operations
+- Lazy loading for large data sets
+- Responsive forms with progress indicators
+
+## Future Enhancements
+
+- [ ] Web-based interface for remote access
+- [ ] Mobile app for returns outside store
+- [ ] Online reservation system
+- [ ] Integration with payment gateways
+- [ ] QR code for quick scanning
+- [ ] Customer loyalty app
+- [ ] Analytics dashboard
+- [ ] Multi-store management
+- [ ] Real-time inventory sync
+- [ ] Machine learning for demand prediction
+
+## Learning Outcomes
+
+This project provided experience in:
+
+- **C# Development**: Windows Forms and object-oriented design
+- **Database Design**: Relational database modeling and optimization
+- **Business Logic**: Complex domain logic implementation
+- **User Interface**: Professional Windows Forms development
+- **Project Management**: Full software development lifecycle
+- **Reporting**: Business intelligence and analytics
+- **Testing**: Comprehensive QA strategies
+
+## Business Value
+
+### For Business Owners
+
+- Reduced operational overhead
+- Increased rental accuracy
+- Better inventory visibility
+- Improved cash flow tracking
+- Data-driven decision making
+
+### For Customers
+
+- Faster rental processing
+- Clear pricing and late fees
+- Membership benefits
+- Rental history tracking
+- Easy returns process
+
+## Deployment Considerations
+
+The application can be deployed:
+
+- As a standalone desktop application
+- On a local area network (LAN)
+- With shared SQL Server database
+- With network file shares for data backup
+
+---
+
+**Repository**: [github.com/alvitodev/AGSPlaystation](https://github.com/alvitodev/AGSPlaystation)  
+**Version**: 2.1.0  
+**License**: Proprietary  
+**Status**: Feature Complete, Active Development  
+**Last Updated**: December 2024  
+**Project Duration**: ~2 months development

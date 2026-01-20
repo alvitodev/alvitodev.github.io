@@ -1,0 +1,344 @@
+---
+title: 'Advanced Home Lab'
+description: 'Self-managed VPS infrastructure with containerized services and automation.'
+publishDate: 2025-01-10
+updatedDate: 2026-01-15
+techStack:
+  ['Proxmox', 'Ubuntu Server', 'Docker', 'Cloudflare', 'Tailscale', 'Jellyfin']
+status: 'maintained'
+heroImage: ''
+---
+
+import { Image } from 'astro:assets'
+
+## Overview
+
+**Advanced Home Lab** is a personal infrastructure project demonstrating enterprise-grade virtualization and containerization on commodity hardware. The project transforms a repurposed laptop into a fully functional, self-managed VPS running multiple containerized services with secure remote access and automated networking.
+
+## Infrastructure Philosophy
+
+This project embodies principles of:
+
+- **Infrastructure as Code**: Reproducible, version-controlled deployments
+- **Resource Efficiency**: Maximizing performance from limited hardware
+- **Security First**: Layered security with secure tunneling and firewalls
+- **High Availability**: Resilient services and automated recovery
+- **Self-Hosting**: Data sovereignty and independence from cloud providers
+
+## Hardware Setup
+
+### Host Machine
+
+- **Device**: Repurposed laptop
+- **CPU**: Multi-core processor with virtualization support
+- **RAM**: 16GB+ for comfortable operation
+- **Storage**: SSD for optimal performance
+- **Connectivity**: Gigabit Ethernet (wired) with WiFi fallback
+
+### Specifications
+
+```
+Proxmox Host
+├── CPU: Intel/AMD with VT-x/AMD-V
+├── RAM: 16GB allocated
+├── Storage: 500GB+ SSD
+└── Network: Gigabit + WiFi
+```
+
+## Software Stack
+
+### Hypervisor & Virtualization
+
+- **Proxmox VE**: Enterprise-grade virtualization platform
+- **KVM/QEMU**: Underlying hypervisor technology
+- **LXC Containers**: Lightweight container virtualization
+
+### Operating System
+
+- **Ubuntu Server 22.04 LTS**: Primary VM for Docker services
+- **Minimal footprint**: Optimized for performance
+
+### Container Orchestration
+
+- **Docker**: Container runtime and orchestration
+- **Docker Compose**: Multi-container application deployment
+
+## Deployed Services
+
+### 1. Media Server (Jellyfin)
+
+```yaml
+Service: Jellyfin
+Purpose: Self-hosted media streaming
+Features:
+  - Movie/TV series library
+  - Music streaming
+  - Photo gallery
+  - Web & mobile apps
+  - Remote access
+Status: Production
+```
+
+### 2. Database Services
+
+```yaml
+Services:
+  - PostgreSQL: Primary database
+  - MySQL: Legacy application support
+  - Redis: In-memory caching
+  - MongoDB: Document storage
+Purpose: Application data persistence
+Status: Production
+```
+
+### 3. Automation & Monitoring
+
+```yaml
+Services:
+  - Portainer: Container management UI
+  - Prometheus: Metrics collection
+  - Grafana: Metrics visualization
+Purpose: Infrastructure monitoring and management
+Status: Production
+```
+
+### 4. Networking & Security
+
+```yaml
+Services:
+  - Cloudflared: Secure tunneling to public internet
+  - Tailscale: Private network VPN
+  - Nginx: Reverse proxy and load balancing
+Purpose: Secure external access and routing
+Status: Production
+```
+
+## Network Architecture
+
+### Access Patterns
+
+```
+┌─────────────────────────────────────────────────────────┐
+│           External Users / Remote Access               │
+└────────────┬────────────────────────────────┬──────────┘
+             │                                │
+      ┌──────▼────────────────────────────────▼────────┐
+      │     Cloudflare Tunnel | Tailscale VPN         │
+      │    (Public Access)      (Private Network)       │
+      └──────┬────────────────────────────────┬────────┘
+             │                                │
+      ┌──────▼────────────────────────────────▼────────┐
+      │         Nginx Reverse Proxy                    │
+      │       (Routing & SSL Termination)              │
+      └──────┬────────────────────────────────┬────────┘
+             │                                │
+      ┌──────▼──────────────────────────────▼────────┐
+      │      Docker Services & VMs                   │
+      │  (Jellyfin, DB, Apps, Monitoring)           │
+      └────────────────────────────────────────────┘
+```
+
+### Security Layers
+
+1. **Firewall**: iptables rules on host
+2. **Tunneling**: Cloudflared for DDoS protection
+3. **VPN**: Tailscale for encrypted private access
+4. **TLS**: SSL/TLS encryption for all services
+5. **Secrets**: Encrypted credential storage
+
+## Docker Compose Configuration
+
+### Example Service Architecture
+
+```yaml
+version: '3.8'
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    ports:
+      - '8096:8096'
+    volumes:
+      - ./media:/media
+      - ./config:/config
+    restart: unless-stopped
+    networks:
+      - homelab
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - homelab
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    driver: bridge
+```
+
+## Remote Access Setup
+
+### Cloudflared Tunnel
+
+- **Purpose**: Expose services to internet securely
+- **Benefits**: No port forwarding, DDoS protection, SSL termination
+- **Configuration**: YAML-based tunnel configuration
+- **Use Cases**: Public-facing services with rate limiting
+
+### Tailscale VPN
+
+- **Purpose**: Secure private network for personal access
+- **Benefits**: Zero-trust security, encrypted mesh network
+- **Features**: Device authentication, access control lists
+- **Use Cases**: Remote management, private service access
+
+## Deployment Strategy
+
+### Container Management
+
+1. **Pull/Build**: Docker images
+2. **Compose**: Define services in docker-compose.yml
+3. **Deploy**: Start services with resource limits
+4. **Monitor**: Track resource usage and health
+5. **Update**: Rolling updates with zero downtime
+
+### Automation
+
+- **Automated Backups**: Database and configuration backups
+- **Health Checks**: Service health monitoring
+- **Restart Policies**: Automatic recovery from failures
+- **Log Aggregation**: Centralized log collection
+
+## Performance Optimization
+
+### Resource Management
+
+```
+CPU Allocation: Proportional sharing
+Memory: Limits per container to prevent OOM
+Storage: Tiered storage strategy
+  └─ SSD: Hot data, databases
+  └─ HDD: Archives, backups
+
+Network: Bandwidth limiting per service
+```
+
+### Caching Strategy
+
+- **Redis**: Application-level caching
+- **Nginx**: HTTP caching with cache-control headers
+- **DNS**: Local resolver with caching
+
+## Monitoring & Observability
+
+### Metrics Collection
+
+- **System**: CPU, memory, disk I/O, network
+- **Docker**: Container resource usage
+- **Application**: Service-specific metrics
+- **Database**: Query performance, connection pools
+
+### Dashboards
+
+```
+Grafana Dashboards:
+├── System Overview
+├── Docker Metrics
+├── Database Performance
+├── Network Activity
+└── Service Health
+```
+
+## Backup & Disaster Recovery
+
+### Backup Strategy
+
+1. **Database Backups**: Daily automated dumps
+2. **Configuration**: Version controlled in Git
+3. **Media Library**: Incremental backups to external storage
+4. **Rotation**: Weekly, monthly, and yearly snapshots
+
+### Recovery Procedures
+
+- Documented restore processes
+- Tested recovery drills
+- Configuration codification for rapid recreation
+
+## Challenges & Solutions
+
+| Challenge             | Solution                                  |
+| --------------------- | ----------------------------------------- |
+| Hardware limitations  | Aggressive resource optimization          |
+| Power reliability     | UPS with auto-shutdown scripts            |
+| Network bandwidth     | Compression and tiered caching            |
+| Security management   | Automated certificate renewal, zero-trust |
+| Monitoring complexity | Centralized dashboards with alerting      |
+
+## Lessons Learned
+
+This project provided hands-on experience with:
+
+- Hypervisor virtualization (Proxmox/KVM)
+- Container orchestration and management
+- Network security and tunneling
+- Infrastructure automation and scripting
+- Monitoring and observability best practices
+- Capacity planning and resource optimization
+- Disaster recovery planning
+
+## Future Enhancements
+
+- [ ] Kubernetes cluster setup
+- [ ] Advanced monitoring with ELK stack
+- [ ] Automated failover and replication
+- [ ] Infrastructure as Code (Terraform)
+- [ ] Load balancing improvements
+- [ ] Secondary backup node
+- [ ] Power optimization and renewable energy
+
+## Cost Analysis
+
+### Initial Investment
+
+- Laptop: Repurposed (free-$500)
+- Network equipment: Minimal ($50-$100)
+- Storage upgrades: ~$100-$200
+
+### Ongoing Costs
+
+- Power consumption: ~$10-$15/month
+- Internet: Existing connection
+- Maintenance: Minimal
+
+### Comparison
+
+Self-hosted homelab provides enterprise infrastructure at fraction of cloud costs while maintaining full control and privacy.
+
+## Repository & Documentation
+
+**Documentation**: Internal wiki with setup guides  
+**Configuration**: Version controlled in Git  
+**Status**: Actively maintained and expanded  
+**Uptime**: 99.2% average
+
+## Conclusion
+
+This Advanced Home Lab project demonstrates that enterprise-grade infrastructure is achievable on limited budgets and hardware. It serves as both a functional service platform and a continuous learning laboratory for infrastructure technologies.
+
+---
+
+**Project Started**: January 2025  
+**Current Status**: Production  
+**Server Uptime**: 99.2%  
+**Services Running**: 8+  
+**Status**: Actively developed and maintained
