@@ -10,7 +10,6 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import expressiveCode from 'astro-expressive-code'
 import rehypeExternalLinks from 'rehype-external-links'
 import rehypeKatex from 'rehype-katex'
-import rehypePrettyCode from 'rehype-pretty-code'
 import remarkEmoji from 'remark-emoji'
 import remarkMath from 'remark-math'
 
@@ -23,7 +22,7 @@ import tailwindcss from '@tailwindcss/vite'
 const commitHash = execSync('git rev-parse --short HEAD').toString().trim();
 
 export default defineConfig({
-  site: 'https://astro-erudite.vercel.app',
+  site: 'https://alvitodev.github.io',
   integrations: [
     expressiveCode({
       themes: ['github-light', 'github-dark'],
@@ -99,15 +98,6 @@ export default defineConfig({
       ],
       rehypeHeadingIds,
       rehypeKatex,
-      [
-        rehypePrettyCode,
-        {
-          theme: {
-            light: 'github-light',
-            dark: 'github-dark',
-          },
-        },
-      ],
     ],
     remarkPlugins: [remarkMath, remarkEmoji],
   },

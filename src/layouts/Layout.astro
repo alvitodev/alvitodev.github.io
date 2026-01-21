@@ -16,20 +16,34 @@ interface Props {
   class?: string
   title?: string
   description?: string
+  image?: string // Baru
+  type?: 'website' | 'article' // Baru
+  publishDate?: Date // Baru
 }
 
-const { class: className, title, description } = Astro.props
+const { 
+  class: className, 
+  title, 
+  description,
+  image,
+  type,
+  publishDate
+} = Astro.props
 ---
 
 <!doctype html>
 <html lang={SITE.locale} class="scroll-smooth">
-  <Head title={title} description={description}>
+  <Head 
+    title={title} 
+    description={description}
+    image={image}
+    type={type}
+    publishDate={publishDate}
+  >
     <slot name="head" />
   </Head>
 
   {/* --- THEME SCRIPT (EARLY EXECUTION) --- */}
-  {/* Script ini WAJIB di <head> agar tidak ada flash light mode */}
-  {/* Ini mencegah flash of unstyled theme saat page load/navigate */}
   <script is:inline>
     (function() {
       const getThemePreference = () => {
@@ -45,21 +59,11 @@ const { class: className, title, description } = Astro.props
     })();
   </script>
   
-  {/* Body: Font default Sans (Plus Jakarta), Background & Text mengikuti variabel CSS */}
   <body class="flex h-fit min-h-screen flex-col font-sans bg-background text-foreground antialiased relative selection:bg-amber-500/30">
-    
-    {/* --- VIGNETTE FIXED OVERLAY --- */}
-    {/* Ini solusi agar vignette tidak menutupi konten saat scroll */}
-    {/* pointer-events-none: agar bisa diklik tembus */}
-    {/* z-50: agar di atas background tapi di bawah elemen penting (jika diatur) */}
     <div class="fixed inset-0 pointer-events-none z-[1] vignette-layer"></div>
 
-    {/* Header Sticky */}
     <header class="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md transition-colors duration-300">
-          
-          {/* Render Header Langsung di sini */}
           <Header /> 
-          
           <div class="contents [&:not(:empty)]:block [&:not(:empty)]:border-t [&:not(:empty)]:border-border">
             <slot name="subposts-navigation" />
             <slot name="table-of-contents" />

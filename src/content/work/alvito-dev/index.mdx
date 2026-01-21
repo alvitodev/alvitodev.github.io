@@ -1,100 +1,99 @@
 ---
-title: 'alvito.dev'
-description: 'Personal portfolio and digital archive built with Astro and React.'
-publishDate: 2021-01-15
-updatedDate: 2026-01-20
-techStack: ['Astro', 'React', 'Tailwind CSS', 'GitHub Pages', 'TypeScript']
-status: 'in-progress'
-heroImage: ''
+title: "Alvito.dev: Digital Command Center"
+description: "Membangun rumah digital modern dengan estetika sci-fi dashboard, performa tinggi, dan struktur konten yang terorganisir."
+publishDate: 2026-01-21
+heroImage: "https://placehold.co/1200x630/18181b/f59e0b?text=Alvito.dev+Dashboard&font=source-code-pro"
+repoLink: "https://github.com/alvitodev/alvitodev.github.io"
+demoLink: "https://alvitodev.github.io"
+techStack: ["Astro", "React", "Tailwind CSS", "TypeScript"]
+tags: ["Web Design", "Personal Branding", "UI/UX"]
 ---
 
-import { Image } from 'astro:assets'
+import Callout from '@/components/Callout.astro'
 
-## Overview
+## Filosofi: Lebih dari Sekadar Kartu Nama
 
-**alvito.dev** is my personal portfolio website and digital archive, serving as a central hub for showcasing my projects, technical writing, and professional journey. Built with modern web technologies, the site emphasizes performance and user experience.
+Di era internet saat ini, banyak developer memiliki website portofolio yang statis—hanya sekadar CV yang ditempel di web. Saya menginginkan sesuatu yang berbeda. Saya ingin membangun sebuah **"Digital Garden"** (Taman Digital) atau lebih tepatnya, sebuah **Command Center**.
 
-## Key Features
+Website ini bukan hanya tempat memajang karya, tapi juga tempat saya mencatat ide, bereksperimen dengan kode, dan membagikan apa yang saya pelajari sehari-hari.
 
-- **Blog & Articles**: Technical writing on web development, IoT, and software engineering
-- **Project Showcase**: Detailed case studies and portfolio pieces
-- **Digital Archive**: Organized collection of notes, resources, and learning materials
-- **Responsive Design**: Fully responsive layout optimized for all devices
-- **Fast Performance**: Leveraging Astro's island architecture for optimal loading speeds
+<Callout type="info" title="Konsep Utama">
+  Tujuan utamanya adalah menciptakan antarmuka yang **padat informasi** namun tetap **estetik**, seperti panel kendali di film sci-fi retro, di mana semua fungsi penting bisa diakses dalam sekali lihat.
+</Callout>
 
-![alvito.dev Interface](/images/projects/alvitodev-interface.png)
+![Konsep Dashboard](https://placehold.co/800x400/18181b/f59e0b?text=Konsep+Dashboard+Sci-Fi&font=source-code-pro)
 
-## Technical Implementation
+## Desain: Estetika "Command Center"
 
-### Architecture
+Mengapa memilih tampilan gelap dengan aksen *amber* (kuning tembaga) dan font *monospace* (seperti mesin ketik)?
 
-The project utilizes **Astro's island architecture** to deliver only the necessary JavaScript to the browser, resulting in exceptionally fast page loads and improved SEO performance.
+1.  **Fokus pada Konten:** Seperti terminal komputer, tidak ada dekorasi berlebihan. Yang ada hanya data dan teks.
+2.  **Kenyamanan Mata:** Mode gelap (*Dark Mode*) adalah standar industri bagi developer yang menatap layar berjam-jam.
+3.  **Identitas:** Memberikan kesan *hacker-ish* dan teknikal, mencerminkan profesi saya sebagai engineer.
 
-```astro
-// Example: Selective hydration with Astro islands
-<WritingDashboard client:load />
-<ThemeToggle client:idle />
+## Dapur Pacu: Mengapa Astro?
+
+Untuk orang awam, bayangkan membuat website itu seperti membangun rumah.
+
+*   **Cara Lama (WordPress/Wix):** Seperti menyewa apartemen furnished. Cepat, tapi sulit diubah sesuka hati dan kadang "berat" karena banyak perabot yang tidak kita butuhkan.
+*   **Cara Modern (React/SPA):** Seperti membangun rumah dari nol, tapi pengunjung harus menunggu tukang merakit rumahnya setiap kali mereka berkunjung (loading time).
+*   **Cara Saya (Astro):** Astro bekerja seperti pabrik pre-fabrikasi. Rumahnya sudah dirakit penuh di "pabrik" (server saya). Ketika Anda berkunjung, rumahnya sudah jadi.
+
+### Arsitektur Website (Component Tree)
+
+Berikut adalah struktur bagaimana halaman depan (Dashboard) disusun dari komponen-komponen kecil:
+
+```mermaid
+graph TD
+    Layout[Layout Wrapper] --> Head[SEO & Meta Tags]
+    Layout --> Header[Sticky Header]
+    Layout --> Main[Main Content]
+    Layout --> Footer
+    
+    Main --> Hero[Hero Section]
+    Main --> Grid[Bento Grid Dashboard]
+    
+    Grid --> Panel1[Writing Panel]
+    Grid --> Panel2[Work Panel]
+    Grid --> Panel3[Notes Panel]
+    Grid --> Panel4[Stats Panel]
+    
+    Panel1 --> List[Post List Item]
+    Panel2 --> Card[Project Card]
 ```
 
-### Technology Stack
+**Hasilnya?** Website ini sangat cepat. Klik halaman mana saja, dan isinya muncul hampir seketika.
 
-- **Framework**: Astro 4.x with static site generation
-- **Styling**: Tailwind CSS with custom design tokens
-- **Components**: React for interactive UI elements
-- **Hosting**: GitHub Pages with custom domain
-- **CMS**: Content collection using Astro's content APIs
+<Callout type="warning" title="Untuk yang Teknis">
+  Project ini menggunakan **Astro v5** dengan **Tailwind CSS v4**. Saya menggunakan arsitektur *Island Architecture*, di mana mayoritas halaman adalah HTML statis (ringan), dan JavaScript hanya dikirimkan untuk bagian yang interaktif saja (seperti tombol tema atau search bar).
+</Callout>
 
-## Development Journey
+## Struktur Konten: Otak di Balik Layar
 
-Started as a simple portfolio in 2021, the project has evolved significantly:
+Salah satu tantangan terbesar developer adalah mengatur dokumentasi. Di sini, saya membagi "isi otak" saya menjadi beberapa laci:
 
-1. **Phase 1 (2021)**: Basic HTML/CSS portfolio
-2. **Phase 2 (2022)**: Migrated to Next.js with MDX support
-3. **Phase 3 (2024)**: Transitioned to Astro for better performance
-4. **Phase 4 (2025-Present)**: Enhanced with React islands and improved content architecture
+1.  **Writing:** Artikel mendalam dan tutorial.
+2.  **Notes:** Catatan teknis pendek (snippets).
+3.  **Library & Gallery:** Koleksi buku dan inspirasi visual.
 
-## Content Organization
+## Tantangan Pengembangan
 
+Mengubah template standar menjadi desain *custom* seperti ini tidak mudah. Tantangan terbesarnya adalah **Konsistensi Desain**.
+
+Saya harus memastikan bahwa elemen desain (seperti efek *vignette* di pinggir layar atau garis-garis grid di latar belakang) terlihat konsisten di layar HP kecil maupun monitor besar. Saya menggunakan **Tailwind CSS** untuk mempercepat proses "melukis" desain ini langsung di kode.
+
+```css
+/* Contoh kode untuk membuat efek latar belakang kotak-kotak */
+body {
+  background-image: 
+    linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
 ```
-src/
-├── content/
-│   ├── writing/        # Blog posts and articles
-│   ├── work/          # Project case studies
-│   ├── notes/         # Learning notes and snippets
-│   └── gallery/       # Project screenshots and media
-├── components/        # Reusable UI components
-├── layouts/          # Page templates
-└── pages/            # Dynamic routes
-```
 
-## Performance Metrics
+## Kesimpulan
 
-- **Lighthouse Score**: 95+ across all metrics
-- **Core Web Vitals**: All green
-- **First Contentful Paint**: < 0.8s
-- **Lighthouse Performance**: 98/100
+**Alvito.dev** bukan sekadar website portofolio statis, melainkan sebuah sistem operasi personal yang hidup di internet. Ia akan terus berkembang seiring bertambahnya skill dan pengalaman saya.
 
-## Future Enhancements
-
-- [ ] Advanced search functionality
-- [ ] Dark mode improvements
-- [ ] Portfolio filtering system
-- [ ] Interactive project timeline
-- [ ] Analytics dashboard
-
-## Lessons Learned
-
-This project has been instrumental in learning:
-
-- Modern static site generation patterns
-- Content-driven architecture design
-- Performance optimization techniques
-- UI/UX design principles
-- TypeScript best practices
-
----
-
-**Repository**: [github.com/alvitodev/alvitodev.github.io](https://github.com/alvitodev/alvitodev.github.io)  
-**Live Site**: [alvito.dev](https://alvito.dev)  
-**Started**: January 2021  
-**Status**: Actively maintained
+Silakan jelajahi "laci-laci" lainnya di website ini!

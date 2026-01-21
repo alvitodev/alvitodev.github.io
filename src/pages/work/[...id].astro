@@ -19,7 +19,13 @@ const { project } = Astro.props
 const { Content } = await render(project)
 ---
 
-<Layout title={project.data.title} description={project.data.description}>
+<Layout 
+  title={project.data.title} 
+  description={project.data.description}
+  image={project.data.heroImage?.src}
+  type="article"
+  publishDate={project.data.publishDate}
+>
   <div class="mx-auto min-h-screen max-w-7xl p-4 md:p-8">
     {/* Navigasi Kembali */}
     <div class="mb-6 flex items-center justify-between">

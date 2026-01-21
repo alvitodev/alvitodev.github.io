@@ -5,11 +5,10 @@ export const SITE = {
   title: 'Alvito.dev',
   description:
     'Command Center for Muhammad Alvito Devanova. A digital garden containing technical logs, projects, and visual databanks.',
-  locale: 'en-us', // Ganti 'id-id' jika konten utama bahasa Indonesia
-  url: 'https://alvito.dev', // URL website Anda
-  href: 'https://alvito.dev',
+  locale: 'id-ID', // Diset ke Indonesia karena target audiens/bahasa konten dominan
+  url: 'https://alvitodev.github.io', 
   author: 'Muhammad Alvito Devanova',
-  twitter: '@alvitodev', // Ganti dengan username Twitter/X Anda jika ada
+  twitter: '@alvitodev', 
 }
 
 // Navigasi Global (Opsional, jika ingin dipusatkan di sini)

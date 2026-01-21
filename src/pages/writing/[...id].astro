@@ -1,6 +1,5 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
-import PostHead from '@/components/PostHead.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import SubpostsHeader from '@/components/SubpostsHeader.astro'
 import SubpostsSidebar from '@/components/SubpostsSidebar.astro'
@@ -58,8 +57,13 @@ const combinedReadingTime =
 const tocSections = await getTOCSections(currentPostId)
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
-  <PostHead slot="head" post={post} />
+<Layout 
+  title={post.data.title} 
+  description={post.data.description}
+  image={post.data.heroImage?.src}
+  type="article"
+  publishDate={post.data.publishDate}
+>
   
   {/* Slot Navigasi Subpost Mobile */}
   {

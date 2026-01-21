@@ -18,7 +18,11 @@ const { note } = Astro.props
 const { Content } = await render(note)
 ---
 
-<Layout title={note.data.title}>
+<Layout 
+  title={note.data.title}
+  type="article"
+  publishDate={note.data.publishDate}
+>
   <div class="mx-auto min-h-screen max-w-3xl p-4 md:p-8">
     {/* Navigasi Kembali */}
     <div class="mb-6">

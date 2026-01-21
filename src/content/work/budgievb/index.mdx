@@ -1,359 +1,161 @@
 ---
-title: 'BudgieVB'
-description: 'Personal cashflow management application built with Visual Basic and ScottPlot.'
-publishDate: 2024-03-15
-updatedDate: 2024-12-01
-techStack: ['Visual Basic', 'ScottPlot', 'Data Analysis', 'Finance', '.NET']
+title: "BudgieVB: Manajer Keuangan Personal"
+description: "Aplikasi desktop manajemen keuangan pribadi (Personal Cashflow) dengan fitur multi-currency, budgeting, dan visualisasi grafik interaktif menggunakan ScottPlot."
+publishDate: 2024-06-20
+techStack: ['Visual Basic .NET', 'MySQL', 'ScottPlot', 'WinForms']
 status: 'completed'
-heroImage: ''
+heroImage: 'https://placehold.co/1200x630/0f172a/22c55e?text=BudgieVB+Dashboard&font=roboto'
+repoLink: "https://github.com/alvitodev/BudgieVB"
+tags: ["Desktop App", "Finance", "Data Visualization"]
 ---
 
-import { Image } from 'astro:assets'
+import Callout from '@/components/Callout.astro'
 
-## Overview
+## Mengapa BudgieVB?
 
-**BudgieVB** is a personal cashflow management application developed in Visual Basic, designed to help users track, analyze, and visualize their financial data. The application leverages **ScottPlot** charting library to provide comprehensive financial visualization and data analysis capabilities.
+Kebanyakan aplikasi keuangan terlalu rumit atau justru terlalu simpel. **BudgieVB** (Budgie Visual Basic) lahir dari kebutuhan tugas akhir mata kuliah **Pemrograman Visual** untuk menciptakan aplikasi desktop yang *robust* namun tetap intuitif.
 
-The name "Budgie" is inspired by the budgerigar, a small parrot often kept as a pet—symbolizing the application's role as a personal financial companion.
+Aplikasi ini tidak sekadar mencatat pengeluaran, tapi juga membantu Anda memvisualisasikan kesehatan finansial melalui grafik yang *real-time*.
 
-## Project Goals
+![Tampilan Dashboard BudgieVB](https://placehold.co/800x450/0f172a/22c55e?text=User+Interface+Aplikasi&font=roboto)
 
-- Create an intuitive interface for personal finance management
-- Provide powerful visualization tools for financial analysis
-- Enable trend analysis and forecasting
-- Support multiple account and budget tracking
-- Deliver actionable financial insights
+## Arsitektur & Alur Kerja
 
-## Key Features
+Agar Anda paham cara kerjanya, mari kita bedah "otak" aplikasi ini. BudgieVB menggunakan arsitektur event-driven khas Windows Forms yang terhubung ke database MySQL lokal.
 
-### 1. Financial Tracking
+### 1. Diagram Alur Data (Data Flow)
 
+Berikut adalah perjalanan data saat Anda mencatat transaksi baru:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant UI as Form Transaksi
+    participant Logic as VB.NET Logic
+    participant DB as MySQL Database
+    participant Chart as ScottPlot Chart
+
+    User->>UI: Input Jumlah & Kategori
+    UI->>Logic: Validasi Input (Tidak boleh 0/Minus)
+    Logic->>DB: INSERT INTO transactions...
+    DB-->>Logic: Success
+    Logic->>UI: Reset Form
+    Logic->>Chart: Request Data Terbaru
+    DB-->>Logic: SELECT SUM(amount)...
+    Logic->>Chart: Re-render Grafik
+    Chart-->>UI: Update Tampilan Pie Chart
 ```
-Expense Tracking:
-├── Transaction recording
-├── Category classification
-├── Date-based filtering
-└── Bulk data import
+
+### 2. Struktur Database
+
+Aplikasi ini menggunakan database relasional untuk menjaga integritas data. Tidak ada lagi cerita saldo minus tanpa alasan.
+
+```mermaid
+erDiagram
+    USERS ||--o{ ACCOUNTS : owns
+    ACCOUNTS ||--o{ TRANSACTIONS : has
+    CATEGORIES ||--o{ TRANSACTIONS : classifies
+    CURRENCIES ||--o{ ACCOUNTS : denominated_in
+
+    USERS {
+        int id PK
+        string username
+        string password_hash
+    }
+
+    ACCOUNTS {
+        int id PK
+        string name
+        decimal balance
+        int currency_id FK
+    }
+
+    TRANSACTIONS {
+        int id PK
+        decimal amount
+        date transaction_date
+        string type "Income/Expense"
+        string note
+    }
 ```
 
-- Record income and expense transactions
-- Categorize transactions for analysis
-- Track accounts and budgets
-- Historical transaction viewing
+## Bedah Kode & Struktur File
 
-### 2. Advanced Visualization
+Jika Anda mengunduh repository ini, berikut adalah peta untuk memahami isinya:
 
-- **Line Charts**: Cashflow trends over time
-- **Bar Charts**: Category-wise expense breakdown
-- **Pie Charts**: Budget allocation visualization
-- **Trend Analysis**: Predictive charts for forecasting
-- **Custom Charts**: User-defined visualization parameters
-
-![BudgieVB Charts](/images/projects/budgievb-charts.png)
-
-### 3. Financial Analysis
-
-- **Monthly Report**: Comprehensive monthly summaries
-- **Category Analysis**: Spending patterns by category
-- **Budget vs Actual**: Compare budgeted vs actual spending
-- **Trend Identification**: Recognize spending patterns
-- **Forecast**: Predict future cashflow
-
-### 4. Data Management
-
-- **Export Capabilities**: Export to CSV/Excel
-- **Database Storage**: Persistent data with SQL database
-- **Data Validation**: Ensure data integrity
-- **Backup**: Automatic backup functionality
-
-## Technical Architecture
-
-### Technology Stack
-
-| Layer            | Technology          |
-| ---------------- | ------------------- |
-| **UI Framework** | Windows Forms       |
-| **Language**     | Visual Basic .NET   |
-| **Database**     | SQLite / SQL Server |
-| **Charting**     | ScottPlot 4.x       |
-| **Build Tool**   | Visual Studio 2022  |
-
-### Project Structure
-
-```
+```text
 BudgieVB/
-├── Forms/
-│   ├── MainForm.vb
-│   ├── TransactionForm.vb
-│   ├── ReportForm.vb
-│   └── ChartForm.vb
-├── Models/
-│   ├── Transaction.vb
-│   ├── Account.vb
-│   ├── Category.vb
-│   └── Budget.vb
-├── Services/
-│   ├── DatabaseService.vb
-│   ├── ReportService.vb
-│   └── ChartService.vb
-└── Utils/
-    ├── ExportHelper.vb
-    └── ValidationHelper.vb
+├── BudgieVB.sln            # File solusi utama (Buka file ini di Visual Studio)
+├── budgie.sql              # Script database (IMPORT INI KE PHPMYADMIN!)
+└── BudgieVB/               # Folder Source Code
+    ├── Forms/              # Semua tampilan GUI ada di sini
+    │   ├── frmLogin.vb     # Gerbang masuk aplikasi
+    │   ├── frmDashboard.vb # Pusat kendali (Ada ScottPlot di sini)
+    │   └── frmAddTx.vb     # Form tambah transaksi
+    ├── Modules/
+    │   └── Database.vb     # "Jantung" koneksi ke MySQL
+    ├── Assets/             # Ikon dan gambar
+    └── App.config          # Konfigurasi koneksi DB (Ganti user/pass DB disini)
 ```
 
-## ScottPlot Integration
+<Callout type="warning" title="Penting untuk Developer">
+  File `Modules/Database.vb` adalah file paling krusial. Di sinilah *Connection String* berada. Jika Anda gagal login, cek apakah username/password MySQL di file ini sudah sesuai dengan settingan XAMPP Anda.
+</Callout>
 
-### Chart Types Implemented
+## Algoritma Utama: Validasi Saldo
+
+Salah satu logika terpenting dalam aplikasi keuangan adalah mencegah pengeluaran melebihi saldo akun. Berikut pseudocode-nya:
 
 ```vb
-' Line Chart for Cashflow Trends
-Dim linePlot As New ScottPlot.Plot()
-linePlot.AddScatter(dates, cashflows)
-linePlot.XLabel = "Date"
-linePlot.YLabel = "Cashflow (IDR)"
-
-' Bar Chart for Category Spending
-Dim barPlot As New ScottPlot.Plot()
-barPlot.AddBar(categoryValues, categoryNames)
-barPlot.Title = "Spending by Category"
-
-' Pie Chart for Budget Allocation
-Dim piePlot As New ScottPlot.Plot()
-piePlot.AddPie(budgetValues, budgetLabels)
+' Logika saat tombol "Simpan Pengeluaran" ditekan
+Function SimpanTransaksi()
+    Dim saldoSekarang = GetCurrentBalance(accountID)
+    Dim pengeluaranBaru = txtAmount.Text
+    
+    ' 1. Cek apakah uang cukup
+    If pengeluaranBaru > saldoSekarang Then
+        ShowError("Saldo tidak cukup! Jangan boros.")
+        Return False
+    End If
+    
+    ' 2. Lakukan Transaksi
+    ExecuteQuery("INSERT INTO transactions ...")
+    
+    ' 3. Update Saldo Akun
+    Dim saldoBaru = saldoSekarang - pengeluaranBaru
+    ExecuteQuery("UPDATE accounts SET balance = " & saldoBaru)
+    
+    Return True
+End Function
 ```
 
-### Key ScottPlot Features Used
+## Panduan Instalasi (Cara Pakai)
 
-- Multiple axis support
-- Legend and annotation capabilities
-- Real-time chart updates
-- Zoom and pan functionality
-- Export to image formats
+Ingin mencoba aplikasi ini di komputer Anda? Ikuti langkah ini:
 
-## User Interface
+1.  **Persiapan Lingkungan:**
+    *   Install **Visual Studio 2022** (Pilih workload *.NET Desktop Development*).
+    *   Install **XAMPP** (untuk server database MySQL).
+    *   Install **MySQL Connector for .NET** (agar VB bisa ngobrol sama MySQL).
 
-### Main Dashboard
+2.  **Setup Database:**
+    *   Nyalakan Apache & MySQL di XAMPP.
+    *   Buka `localhost/phpmyadmin`.
+    *   Buat database baru bernama `budgie_db`.
+    *   Import file `budgie.sql` yang ada di repository.
 
-![BudgieVB Dashboard](/images/projects/budgievb-dashboard.png)
+3.  **Jalankan Aplikasi:**
+    *   Buka `BudgieVB.sln`.
+    *   Tekan tombol **Start** (Ikon Play Hijau).
+    *   Login dengan user default (jika ada di readme) atau register user baru.
 
-The main dashboard provides:
+## Pustaka Pihak Ketiga
 
-- Quick access to key financial metrics
-- Summary cards showing balance, income, expenses
-- Recent transactions preview
-- Quick shortcuts to major functions
+Saya menggunakan **ScottPlot** karena komponen grafik bawaan Visual Studio (MSChart) sudah terasa kuno dan berat. ScottPlot memungkinkan:
+*   Rendering grafik ribuan data dalam hitungan milidetik.
+*   Interaktif (bisa di-zoom dan digeser).
+*   Tampilan modern dan *flat design*.
 
-### Transaction Management
+## Kesimpulan
 
-```
-Add Transaction:
-├── Date picker
-├── Amount input
-├── Category selection
-├── Account selection
-├── Notes/description
-└── Receipt attachment
-```
-
-### Reporting Module
-
-- Customizable date range selection
-- Multiple report types
-- Filter by category, account, or amount
-- Export to PDF/Excel
-- Print functionality
-
-## Data Model
-
-### Core Entities
-
-**Transaction**
-
-```
-- ID: int
-- Date: DateTime
-- Amount: decimal
-- Category: string
-- Account: string
-- Type: enum (Income/Expense)
-- Description: text
-- CreatedDate: DateTime
-```
-
-**Budget**
-
-```
-- ID: int
-- Category: string
-- LimitAmount: decimal
-- Month: DateTime
-- AlertThreshold: decimal
-- CreatedDate: DateTime
-```
-
-**Account**
-
-```
-- ID: int
-- Name: string
-- Type: enum (Checking/Savings/Credit)
-- OpeningBalance: decimal
-- Currency: string
-- IsActive: bool
-```
-
-## Analysis Features
-
-### 1. Trend Analysis
-
-- Month-over-month comparison
-- Year-over-year analysis
-- Seasonal pattern detection
-- Spending velocity tracking
-
-### 2. Budget Monitoring
-
-- Budget vs actual reporting
-- Overspending alerts
-- Category limit tracking
-- Budget adjustment recommendations
-
-### 3. Financial Insights
-
-```
-Insights Generated:
-├── Largest expense categories
-├── Spending trends
-├── Income stability
-├── Savings rate
-├── Cash position
-└── Budget health score
-```
-
-## Development Process
-
-### Phases
-
-| Phase           | Duration  | Deliverables                        |
-| --------------- | --------- | ----------------------------------- |
-| **Planning**    | 1 week    | Requirements, design mockups        |
-| **Backend Dev** | 2 weeks   | Database, business logic, services  |
-| **UI Dev**      | 2 weeks   | Forms, layouts, user interactions   |
-| **Charting**    | 1.5 weeks | Chart implementations, data binding |
-| **Testing**     | 1 week    | Unit tests, UAT, bug fixes          |
-| **Polish**      | 0.5 weeks | UI refinements, documentation       |
-
-### Development Challenges
-
-| Challenge                       | Solution                                |
-| ------------------------------- | --------------------------------------- |
-| ScottPlot learning curve        | Documentation review, sample analysis   |
-| Performance with large datasets | Implemented data pagination and caching |
-| Complex chart interactions      | Event delegation and state management   |
-| Database optimization           | Proper indexing and query optimization  |
-
-## Performance Characteristics
-
-### Application Metrics
-
-- **Startup Time**: < 2 seconds
-- **Transaction Load**: 10,000+ transactions handled smoothly
-- **Chart Rendering**: < 500ms for most charts
-- **Memory Footprint**: ~150MB typical usage
-- **Database Size**: ~10MB for 12 months of data
-
-## Testing
-
-### Test Coverage
-
-- **Unit Tests**: Business logic validation
-- **Integration Tests**: Database operations
-- **UI Tests**: Form interactions
-- **Performance Tests**: Chart rendering with large datasets
-
-### Test Scenarios
-
-```
-✓ Transaction CRUD operations
-✓ Budget calculation accuracy
-✓ Chart data binding
-✓ Export functionality
-✓ Data validation rules
-✓ Error handling
-✓ Performance under load
-```
-
-## User Manual Highlights
-
-### Getting Started
-
-1. Launch application
-2. Add accounts (checking, savings, credit)
-3. Create budget categories
-4. Begin recording transactions
-5. View charts and reports
-
-### Advanced Features
-
-- Multi-account tracking
-- Budget planning tools
-- Custom date range analysis
-- Report generation and printing
-- Data export for external analysis
-
-## Future Enhancements
-
-- [ ] Cloud synchronization
-- [ ] Mobile companion app
-- [ ] AI-powered expense categorization
-- [ ] Bill payment reminders
-- [ ] Multi-currency support
-- [ ] Investment tracking
-- [ ] Tax report generation
-- [ ] Custom budget templates
-
-## Learning Outcomes
-
-This project provided valuable experience in:
-
-- **Visual Basic .NET**: Windows Forms development
-- **Third-Party Libraries**: ScottPlot integration and customization
-- **Database Design**: Relational database modeling
-- **Financial Logic**: Money management algorithms
-- **UI/UX Design**: User-centric interface design
-- **Data Visualization**: Effective chart design
-- **Performance Optimization**: Large dataset handling
-
-## Lessons Learned
-
-Key takeaways from this project:
-
-1. **Library Ecosystem**: Value of well-designed third-party libraries
-2. **Domain Knowledge**: Understanding finance terminology improves design
-3. **User Feedback**: Iterative design based on user testing is crucial
-4. **Data Visualization**: Charts must be intuitive, not just pretty
-5. **Performance**: Chart rendering can be a bottleneck with large datasets
-
-## Deployment & Distribution
-
-The application can be:
-
-- Deployed as a standalone .exe
-- Packaged in installer (NSIS/MSI)
-- Distributed via internal company network
-- Deployed on portable storage
-
-## Repository & Resources
-
-**Repository**: [github.com/alvitodev/BudgieVB](https://github.com/alvitodev/BudgieVB)  
-**Documentation**: In-app help system  
-**Version**: 1.2.0  
-**License**: MIT  
-**Status**: Feature Complete, Maintenance Mode
-
----
-
-**Project Started**: March 2024  
-**Latest Update**: December 2024  
-**Development Time**: ~3 months  
-**Status**: Completed and stable
+BudgieVB mengajarkan saya bahwa aplikasi visual yang baik bukan hanya soal *drag-and-drop* tombol, tapi bagaimana menyusun arsitektur data yang rapi di belakang layar. Sinergi antara **MySQL** (Penyimpanan), **VB.NET** (Logika), dan **ScottPlot** (Visualisasi) menghasilkan aplikasi yang *powerful*.
