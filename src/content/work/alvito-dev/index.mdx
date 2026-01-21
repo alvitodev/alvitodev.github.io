@@ -1,99 +1,130 @@
 ---
-title: "Alvito.dev: Digital Command Center"
-description: "Membangun rumah digital modern dengan estetika sci-fi dashboard, performa tinggi, dan struktur konten yang terorganisir."
+title: "Alvito.dev"
+description: "Membangun rumah digital modern dengan performa tinggi, struktur konten terorganisir, dan estetika Industrial"
 publishDate: 2026-01-21
-heroImage: "https://placehold.co/1200x630/18181b/f59e0b?text=Alvito.dev+Dashboard&font=source-code-pro"
+heroImage: "https://placehold.co/1200x630/18181b/f59e0b?text=Alvito.dev+System&font=source-code-pro"
 repoLink: "https://github.com/alvitodev/alvitodev.github.io"
 demoLink: "https://alvitodev.github.io"
 techStack: ["Astro", "React", "Tailwind CSS", "TypeScript"]
-tags: ["Web Design", "Personal Branding", "UI/UX"]
+tags: ["Web Design", "Personal Branding", "UI/UX", "Documentation"]
+status: "maintained"
 ---
 
-import Callout from '@/components/Callout.astro'
+import Callout from '@/components/Callout.astro';
 
-## Filosofi: Lebih dari Sekadar Kartu Nama
+## Evolusi Digital
 
-Di era internet saat ini, banyak developer memiliki website portofolio yang statis—hanya sekadar CV yang ditempel di web. Saya menginginkan sesuatu yang berbeda. Saya ingin membangun sebuah **"Digital Garden"** (Taman Digital) atau lebih tepatnya, sebuah **Command Center**.
+**Alvito.dev** bukan sekadar portofolio statis, melainkan sebuah **"Command Center"** digital yang direkayasa ulang sepenuhnya. Bermula dari halaman HTML manual, situs ini kini telah bertransformasi menjadi aplikasi web modern berbasis **Astro** yang mengutamakan performa, kemudahan pengelolaan (*maintainability*), dan identitas visual yang kuat.
 
-Website ini bukan hanya tempat memajang karya, tapi juga tempat saya mencatat ide, bereksperimen dengan kode, dan membagikan apa yang saya pelajari sehari-hari.
+Visi utamanya adalah menciptakan ruang personal yang fleksibel untuk menampung berbagai bentuk ekspresi digital—mulai dari artikel teknis mendalam, catatan harian, portofolio proyek, hingga log aktivitas mikro.
 
-<Callout type="info" title="Konsep Utama">
-  Tujuan utamanya adalah menciptakan antarmuka yang **padat informasi** namun tetap **estetik**, seperti panel kendali di film sci-fi retro, di mana semua fungsi penting bisa diakses dalam sekali lihat.
+## Arsitektur & Tech Stack
+
+Situs ini dibangun di atas filosofi **"Islands Architecture"** yang dibawa oleh Astro, memungkinkan kita mengirimkan HTML statis murni ke pengguna sambil tetap memiliki komponen interaktif yang kaya di tempat yang diperlukan.
+
+| Teknologi | Peran | Alasan Pemilihan |
+| :--- | :--- | :--- |
+| **Astro** | *Core Framework* | Menghasilkan HTML statis (SSG) secara default demi performa *load* tercepat dan SEO maksimal. JS hanya dikirim jika dibutuhkan (*Zero JS by default*). |
+| **React** | *UI Components* | Digunakan sebagai "Islands" untuk elemen interaktif kompleks seperti *Tab Filters* di halaman Writing, *Image Gallery*, dan *Interactive Widgets*. |
+| **Tailwind CSS** | *Styling Engine* | Memungkinkan pembuatan sistem desain yang konsisten, rigid, dan *utility-first* tanpa meninggalkan file HTML/JSX. |
+| **TypeScript** | *Logic & Safety* | Menjamin integritas data di seluruh aplikasi, terutama untuk memvalidasi *Content Collections* dan props komponen. |
+
+## Desain Sistem: Industrial Cyberpunk
+
+Bahasa visual situs ini mengadopsi gaya **Minimalist Industrial Sci-Fi** (sering disebut juga *Techwear UI* atau *Cassette Futurism* modern).
+
+Kami menghindari estetika "Neon Cyberpunk" yang berlebihan dan beralih ke tampilan yang lebih *matte*, taktis, dan fungsional seperti antarmuka mesin atau sistem operasi militer futuristik.
+
+### DNA Visual
+
+* **Warna Dasar:** `Zinc-950` (Hampir hitam, *matte*). Memberikan kedalaman tanpa kontras yang menyakitkan mata.
+* **Warna Aksen:** `Amber-500` (Jingga Industrial). Digunakan secara hemat untuk *highlight* status, link aktif, atau notifikasi.
+* **Surface:** `Zinc-900` dengan opasitas rendah (*Glassmorphism*) dan *border* tipis (`1px`) untuk memisahkan modul konten.
+* **Tipografi:**
+    * **Judul & Metadata:** *Geist Mono* atau *JetBrains Mono*. Memberikan kesan teknis dan data-driven.
+    * **Konten Artikel:** *Plus Jakarta Sans* atau *Inter*. Mengutamakan keterbacaan (*legibility*) untuk teks panjang.
+
+<Callout type="info">
+Desain ini mengutamakan **Fungsi di atas Bentuk**. Elemen dekoratif seperti *scanlines* atau *grid* hanya digunakan jika mendukung hierarki informasi, bukan sekadar hiasan.
 </Callout>
 
-![Konsep Dashboard](https://placehold.co/800x400/18181b/f59e0b?text=Konsep+Dashboard+Sci-Fi&font=source-code-pro)
+## Backend: The Super-Schema
 
-## Desain: Estetika "Command Center"
+Alih-alih menggunakan database SQL/NoSQL yang kompleks, Alvito.dev memanfaatkan kekuatan **Astro Content Collections**. Seluruh konten disimpan sebagai file Markdown (`.md`), MDX (`.mdx`), atau JSON di dalam repositori, namun diperlakukan layaknya database terstruktur dengan validasi skema yang ketat menggunakan **Zod**.
 
-Mengapa memilih tampilan gelap dengan aksen *yellow* (kuning industrial) dan font *monospace* (seperti mesin ketik)?
+Struktur data ini dibagi menjadi 6 Koleksi Utama:
 
-1.  **Fokus pada Konten:** Seperti terminal komputer, tidak ada dekorasi berlebihan. Yang ada hanya data dan teks.
-2.  **Kenyamanan Mata:** Mode gelap (*Dark Mode*) adalah standar industri bagi developer yang menatap layar berjam-jam.
-3.  **Identitas:** Memberikan kesan *hacker-ish* dan teknikal, mencerminkan profesi saya sebagai engineer.
+### 1. Writing (`src/content/writing/`)
+Arsip pemikiran utama.
+* **Tipe:** Artikel panjang, Tutorial, Opini.
+* **Format:** Page Bundles (`judul-artikel/index.mdx`) agar aset gambar terorganisir per artikel.
+* **Fitur:** Mendukung Kategori (*Technical, Opinion, Featured*), *Table of Contents* otomatis, dan *Subposts* (Seri Artikel).
 
-## Dapur Pacu: Mengapa Astro?
+### 2. Work (`src/content/work/`)
+Dokumentasi karya dan eksperimen (Halaman ini adalah salah satu contohnya).
+* **Tipe:** Studi Kasus, Dokumentasi Proyek.
+* **Format:** Page Bundles.
+* **Metadata Khusus:** `techStack` (array teknologi), `repoLink`, `demoLink`, dan `status` (Completed, In-Progress, Maintained).
 
-Untuk orang awam, bayangkan membuat website itu seperti membangun rumah.
+### 3. Notes (`src/content/notes/`)
+Catatan lapangan yang cepat.
+* **Tipe:** *Today I Learned* (TIL), Snippet Kode, Ide Kasar.
+* **Format:** Single File (`judul-note.md`).
+* **Filosofi:** *Low friction*. Menulis tanpa beban struktur artikel panjang.
 
-*   **Cara Lama (WordPress/Wix):** Seperti menyewa apartemen furnished. Cepat, tapi sulit diubah sesuka hati dan kadang "berat" karena banyak perabot yang tidak kita butuhkan.
-*   **Cara Modern (React/SPA):** Seperti membangun rumah dari nol, tapi pengunjung harus menunggu tukang merakit rumahnya setiap kali mereka berkunjung (loading time).
-*   **Cara Saya (Astro):** Astro bekerja seperti pabrik pre-fabrikasi. Rumahnya sudah dirakit penuh di "pabrik" (server saya). Ketika Anda berkunjung, rumahnya sudah jadi.
+### 4. Feed (`src/content/feed/`)
+Jejak digital waktu nyata.
+* **Tipe:** Status update, *Microblogging*.
+* **Format:** Single File berdasarkan tanggal (`YYYY-MM-DD-slug.md`).
+* **Konten:** Bisa berisi teks singkat, embed Spotify, atau foto momen.
 
-### Arsitektur Website (Component Tree)
+### 5. Library (`src/content/library/`)
+Log konsumsi media.
+* **Format:** Data JSON.
+* **Isi:** Daftar buku yang dibaca, film yang ditonton, dan game yang dimainkan beserta *rating* dan statusnya (*Reading, Finished, Dropped*).
 
-Berikut adalah struktur bagaimana halaman depan (Dashboard) disusun dari komponen-komponen kecil:
+### 6. Gallery (`src/content/gallery/`)
+Portofolio fotografi.
+* **Format:** Data JSON.
+* **Isi:** Metadata foto, lokasi pengambilan, dan data EXIF kamera.
 
-```mermaid
-graph TD
-    Layout[Layout Wrapper] --> Head[SEO & Meta Tags]
-    Layout --> Header[Sticky Header]
-    Layout --> Main[Main Content]
-    Layout --> Footer
-    
-    Main --> Hero[Hero Section]
-    Main --> Grid[Bento Grid Dashboard]
-    
-    Grid --> Panel1[Writing Panel]
-    Grid --> Panel2[Work Panel]
-    Grid --> Panel3[Notes Panel]
-    Grid --> Panel4[Stats Panel]
-    
-    Panel1 --> List[Post List Item]
-    Panel2 --> Card[Project Card]
+## Fitur Unggulan
+
+Situs ini dikembangkan dari basis template *Astro Erudite* yang telah dimodifikasi secara ekstensif:
+
+### MDX Components
+Penulisan konten tidak terbatas pada teks biasa. Kita dapat menyisipkan komponen React/Astro langsung di dalam file Markdown.
+Contohnya adalah komponen `Callout` ini:
+
+```jsx
+<Callout type="warning">
+  Hati-hati, mengubah skema konten bisa menyebabkan error saat build!
+</Callout>
 ```
-
-**Hasilnya?** Website ini sangat cepat. Klik halaman mana saja, dan isinya muncul hampir seketika.
-
-<Callout type="warning" title="Untuk yang Teknis">
-  Project ini menggunakan **Astro v5** dengan **Tailwind CSS v4**. Saya menggunakan arsitektur *Island Architecture*, di mana mayoritas halaman adalah HTML statis (ringan), dan JavaScript hanya dikirimkan untuk bagian yang interaktif saja (seperti tombol tema atau search bar).
+<Callout type="warning">
+  Hati-hati, mengubah skema konten bisa menyebabkan error saat build!
 </Callout>
 
-## Struktur Konten: Otak di Balik Layar
+### Navigasi Seri (Subposts)
+Situs ini mendukung struktur artikel berseri. Jika sebuah folder artikel memiliki "anak" (sub-artikel), *sidebar* navigasi akan otomatis muncul untuk memudahkan pembaca berpindah antar bab tanpa kehilangan konteks.
 
-Salah satu tantangan terbesar developer adalah mengatur dokumentasi. Di sini, saya membagi "isi otak" saya menjadi beberapa laci:
+### Daftar Isi Cerdas (Sticky TOC)
+Untuk artikel panjang, *Table of Contents* akan di-generate otomatis dari heading artikel. Sidebar ini bersifat *sticky* (mengikuti scroll) dan memiliki indikator aktif untuk menunjukkan bagian mana yang sedang dibaca.
 
-1.  **Writing:** Artikel mendalam dan tutorial.
-2.  **Notes:** Catatan teknis pendek (snippets).
-3.  **Library & Gallery:** Koleksi buku dan inspirasi visual.
+## Workflow Deployment (CI/CD)
 
-## Tantangan Pengembangan
+Untuk memastikan stabilitas dan kemudahan update, proyek ini menggunakan alur kerja otomatis via **GitHub Actions**:
 
-Mengubah template standar menjadi desain *custom* seperti ini tidak mudah. Tantangan terbesarnya adalah **Konsistensi Desain**.
+1.  **Development (`dev` branch):**
+    * Seluruh kode sumber dan konten mentah berada di sini.
+    * Penulisan artikel dan koding dilakukan di branch ini.
+2.  **Build Automation:**
+    * Saat ada *push* ke `dev`, GitHub Actions akan menjalankan `npm run build`.
+    * Proses ini akan memvalidasi seluruh konten (cek error tipe data, link mati, dll).
+3.  **Deployment (`main` branch):**
+    * Jika build sukses, hasil HTML statis (folder `dist/`) akan di-deploy otomatis ke branch `main`.
+    * GitHub Pages menyajikan situs dari branch `main` ini.
 
-Saya harus memastikan bahwa elemen desain (seperti efek *vignette* di pinggir layar atau garis-garis grid di latar belakang) terlihat konsisten di layar HP kecil maupun monitor besar. Saya menggunakan **Tailwind CSS** untuk mempercepat proses "melukis" desain ini langsung di kode.
+---
 
-```css
-/* Contoh kode untuk membuat efek latar belakang kotak-kotak */
-body {
-  background-image: 
-    linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-```
-
-## Kesimpulan
-
-**Alvito.dev** bukan sekadar website portofolio statis, melainkan sebuah sistem operasi personal yang hidup di internet. Ia akan terus berkembang seiring bertambahnya skill dan pengalaman saya.
-
-Silakan jelajahi "laci-laci" lainnya di website ini!
+> *"The code is the documentation, but the documentation makes the code accessible."*

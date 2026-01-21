@@ -13,6 +13,8 @@ import rehypeKatex from 'rehype-katex'
 import remarkEmoji from 'remark-emoji'
 import remarkMath from 'remark-math'
 
+import mermaid from 'astro-mermaid';
+
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
@@ -71,6 +73,7 @@ export default defineConfig({
     react(),
     sitemap(),
     icon(),
+    mermaid(),
   ],
   vite: {
     plugins: [tailwindcss() as any],
