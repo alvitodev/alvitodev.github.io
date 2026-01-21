@@ -1,216 +1,71 @@
 ---
-title: 'NusaKultura'
-description: 'Mobile prototype app for exploring and preserving Indonesian cultural heritage.'
-publishDate: 2024-10-15
-updatedDate: 2025-01-20
-techStack:
-  ['Mobile Development', 'UI/UX Design', 'Cultural Content', 'User Research']
-status: 'in-progress'
-heroImage: ''
+title: "NusaKultura: Temukan Cerita di Setiap Sudut Nusantara"
+description: "Sebuah inisiatif desain UI/UX untuk menghubungkan kembali generasi muda dengan akar budaya Indonesia melalui pengalaman digital yang imersif."
+publishDate: 2024-10-24
+techStack: ['Figma', 'UI/UX Research', 'Design Thinking', 'Prototyping']
+status: 'completed'
+heroImage: './heroimage.png'
+tags: ["UI/UX", "Mobile App", "Culture", "Research"]
 ---
 
-import { Image } from 'astro:assets'
+import Callout from '@/components/Callout.astro'
 
-## Overview
+## Latar Belakang: Krisis Identitas Budaya
 
-**NusaKultura** is an innovative educational mobile prototype application designed to explore and celebrate Indonesia's diverse cultural heritage. The project aims to enhance public knowledge about Indonesian traditions, arts, and customs while fostering deeper appreciation for the nation's rich cultural diversity.
+Indonesia adalah negara kepulauan dengan kekayaan tak ternilai: **17.001 pulau**, **1.300+ kelompok etnis**, dan **700+ bahasa daerah**. Namun, data menunjukkan sebuah ironi.
 
-Developed in collaboration with **INFINITE Research Group** at Universitas Negeri Yogyakarta, this project combines technology, education, and cultural preservation.
+Di tengah arus modernisasi dan gempuran konten global di media sosial, generasi muda semakin terputus dari akar budaya mereka. Apresiasi terhadap tradisi lokal memudar, tergantikan oleh tren asing yang seringkali tidak selaras dengan nilai-nilai luhur Nusantara.
 
-## Project Vision
+> *"Bagaimana kita bisa membuat budaya tradisional terlihat 'relevan' dan 'menarik' bagi Gen-Z yang terbiasa dengan estetika modern?"*
 
-To create an accessible, engaging platform that:
+Itulah pertanyaan besar yang mendasari proyek riset dan desain **NusaKultura** ini.
 
-- Makes Indonesian cultural knowledge widely available
-- Encourages younger generations to appreciate their heritage
-- Documents and preserves endangered cultural practices
-- Promotes cultural tourism and understanding
+## Tim Riset & Desain (Team 01)
 
-![NusaKultura App Interface](/images/projects/nusakultura-interface.png)
+Proyek ini dikerjakan secara kolaboratif dalam tim Research Group PAB INFINITE 2024:
 
-## Key Features
-
-### 1. Cultural Exploration
-
-- Browse diverse Indonesian cultural categories
-- Detailed content on traditional arts, music, and crafts
-- Regional cultural highlights
-- Historical context and significance
-
-### 2. Educational Content
-
-- Interactive learning modules
-- Multimedia content (images, videos, audio)
-- Cultural facts and trivia
-- Expert insights and cultural notes
-
-### 3. User Engagement
-
-- Favorite/bookmark cultural items
-- Personal learning progress tracking
-- Sharing capabilities for social engagement
-- Interactive quizzes and challenges
-
-### 4. Cultural Mapping
-
-- Geographic distribution of cultures
-- Regional navigation system
-- Cultural routes and heritage sites
-
-## Content Categories
-
-- **Traditional Arts**: Batik, wayang, puppet theater
-- **Music & Dance**: Regional instruments, traditional performances
-- **Cuisine**: Traditional recipes and cooking methods
-- **Crafts**: Traditional handicrafts and techniques
-- **Festivals**: Annual celebrations and ceremonies
-- **Languages**: Linguistic diversity across regions
-- **Architecture**: Traditional buildings and structures
-
-## Design Approach
-
-### User-Centric Design
-
-The application was designed through extensive user research:
-
-1. **Target Audience**: Students (ages 12-25), tourists, cultural enthusiasts
-2. **Usability Testing**: Multiple rounds of user testing and feedback
-3. **Accessibility**: Designed for various literacy levels
-4. **Engagement**: Gamification elements to enhance learning
-
-### Design Principles
-
-- **Visual Heritage**: UI inspired by traditional Indonesian patterns
-- **Clear Navigation**: Intuitive information architecture
-- **Mobile-First**: Optimized for smartphone usage
-- **Cultural Sensitivity**: Respectful representation of traditions
-
-![NusaKultura Design System](/images/projects/nusakultura-design.png)
-
-## Technical Specifications
-
-### Development Stack
-
-- Mobile prototyping tools (Figma for design)
-- User testing and feedback collection
-- Content management system for cultural data
-- Analytics for user engagement tracking
-
-### Platform Considerations
-
-- Cross-platform compatibility (iOS/Android)
-- Offline content availability
-- Multilingual support (Indonesian, English)
-- Low bandwidth optimization
-
-## Content Strategy
-
-### Information Architecture
-
-```
-Categories
-├── Visual Arts
-│   ├── Batik
-│   ├── Painting
-│   └── Sculpture
-├── Performing Arts
-│   ├── Dance
-│   ├── Music
-│   └── Theater
-├── Culinary Arts
-├── Crafts & Heritage
-└── Language & Literature
-```
-
-### Content Quality
-
-- Curated by cultural experts
-- Verified for historical accuracy
-- Updated regularly with new content
-- Community contributions system
-
-## Research & Development
-
-### Collaboration with INFINITE
-
-The INFINITE Research Group brings expertise in:
-
-- User research and validation
-- Technical feasibility assessment
-- Content curation and verification
-- Prototype testing and iteration
-
-### Key Research Findings
-
-1. **User Need**: 87% of young users expressed interest in cultural learning through apps
-2. **Content Preference**: Visual content (images/videos) rated as most engaging
-3. **Feature Request**: Offline access and sharing capabilities highly desired
-4. **Engagement**: Gamified learning increased user session duration by 3.2x
-
-## Development Timeline
-
-| Phase                | Timeline       | Milestones                             |
-| -------------------- | -------------- | -------------------------------------- |
-| Research & Planning  | Aug - Sep 2024 | User research, market analysis         |
-| Design & Prototyping | Sep - Oct 2024 | UI/UX design, prototype creation       |
-| User Testing         | Oct - Nov 2024 | Usability testing, feedback collection |
-| Refinement           | Nov - Dec 2024 | Iterations based on feedback           |
-| Current Phase        | Jan 2025       | Ongoing development & enhancement      |
-
-## Impact & Goals
-
-### Educational Impact
-
-- Reach 10,000+ students in first year
-- Integrated into school curricula
-- Support cultural preservation initiatives
-
-### Community Engagement
-
-- Showcase local cultural practitioners
-- Enable community content contributions
-- Foster cultural appreciation networks
-
-## Challenges & Solutions
-
-| Challenge             | Approach                                |
-| --------------------- | --------------------------------------- |
-| Content accuracy      | Expert review and academic partnerships |
-| User engagement       | Gamification and social features        |
-| Technical limitations | Progressive enhancement strategy        |
-| Multilingual support  | Phased language rollout                 |
-
-## Future Roadmap
-
-- [ ] Full mobile app development (React Native/Flutter)
-- [ ] AR features for virtual cultural experiences
-- [ ] Integration with cultural institutions
-- [ ] User-generated content platform
-- [ ] Virtual guided tours of heritage sites
-- [ ] Certification programs for cultural learning
-- [ ] Partnerships with museums and cultural centers
-
-## Team & Collaboration
-
-**Research Group**: INFINITE Research Group, UNY  
-**Contributors**: Faculty advisors, student researchers, cultural experts  
-**Advisors**: Indonesian cultural heritage specialists
-
-## Lessons Learned
-
-This project demonstrated the importance of:
-
-- Deep user research in educational app design
-- Cultural sensitivity in content representation
-- Balancing educational rigor with user engagement
-- Collaborative research and development
-- Iterative design based on user feedback
+* **Muhammad Alvito Devanova** (24051130033)
+* **Fandila Rhisma Cahyani** (23545234023)
+* **Muhammad Rama Ilhamsyah Zain** (24050530052)
+* **Muhammad Syauqi Nur Muzaki** (23080130055)
+* **Zildan Priyahutama** (23080230312)
 
 ---
 
-**Project Status**: Prototype Phase  
-**Started**: August 2024  
-**Research Group**: [INFINITE Research Group](https://infinite.uny.ac.id)  
-**Institution**: Universitas Negeri Yogyakarta  
-**Current Focus**: Full app development and content expansion  
-**Status**: Actively being developed
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/0QvBde20z9XSF0z4tB3ReX/PROTOTYPE?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+## Design System
+
+Untuk menerjemahkan nilai tradisional ke dalam antarmuka modern, kami mengembangkan *Design Language* yang menyeimbangkan kesan etnik dengan kebersihan visual (clean look).
+
+### 1. Tipografi
+Kami memilih kombinasi font yang kontras namun harmonis:
+
+* **Header (Playfair Display):** Font serif yang elegan dan klasik, merepresentasikan keanggunan sejarah dan budaya tradisional.
+* **Body (Inter):** Font sans-serif geometris yang sangat mudah dibaca di layar ponsel, memberikan kesan modern dan aksesibel.
+
+### 2. Palet Warna
+Warna diambil dari elemen alam dan arsitektur Nusantara (seperti tanah liat, kayu jati, dan kain tenun), namun disesuaikan saturasi-nya untuk kenyamanan mata di layar digital.
+
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 not-prose my-6">
+  <div className="h-24 rounded-lg bg-[#5D4037] flex items-center justify-center text-white text-xs font-mono">Earth Brown</div>
+  <div className="h-24 rounded-lg bg-[#D7CCC8] flex items-center justify-center text-gray-800 text-xs font-mono">Cream Paper</div>
+  <div className="h-24 rounded-lg bg-[#FF7043] flex items-center justify-center text-white text-xs font-mono">Terracotta</div>
+  <div className="h-24 rounded-lg bg-[#263238] flex items-center justify-center text-white text-xs font-mono">Charcoal</div>
+</div>
+
+## Eksplorasi UI & Fitur
+
+Aplikasi NusaKultura dirancang sebagai "Museum Saku" yang interaktif.
+
+### Halaman Jelajah (Explore)
+Menggunakan peta interaktif atau *grid card* visual. Pengguna bisa memilih pulau atau provinsi untuk melihat cerita unik di baliknya.
+* *Contoh Konten:* **Rumah Joglo**. Tidak hanya menampilkan foto, tapi juga filosofi di balik arsitektur tersebut, seperti hierarki sosial dan simbolisme atapnya.
+
+### Detail Kebudayaan
+Setiap entitas budaya (Tarian, Rumah Adat, Senjata) disajikan dengan *storytelling* yang kuat, bukan sekadar teks ensiklopedia.
+* Menggunakan hierarki informasi yang jelas.
+* Gambar berkualitas tinggi sebagai fokus utama.
+
+<Callout type="success" title="Outcome">
+  NusaKultura bukan sekadar aplikasi ensiklopedia, melainkan jembatan digital. Kami berhasil merancang antarmuka yang tidak mengintimidasi pengguna awam, namun tetap kaya akan informasi bagi mereka yang ingin menyelam lebih dalam.
+</Callout>
