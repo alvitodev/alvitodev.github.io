@@ -29,11 +29,11 @@
 }
 
 @layer base {
-  /* --- LIGHT MODE (Default) --- */
+  /* --- LIGHT MODE (Industrial Clean) --- */
   :root {
-    /* Background Putih Bersih / Abu-abu sangat muda */
+    /* Background: Putih "Kertas" (Zinc-50) */
     --background: 0 0% 98%; 
-    --foreground: 240 10% 3.9%; /* Teks Hampir Hitam */
+    --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
@@ -41,70 +41,71 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    /* Primary: Amber Gelap agar kontras di background putih */
-    --primary: 35 90% 40%; 
+    /* Primary: Kuning Emas Gelap (Yellow-600) */
+    --primary: 42 100% 40%; 
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 4.8% 95.9%;
+    /* Secondary: Gelapkan agar terlihat beda dari background putih */
+    --secondary: 240 5% 90%; /* FIX: Lebih gelap (sebelumnya 96%) */
     --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    /* Muted: Gelapkan agar area non-aktif terlihat jelas */
+    --muted: 240 5% 90%; /* FIX: Lebih gelap (sebelumnya 93%) */
+    --muted-foreground: 240 4% 40%; /* Teks abu gelap */
 
-    --accent: 240 4.8% 95.9%;
+    --accent: 240 5% 90%;
     --accent-foreground: 240 5.9% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 35 90% 40%; /* Ring Amber */
+    /* Border: Lebih tegas agar struktur terlihat */
+    --border: 240 5% 82%; /* FIX: Lebih gelap/tegas (sebelumnya 85%) */
+    --input: 240 5% 82%;
+    --ring: 42 100% 40%;
 
-    /* Grid Color untuk Light Mode (Abu-abu tipis) */
-    --grid-color: rgba(0, 0, 0, 0.05);
+    /* Grid Color: Sedikit lebih terlihat */
+    --grid-color: rgba(0, 0, 0, 0.1);
     
-    /* Vignette Light Mode (Sangat halus atau transparan agar tidak kotor) */
     --vignette-color: rgba(0,0,0,0.03); 
   }
 
-  /* --- DARK MODE --- */
+  /* --- DARK MODE (Cyberpunk Industrial) --- */
   .dark {
-    /* Background Zinc-950 (Hampir Hitam) */
-    --background: 24 9.8% 10%; 
-    --foreground: 0 0% 98%; /* Teks Putih */
+    /* Background: Zinc-950 (Sangat Gelap tapi bukan Hitam mati) */
+    --background: 24 10% 5%; 
+    
+    /* Foreground: Putih Tulang (Zinc-200), BUKAN Putih Murni agar mata tidak sakit */
+    --foreground: 240 5% 90%; /* FIX: Turun dari 98% ke 90% */
 
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 24 10% 7%; /* Card sedikit lebih terang dari background agar punya dimensi */
+    --card-foreground: 240 5% 90%;
 
-    --popover: 24 9.8% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 24 10% 5%;
+    --popover-foreground: 240 5% 90%;
 
-    /* Primary: Amber Terang (Sci-Fi Glow) */
-    --primary: 45 93% 47%;
-    --primary-foreground: 24 9.8% 10%;
+    /* Primary: Kuning Safety/Neon (Yellow-400) */
+    --primary: 48 96% 53%;
+    --primary-foreground: 24 9.8% 5%;
 
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 240 4% 16%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 4% 12%; 
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 240 3.7% 15.9%;
+    --accent: 240 4% 16%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 45 93% 47%;
+    --border: 240 4% 20%;
+    --input: 240 4% 20%;
+    --ring: 48 96% 53%;
 
-    /* Grid Color Dark Mode */
     --grid-color: #27272a;
-
-    /* Vignette Dark Mode (Hitam pekat di pinggir) */
-    --vignette-color: rgba(0,0,0,0.8);
+    --vignette-color: rgba(0,0,0,0.7);
   }
 
   * {
@@ -114,35 +115,35 @@
   body {
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     
-    /* Background Grid Pattern - Menggunakan variable agar adaptif */
+    /* Background Grid Pattern */
     background-image: 
       linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
       linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
     background-size: 40px 40px;
-    background-attachment: fixed; /* Grid diam saat scroll */
+    background-attachment: fixed;
   }
 
-  /* CLASS KHUSUS VIGNETTE (Dipanggil di Layout.astro) */
+  /* CLASS KHUSUS VIGNETTE */
   .vignette-layer {
-    /* Radial Gradient: Tengah transparan, Pinggir gelap */
     background: radial-gradient(
       circle at center, 
-      transparent 50%, 
+      transparent 40%, 
       var(--vignette-color) 100%
     );
   }
 
-  /* Custom Scrollbar */
+  /* Custom Scrollbar Industrial */
   ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-muted;
+    @apply bg-zinc-200 dark:bg-zinc-900;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-zinc-400 dark:bg-zinc-700 rounded;
+    @apply bg-zinc-400 dark:bg-zinc-700 rounded-sm border-2 border-transparent bg-clip-content;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-amber-500;
+    @apply bg-yellow-600 dark:bg-yellow-400; /* Hover jadi Kuning */
   }
 }

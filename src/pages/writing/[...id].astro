@@ -121,7 +121,7 @@ const tocSections = await getTOCSections(currentPostId)
     {/* Hero Image (Updated to use heroImage) */}
     {
       post.data.heroImage && (
-        <div class="col-span-full mx-auto w-full max-w-5xl border-y border-zinc-800 bg-zinc-900/50">
+        <div class="col-span-full mx-auto w-full max-w-5xl border-y border-border bg-muted/50">
             <Image
             src={post.data.heroImage}
             alt={post.data.title}
@@ -137,7 +137,7 @@ const tocSections = await getTOCSections(currentPostId)
     <section class="col-start-2 flex flex-col gap-y-6 text-center pt-2">
       <div class="flex flex-col">
         <h1
-          class="mb-4 scroll-mt-31 text-3xl font-bold font-mono tracking-tight sm:text-5xl text-zinc-100"
+          class="mb-4 scroll-mt-31 text-3xl font-bold font-mono tracking-tight sm:text-5xl text-foreground"
           id="post-title"
         >
           {post.data.title}
@@ -162,7 +162,7 @@ const tocSections = await getTOCSections(currentPostId)
 
           {/* Date (Updated field) */}
           <div
-            class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0 text-amber-500"
+            class="flex w-full items-center justify-center gap-2 py-2 sm:w-fit sm:px-2 sm:py-0 first:sm:pl-0 last:sm:pr-0 text-yellow-500"
           >
             <Icon name="lucide:calendar" class="size-3" />
             <span>{formatDate(post.data.publishDate)}</span> /* FIX: date -> publishDate */
@@ -202,7 +202,7 @@ const tocSections = await getTOCSections(currentPostId)
           {
             (post.data.tags ?? []).map((tag) => (
                 <span
-                  class={badgeVariants({ variant: 'outline' }) + " font-mono text-xs border-zinc-700 text-zinc-400"}
+                  class={badgeVariants({ variant: 'outline' }) + " font-mono text-xs border-border text-muted-foreground"}
                 >
                   <Icon name="lucide:hash" class="size-3 mr-1" />
                   {tag}
@@ -227,7 +227,7 @@ const tocSections = await getTOCSections(currentPostId)
     }
 
     {/* ARTIKEL KONTEN */}
-    <article class="prose prose-invert prose-zinc col-start-2 max-w-none prose-headings:font-mono prose-headings:tracking-tight prose-a:text-amber-500 prose-code:text-amber-300 prose-pre:border prose-pre:border-zinc-800 prose-pre:bg-zinc-950/50">
+    <article class="prose dark:prose-invert prose-zinc col-start-2 max-w-none prose-headings:font-mono prose-headings:tracking-tight prose-a:text-yellow-600 dark:prose-a:text-yellow-500 prose-code:text-yellow-600 dark:prose-code:text-yellow-300 prose-pre:border prose-pre:border-border prose-pre:bg-muted/50">
       <Content />
     </article>
 
@@ -257,14 +257,14 @@ const tocSections = await getTOCSections(currentPostId)
   <Button
     variant="outline"
     size="icon"
-    className="group fixed right-8 bottom-8 z-50 hidden bg-zinc-900 border-zinc-700 hover:border-amber-500"
+    className="group fixed right-8 bottom-8 z-50 hidden bg-background border-border hover:border-yellow-500"
     id="scroll-to-top"
     title="Scroll to top"
     aria-label="Scroll to top"
   >
     <Icon
       name="lucide:arrow-up"
-      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5 text-zinc-400 group-hover:text-amber-500"
+      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5 text-muted-foreground group-hover:text-yellow-500"
     />
   </Button>
 

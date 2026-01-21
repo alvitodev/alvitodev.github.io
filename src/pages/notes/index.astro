@@ -16,8 +16,8 @@ const recentNotes = allNotes.sort(
     {/* --- HEADER TERMINAL --- */}
     <header class="mt-8 mb-12 border-b border-zinc-800 pb-8">
       <div class="mb-4 flex items-center gap-3">
-        <div class="h-3 w-3 rounded-sm bg-amber-500"></div>
-        <span class="font-mono text-xs tracking-[0.2em] text-amber-500"
+        <div class="h-3 w-3 rounded-sm bg-yellow-500"></div>
+        <span class="font-mono text-xs tracking-[0.2em] text-yellow-500"
           >DATABASE // QUICK_NOTES</span
         >
       </div>
@@ -43,10 +43,10 @@ const recentNotes = allNotes.sort(
       recentNotes.length > 0 ? (
         <div class="flex flex-col gap-4">
           {recentNotes.map((note) => (
-            <Panel class="p-4 transition-colors duration-300 hover:border-amber-500/50">
+            <Panel class="p-4 transition-colors duration-300 hover:border-yellow-500/50">
               <a href={`/notes/${note.id}`} class="group block">
                 <div class="flex items-start justify-between font-mono">
-                  <h2 class="text-lg font-bold text-zinc-200 transition-colors group-hover:text-amber-500">
+                  <h2 class="text-lg font-bold text-zinc-200 transition-colors group-hover:text-yellow-500">
                     {note.data.title}
                   </h2>
                   <span class="pt-1 text-xs whitespace-nowrap text-zinc-600">

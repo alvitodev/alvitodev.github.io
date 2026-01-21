@@ -57,7 +57,7 @@ const feedItemsWithContent = await Promise.all(
           {feedItemsWithContent.map((item) => (
             <div class="group relative">
               {/* Titik Timeline */}
-              <div class="absolute top-1 left-[-26px] z-10 h-2 w-2 rounded-full border border-zinc-600 bg-zinc-950 transition-colors group-hover:border-amber-500 group-hover:bg-amber-500/20" />
+              <div class="absolute top-1 left-[-26px] z-10 h-2 w-2 rounded-full border border-zinc-600 bg-zinc-950 transition-colors group-hover:border-yellow-500 group-hover:bg-yellow-500/20" />
 
               {/* Panel Konten */}
               <Panel class="p-6">
@@ -65,7 +65,7 @@ const feedItemsWithContent = await Promise.all(
                   <span class="font-mono text-xs text-zinc-600 uppercase">
                     LOGGED_AT
                   </span>
-                  <span class="font-mono text-xs text-amber-500">
+                  <span class="font-mono text-xs text-yellow-500">
                     {formatDate(item.data.publishDate)}
                   </span>
                 </div>

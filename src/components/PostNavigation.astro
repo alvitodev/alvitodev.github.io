@@ -13,7 +13,7 @@ const { newerPost, olderPost } = Astro.props
         href={`/writing/${olderPost.id}`}
         class="group flex flex-col gap-1 text-left sm:max-w-[45%]"
       >
-        <span class="flex items-center gap-1 font-mono text-xs text-zinc-500 transition-colors group-hover:text-amber-500">
+        <span class="flex items-center gap-1 font-mono text-xs text-zinc-500 transition-colors group-hover:text-yellow-500">
           <Icon name="lucide:arrow-left" class="size-3" />
           PREVIOUS_LOG
         </span>
@@ -32,7 +32,7 @@ const { newerPost, olderPost } = Astro.props
         href={`/writing/${newerPost.id}`}
         class="group flex flex-col gap-1 text-right sm:max-w-[45%]"
       >
-        <span class="flex items-center justify-end gap-1 font-mono text-xs text-zinc-500 transition-colors group-hover:text-amber-500">
+        <span class="flex items-center justify-end gap-1 font-mono text-xs text-zinc-500 transition-colors group-hover:text-yellow-500">
           NEXT_LOG
           <Icon name="lucide:arrow-right" class="size-3" />
         </span>

@@ -17,7 +17,7 @@ Website ini bukan sekadar portofolio, melainkan sebuah **Command Center** digita
 
 #### 1. VISUAL SYSTEM: "INDUSTRIAL DARK"
 
-- **Palette:** Zinc-950 (Void Black) & Amber-500 (Warning Orange).
+- **Palette:** Zinc-950 (Void Black) & Yellow-400 (Industrial Yellow).
 - **Typography:** `JetBrains Mono` untuk elemen teknis, `Plus Jakarta Sans` untuk keterbacaan.
 - **Effects:** CRT Scanlines, Vignette, Grid Background, dan Glitch Hover effects.
 

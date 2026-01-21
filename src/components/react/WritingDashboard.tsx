@@ -46,7 +46,7 @@ export default function WritingDashboard({ posts }: Props) {
             onClick={() => setActiveTab(tab as any)}
             className={`border px-4 py-1.5 font-mono text-xs tracking-wider uppercase transition-all duration-300 ${
               activeTab === tab
-                ? 'border-amber-500 bg-amber-500 font-bold text-zinc-950 shadow-[0_0_10px_rgba(245,158,11,0.4)]'
+                ? 'border-yellow-500 bg-yellow-500 font-bold text-zinc-950 shadow-[0_0_10px_rgba(245,158,11,0.4)]'
                 : 'border-zinc-800 bg-zinc-900/50 text-zinc-500 hover:border-zinc-600 hover:text-zinc-300'
             } `}
           >
@@ -66,13 +66,13 @@ export default function WritingDashboard({ posts }: Props) {
             <a
               key={post.id}
               href={`/writing/${post.id}`}
-              className="group relative block border border-zinc-800 bg-zinc-900/40 p-5 transition-all duration-300 hover:border-amber-500/50 hover:bg-zinc-900"
+              className="group relative block border border-zinc-800 bg-zinc-900/40 p-5 transition-all duration-300 hover:border-yellow-500/50 hover:bg-zinc-900"
             >
               {/* Dekorasi Hover di Kiri */}
-              <div className="absolute top-0 left-0 h-full w-1 bg-amber-500 opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="absolute top-0 left-0 h-full w-1 bg-yellow-500 opacity-0 transition-opacity group-hover:opacity-100" />
 
               <div className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between">
-                <h3 className="font-mono text-lg font-bold text-zinc-200 transition-colors group-hover:text-amber-500">
+                <h3 className="font-mono text-lg font-bold text-zinc-200 transition-colors group-hover:text-yellow-500">
                   {post.title}
                 </h3>
                 <span className="font-mono text-xs whitespace-nowrap text-zinc-600">
@@ -90,7 +90,7 @@ export default function WritingDashboard({ posts }: Props) {
                   {post.category}
                 </span>
                 {post.isFeatured && (
-                  <span className="rounded border border-amber-900/50 bg-amber-900/10 px-1.5 py-0.5 text-[10px] text-amber-600 uppercase">
+                  <span className="rounded border border-yellow-900/50 bg-yellow-900/10 px-1.5 py-0.5 text-[10px] text-yellow-600 uppercase">
                     Featured
                   </span>
                 )}

@@ -21,10 +21,10 @@ const pathname = Astro.url.pathname
   {/* LOGO (Kiri) */}
   <a href="/" class="group flex items-center gap-2">
     <div
-      class="relative flex h-6 w-6 items-center justify-center overflow-hidden border border-zinc-400 bg-zinc-200 transition-colors group-hover:border-amber-500 dark:border-zinc-700 dark:bg-zinc-900"
+      class="relative flex h-6 w-6 items-center justify-center overflow-hidden border border-zinc-400 bg-zinc-200 transition-colors group-hover:border-yellow-500 dark:border-zinc-700 dark:bg-zinc-900"
     >
       <span
-        class="dark:group-hover:text-foreground font-mono text-xs font-bold text-amber-600 group-hover:text-amber-700 dark:text-amber-500"
+        class="dark:group-hover:text-foreground font-mono text-xs font-bold text-yellow-600 group-hover:text-yellow-700 dark:text-yellow-500"
         >A</span
       >
       <div
@@ -35,7 +35,7 @@ const pathname = Astro.url.pathname
     <span
       class="dark:group-hover:text-foreground font-mono text-sm font-bold tracking-tighter text-zinc-700 transition-colors group-hover:text-black dark:text-zinc-300"
     >
-      ALVITO<span class="text-amber-600 dark:text-amber-500">.DEV</span>
+      ALVITO<span class="text-yellow-600 dark:text-yellow-500">.DEV</span>
     </span>
   </a>
 
@@ -50,13 +50,13 @@ const pathname = Astro.url.pathname
             href={item.href}
             class={`relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs ${
               isActive
-                ? 'border border-amber-500/50 bg-amber-500/10 font-bold text-amber-600 dark:text-amber-500'
+                ? 'border border-yellow-500/50 bg-yellow-500/10 font-bold text-yellow-600 dark:text-yellow-500'
                 : 'border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200'
             } `}
           >
             {item.label}
             {isActive && (
-              <span class="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 animate-pulse rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
+              <span class="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 animate-pulse rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
             )}
           </a>
         )

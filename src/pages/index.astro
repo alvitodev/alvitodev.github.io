@@ -25,7 +25,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
         <h1
           class="text-foreground font-mono text-4xl font-bold tracking-tighter"
         >
-          ALVITO<span class="text-amber-500">.DEV</span>
+          ALVITO<span class="text-yellow-500">.DEV</span>
         </h1>
         <div class="text-muted-foreground mt-2 flex gap-4 font-mono text-xs">
           <p>
@@ -56,10 +56,10 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
                 class="border-border/50 flex cursor-pointer items-baseline justify-between border-b py-2 transition-all hover:pl-2"
               >
                 <div class="flex items-center gap-2 overflow-hidden">
-                  <span class="text-xs text-amber-500 opacity-0 transition-opacity group-hover/item:opacity-100">
+                  <span class="text-xs text-yellow-500 opacity-0 transition-opacity group-hover/item:opacity-100">
                     &gt;
                   </span>
-                  <span class="text-foreground/80 truncate font-mono text-sm transition-colors hover:text-amber-500">
+                  <span class="text-foreground/80 truncate font-mono text-sm transition-colors hover:text-yellow-500">
                     {post.data.title}
                   </span>
                 </div>
@@ -74,7 +74,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
       <div class="border-border/50 mt-4 border-t pt-2 text-right">
         <a
           href="/writing"
-          class="font-mono text-xs text-amber-500 hover:underline"
+          class="font-mono text-xs text-yellow-500 hover:underline"
         >
           [VIEW_ALL_LOGS]
         </a>
@@ -90,7 +90,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
               href={project.data.demoLink || project.data.repoLink || '#'}
               class="group block"
             >
-              <div class="bg-secondary/20 border-border flex items-center justify-between border p-3 transition-colors group-hover:border-amber-500/50">
+              <div class="bg-secondary/20 border-border flex items-center justify-between border p-3 transition-colors group-hover:border-yellow-500/50">
                 <div class="flex flex-col gap-1">
                   <span class="text-foreground truncate text-sm font-bold">
                     {project.data.title}
@@ -103,7 +103,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
                   class={`border px-2 py-1 font-mono text-[10px] ${
                     project.data.status === 'completed'
                       ? 'border-green-500/30 bg-green-500/10 text-green-500'
-                      : 'border-amber-500/30 bg-amber-500/10 text-amber-500'
+                      : 'border-yellow-500/30 bg-yellow-500/10 text-yellow-500'
                   }`}
                 >
                   {project.data.status}
@@ -116,7 +116,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
       <div class="border-border/50 mt-4 border-t pt-2 text-right">
         <a
           href="/about"
-          class="font-mono text-xs text-amber-500 hover:underline"
+          class="font-mono text-xs text-yellow-500 hover:underline"
         >
           [ACCESS_ARCHIVES]
         </a>
@@ -129,7 +129,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
         {
           recentNotes.map((note) => (
             <li class="border-b border-zinc-800 pb-2 font-mono text-xs text-zinc-400 transition-all hover:pl-2">
-              <a href={`/notes/${note.id}`} class="hover:text-amber-500">
+              <a href={`/notes/${note.id}`} class="hover:text-yellow-500">
                 {note.data.title}
               </a>
             </li>
@@ -139,7 +139,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
       <div class="border-border/50 mt-4 border-t pt-2 text-right">
         <a
           href="/notes"
-          class="font-mono text-xs text-amber-500 hover:underline"
+          class="font-mono text-xs text-yellow-500 hover:underline"
           >[VIEW_ALL_SNIPPETS]</a
         >
       </div>
@@ -154,7 +154,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
               <span class="text-foreground font-bold uppercase">
                 {item.data.title}
               </span>
-              <span class="text-amber-500 uppercase">{item.data.type}</span>
+              <span class="text-yellow-500 uppercase">{item.data.type}</span>
             </div>
           ))
         }
@@ -162,7 +162,7 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
       <div class="border-border/50 mt-4 border-t pt-2 text-right">
         <a
           href="/library"
-          class="font-mono text-xs text-amber-500 hover:underline"
+          class="font-mono text-xs text-yellow-500 hover:underline"
           >[ACCESS_LIBRARY]</a
         >
       </div>
@@ -178,24 +178,24 @@ const libraryLogs = (await getCollection('library')).slice(0, 2)
           &gt; CORE_TEMPERATURE: <span class="text-green-500">35C</span>
         </p>
         <p class="font-mono text-xs text-zinc-500">
-          &gt; NEXT_UPDATE_CYCLE: <span class="text-amber-500">T-30 DAYS</span>
+          &gt; NEXT_UPDATE_CYCLE: <span class="text-yellow-500">T-30 DAYS</span>
         </p>
       </div>
 
       <div class="border-border/50 flex flex-col gap-2 border-t pt-4">
         <a
           href="/gallery"
-          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          class="font-mono text-xs text-zinc-400 hover:text-yellow-500"
           >[VIEW_GALLERY_DATABANKS]</a
         >
         <a
           href="/feed"
-          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          class="font-mono text-xs text-zinc-400 hover:text-yellow-500"
           >[VIEW_LIVE_FEED]</a
         >
         <a
           href="/cv"
-          class="font-mono text-xs text-zinc-400 hover:text-amber-500"
+          class="font-mono text-xs text-zinc-400 hover:text-yellow-500"
           >[ACCESS_RESUME]</a
         >
       </div>
