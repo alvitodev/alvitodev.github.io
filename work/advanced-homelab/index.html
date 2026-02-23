@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="id-ID" class="scroll-smooth"> <head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"><meta name="generator" content="Astro v5.16.4"><!-- Canonical URL --><link rel="canonical" href="https://alvitodev.github.io/work/advanced-homelab/"><!-- Primary Meta Tags --><title>Advanced Home Lab | Alvito.dev</title><meta name="title" content="Advanced Home Lab | Alvito.dev"><meta name="description" content="Infrastruktur self-hosted yang berjalan di atas hardware daur ulang, memanfaatkan Proxmox VE, LXC, dan Docker untuk efisiensi maksimal."><meta name="author" content="Muhammad Alvito Devanova"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:url" content="https://alvitodev.github.io/work/advanced-homelab/"><meta property="og:title" content="Advanced Home Lab | Alvito.dev"><meta property="og:description" content="Infrastruktur self-hosted yang berjalan di atas hardware daur ulang, memanfaatkan Proxmox VE, LXC, dan Docker untuk efisiensi maksimal."><meta property="og:image" content="https://alvitodev.github.io/static/1200x630.png"><meta property="og:site_name" content="Alvito.dev"><meta property="og:locale" content="id-ID"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://alvitodev.github.io/work/advanced-homelab/"><meta property="twitter:title" content="Advanced Home Lab | Alvito.dev"><meta property="twitter:description" content="Infrastruktur self-hosted yang berjalan di atas hardware daur ulang, memanfaatkan Proxmox VE, LXC, dan Docker untuk efisiensi maksimal."><meta property="twitter:image" content="https://alvitodev.github.io/static/1200x630.png"><meta property="twitter:creator" content="@alvitodev"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Advanced Home Lab","description":"Infrastruktur self-hosted yang berjalan di atas hardware daur ulang, memanfaatkan Proxmox VE, LXC, dan Docker untuk efisiensi maksimal.","image":"https://alvitodev.github.io/static/1200x630.png","author":{"@type":"Person","name":"Muhammad Alvito Devanova","url":"https://alvitodev.github.io/"},"datePublished":"2025-01-21T00:00:00.000Z","dateModified":"2025-01-21T00:00:00.000Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://alvitodev.github.io/work/advanced-homelab/"}}</script><!-- Mobile & PWA --><meta name="HandheldFriendly" content="True"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no"><meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#121212" media="(prefers-color-scheme: light)"><link rel="sitemap" href="/sitemap-index.xml"><link rel="manifest" href="/site.webmanifest"><link rel="alternate" type="application/rss+xml" title="Alvito.dev" href="https://alvitodev.github.io/rss.xml"><link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="astro-erudite"><link rel="manifest" href="/site.webmanifest"><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.QW52Ox2j.js"></script><style>@keyframes scan{0%{transform:translateY(-100%)}to{transform:translateY(100%)}}.animate-scan[data-astro-cid-u23vcbo2]{animation:scan 2.5s linear infinite}
+</style>
+<link rel="stylesheet" href="/_astro/about.BA91I8cj.css"><script type="module" src="/_astro/page.lxGFV7-1.js"></script></head><script>
+    (function() {
+      const getThemePreference = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    })();
+  </script><body class="flex h-fit min-h-screen flex-col font-sans bg-background text-foreground antialiased relative selection:bg-yellow-500/30"> <div class="fixed inset-0 pointer-events-none z-[1] vignette-layer"></div> <header class="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md transition-colors duration-300"> <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3">  <a href="/" class="group flex items-center gap-2"> <div class="relative flex h-6 w-6 items-center justify-center overflow-hidden border border-zinc-400 bg-zinc-200 transition-colors group-hover:border-yellow-500 dark:border-zinc-700 dark:bg-zinc-900"> <span class="dark:group-hover:text-foreground font-mono text-xs font-bold text-yellow-600 group-hover:text-yellow-700 dark:text-yellow-500">A</span> <div class="absolute top-0 right-0 h-1.5 w-1.5 border-b border-l border-zinc-400 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-950"></div> </div> <span class="dark:group-hover:text-foreground font-mono text-sm font-bold tracking-tighter text-zinc-700 transition-colors group-hover:text-black dark:text-zinc-300">
+ALVITO<span class="text-yellow-600 dark:text-yellow-500">.DEV</span> </span> </a>  <nav class="flex items-center gap-2 sm:gap-4"> <a href="/" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> HOME  </a><a href="/writing" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> WRITING  </a><a href="/work" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-yellow-500/50 bg-yellow-500/10 font-bold text-yellow-600 dark:text-yellow-500 "> WORK <span class="absolute -top-0.5 -right-0.5 h-1.5 w-1.5 animate-pulse rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></span> </a><a href="/notes" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> NOTES  </a><a href="/feed" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> FEED  </a><a href="/library" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> LIBRARY  </a><a href="/gallery" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> GALLERY  </a><a href="/about" class="relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all duration-300 sm:text-xs border border-transparent text-zinc-500 hover:bg-zinc-200/50 hover:text-zinc-900 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-200 "> ABOUT  </a>  <div class="mx-1 hidden h-4 w-[1px] bg-zinc-300 sm:block dark:bg-zinc-800"></div>  <div class="scale-90"> <button id="theme-toggle" type="button" class="relative inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 bg-transparent text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:pointer-events-none disabled:opacity-50 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:focus-visible:ring-zinc-300" aria-label="Toggle theme"> <svg width="1em" height="1em" class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" data-icon="lucide:sun">   <symbol id="ai:lucide:sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></symbol><use href="#ai:lucide:sun"></use>  </svg> <svg width="1em" height="1em" class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" data-icon="lucide:moon">   <symbol id="ai:lucide:moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><use href="#ai:lucide:moon"></use>  </svg> </button> <script>
+  function setupThemeToggle() {
+    const button = document.getElementById('theme-toggle')
+    // Sync initial theme from storage or system preference
+    const applyTheme = (theme) => {
+      const element = document.documentElement
+      const isDark = theme === 'dark'
+      if (isDark) element.classList.add('dark')
+      else element.classList.remove('dark')
+      element.setAttribute('data-theme', isDark ? 'dark' : 'light')
+      element.style.colorScheme = isDark ? 'dark' : 'light'
+    }
+
+    const getStoredTheme = () => {
+      try {
+        const t = localStorage.getItem('theme')
+        if (t === 'dark' || t === 'light') return t
+      } catch (e) {}
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    }
+
+    // Apply stored theme immediately (important for client-side navigations)
+    try {
+      applyTheme(getStoredTheme())
+    } catch (e) {}
+
+    // Fungsi toggle
+    const handleToggleClick = () => {
+      const element = document.documentElement
+      element.classList.toggle('dark')
+
+      const isDark = element.classList.contains('dark')
+      try {
+        localStorage.setItem('theme', isDark ? 'dark' : 'light')
+      } catch (e) {}
+
+      // Update atribut data-theme juga untuk CSS selector
+      element.setAttribute('data-theme', isDark ? 'dark' : 'light')
+
+      // 🔑 PENTING: Trigger repaint agar CSS variables terupdate dengan baik
+      // Ini memastikan vignette, grid, dan semua elemen lain switch tema dengan smooth
+      element.style.colorScheme = isDark ? 'dark' : 'light'
+    }
+
+    // Tambahkan listener sekali saja per button instance
+    if (button && !button.dataset.themeInit) {
+      button.addEventListener('click', handleToggleClick)
+      button.dataset.themeInit = 'true'
+    }
+  }
+
+  // Jalankan saat load awal
+  setupThemeToggle()
+
+  // Jalankan ulang saat navigasi (jika pakai View Transitions)
+  document.addEventListener('astro:page-load', setupThemeToggle)
+</script> </div> </nav> </div> <div class="contents [&:not(:empty)]:block [&:not(:empty)]:border-t [&:not(:empty)]:border-border">   </div> </header> <main class="w-full mx-auto flex grow flex-col gap-y-6 px-4 relative z-10">  <div class="mx-auto min-h-screen max-w-7xl p-4 md:p-8">  <div class="mb-6 flex items-center justify-between"> <a href="/" class="group flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-yellow-500"> <svg width="1em" height="1em" class="size-3 transition-transform group-hover:-translate-x-1" data-icon="lucide:arrow-left">   <symbol id="ai:lucide:arrow-left" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 19l-7-7l7-7m7 7H5"/></symbol><use href="#ai:lucide:arrow-left"></use>  </svg>
+RETURN_TO_BASE
+</a> <span class="font-mono text-[10px] text-muted-foreground">
+PROJECT_ID: ADVANCED-HOMELAB </span> </div> <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">  <div class="flex flex-col gap-6 lg:col-span-4"> <div class="relative group border border-border bg-card text-card-foreground backdrop-blur-md p-6 overflow-hidden shadow-sm h-fit" data-astro-cid-u23vcbo2>  <div class="absolute top-0 left-0 w-[2px] h-full bg-border group-hover:bg-primary transition-colors duration-300 ease-out z-20" data-astro-cid-u23vcbo2></div>  <div class="absolute top-0 right-0 w-4 h-4 border-b border-l border-border z-20 opacity-50 group-hover:opacity-100 transition-opacity" data-astro-cid-u23vcbo2></div> <div class="absolute bottom-0 left-0 w-4 h-4 border-t border-r border-border z-20 opacity-50 group-hover:opacity-100 transition-opacity" data-astro-cid-u23vcbo2></div>  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none animate-scan z-10" data-astro-cid-u23vcbo2></div>  <div class="relative flex items-center gap-3 mb-6 border-b border-border pb-3 z-20" data-astro-cid-u23vcbo2> <div class="relative flex h-2 w-2" data-astro-cid-u23vcbo2> <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" data-astro-cid-u23vcbo2></span> <span class="relative inline-flex rounded-full h-2 w-2 bg-primary" data-astro-cid-u23vcbo2></span> </div> <h2 class="font-mono text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] group-hover:text-foreground transition-colors" data-astro-cid-u23vcbo2> // PROJECT_SPECS </h2> </div> <div class="relative z-20" data-astro-cid-u23vcbo2> <div class="space-y-6 font-mono text-sm">  <div> <span class="mb-2 block text-xs text-muted-foreground">CURRENT_STATUS</span> <div class="inline-flex items-center gap-2 px-3 py-1.5 border rounded-md border-border bg-muted text-muted-foreground"> <span class="relative flex h-2 w-2"> <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-yellow-400"></span> <span class="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span> </span> <span class="text-xs font-bold tracking-wider uppercase"> maintained </span> </div> </div>  <div> <span class="mb-2 block text-xs text-muted-foreground">TECHNOLOGY_STACK</span> <div class="flex flex-wrap gap-1.5"> <span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">Proxmox</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">LXC</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">Docker</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">Ubuntu</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">Tailscale</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">Jellyfin</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">PostgreSQL</span><span data-slot="badge" class="inline-flex items-center justify-center border px-2 py-0.5 font-medium w-fit whitespace-nowrap shrink-0 [&amp;&gt;svg]:size-3 gap-1 [&amp;&gt;svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive overflow-hidden [a&amp;]:hover:bg-muted [a&amp;]:hover:text-foreground rounded-md border-border bg-muted/50 text-foreground text-[10px] uppercase tracking-wider hover:border-yellow-500/50 transition-colors">N8N</span> </div> </div>  <div class="flex flex-col gap-3 border-t border-border pt-6">   </div> </div>  </div> </div>  </div>  <div class="lg:col-span-8"> <div class="relative group border border-border bg-card text-card-foreground backdrop-blur-md p-6 overflow-hidden shadow-sm min-h-full" data-astro-cid-u23vcbo2>  <div class="absolute top-0 left-0 w-[2px] h-full bg-border group-hover:bg-primary transition-colors duration-300 ease-out z-20" data-astro-cid-u23vcbo2></div>  <div class="absolute top-0 right-0 w-4 h-4 border-b border-l border-border z-20 opacity-50 group-hover:opacity-100 transition-opacity" data-astro-cid-u23vcbo2></div> <div class="absolute bottom-0 left-0 w-4 h-4 border-t border-r border-border z-20 opacity-50 group-hover:opacity-100 transition-opacity" data-astro-cid-u23vcbo2></div>  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none animate-scan z-10" data-astro-cid-u23vcbo2></div>  <div class="relative flex items-center gap-3 mb-6 border-b border-border pb-3 z-20" data-astro-cid-u23vcbo2> <div class="relative flex h-2 w-2" data-astro-cid-u23vcbo2> <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" data-astro-cid-u23vcbo2></span> <span class="relative inline-flex rounded-full h-2 w-2 bg-primary" data-astro-cid-u23vcbo2></span> </div> <h2 class="font-mono text-xs font-bold text-muted-foreground uppercase tracking-[0.2em] group-hover:text-foreground transition-colors" data-astro-cid-u23vcbo2> // CLASSIFIED_DOCUMENT </h2> </div> <div class="relative z-20" data-astro-cid-u23vcbo2>  <header class="mb-8 border-b border-border pb-6"> <h1 class="text-foreground mb-4 font-mono text-3xl font-black tracking-tight uppercase md:text-4xl"> Advanced Home Lab </h1> <p class="border-l-2 border-yellow-500/50 py-1 pl-4 font-mono text-sm leading-relaxed text-muted-foreground"> Infrastruktur self-hosted yang berjalan di atas hardware daur ulang, memanfaatkan Proxmox VE, LXC, dan Docker untuk efisiensi maksimal. </p> </header> <article class="prose dark:prose-invert prose-zinc prose-headings:font-mono prose-headings:uppercase prose-headings:tracking-tight prose-h2:text-yellow-600 dark:prose-h2:text-yellow-500 prose-h2:border-b prose-h2:border-border prose-h2:pb-2 prose-h2:mt-10 prose-a:text-yellow-600 dark:prose-a:text-yellow-500 hover:prose-a:text-yellow-500 dark:hover:prose-a:text-yellow-400 prose-a:no-underline hover:prose-a:underline prose-code:text-yellow-600 dark:prose-code:text-yellow-200 prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:border prose-pre:border-border prose-pre:bg-muted/80 prose-img:rounded prose-img:border prose-img:border-border max-w-none"> <h2 id="overview">Overview</h2>
+<p><strong>Advanced Home Lab</strong> adalah proyek infrastruktur <em>self-hosted</em> yang saya bangun untuk mensimulasikan lingkungan <em>production server</em> secara lokal. Proyek ini bertujuan untuk mendapatkan kedaulatan data penuh (<em>data sovereignty</em>), menjalankan layanan otomatisasi, dan menyediakan media server pribadi tanpa bergantung pada layanan Cloud berbayar.</p>
+<p>Tantangan utama dari proyek ini adalah <strong>efisiensi</strong>. Menggunakan pendekatan <em>“Upcycling Hardware”</em>, saya mengubah laptop lawas menjadi server virtualisasi yang tangguh dengan arsitektur <em>container-based</em> yang sangat hemat daya namun tetap performan.</p>
+<h2 id="hardware-specifications">Hardware Specifications</h2>
+<p>Server ini berjalan secara <em>headless</em> (tanpa monitor/keyboard) di atas laptop ASUS Vivobook X441M dengan manajemen daya yang telah dimodifikasi agar tetap beroperasi saat <em>lid</em> tertutup.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">Komponen</th><th style="text-align:left">Spesifikasi</th><th style="text-align:left">Peran</th></tr></thead><tbody><tr><td style="text-align:left"><strong>Host Unit</strong></td><td style="text-align:left">ASUS Vivobook X441M</td><td style="text-align:left">Server Utama</td></tr><tr><td style="text-align:left"><strong>CPU</strong></td><td style="text-align:left">Intel Celeron N4000 (2 Cores, 2 Threads)</td><td style="text-align:left">Komputasi Hemat Daya</td></tr><tr><td style="text-align:left"><strong>RAM</strong></td><td style="text-align:left">8GB DDR4</td><td style="text-align:left">Memori untuk LXC &amp; Cache</td></tr><tr><td style="text-align:left"><strong>Storage (OS)</strong></td><td style="text-align:left">120GB SSD (KLEVV NEO N400)</td><td style="text-align:left">Proxmox OS &amp; Docker Rootfs</td></tr><tr><td style="text-align:left"><strong>Storage (Data)</strong></td><td style="text-align:left">1TB HDD (Toshiba)</td><td style="text-align:left"><em>Cold Storage</em> (Media &amp; Backup)</td></tr><tr><td style="text-align:left"><strong>Power</strong></td><td style="text-align:left">AC Power + Built-in Battery</td><td style="text-align:left">Berfungsi sebagai UPS alami</td></tr></tbody></table>
+<h2 id="architecture--topology">Architecture &amp; Topology</h2>
+<p>Mengingat keterbatasan CPU Celeron N4000, saya menghindari penggunaan Virtual Machine (VM) penuh yang memiliki <em>overhead</em> tinggi. Sebagai gantinya, saya menerapkan arsitektur <strong>Nested Containerization</strong>:</p>
+<p><strong>Proxmox VE (Host) → LXC Container (Docker Host) → Docker Containers (Services)</strong></p>
+<h3 id="architectural-decisions">Architectural Decisions</h3>
+<ol>
+<li>
+<p><strong>LXC sebagai Docker Host:</strong>
+Saya menjalankan Docker Engine di dalam LXC <em>unprivileged container</em>. Ini memberikan performa <em>near-native</em> karena LXC berbagi kernel dengan host Proxmox, meminimalkan penggunaan CPU dibandingkan VM tradisional.</p>
+</li>
+<li>
+<p><strong>Storage Bind-Mounting:</strong>
+Untuk menangani HDD 1TB yang berisi data portabel (NTFS), saya melakukan <em>mounting</em> di level Proxmox Host, kemudian meneruskannya ke LXC menggunakan fitur <strong>Bind Mount</strong>.</p>
+<ul>
+<li><strong>Keuntungan:</strong> Kontainer Docker bisa membaca/tulis data fisik secara langsung tanpa <em>layer</em> virtual disk (qcow2/raw) yang lambat.</li>
+<li><strong>Mekanisme:</strong> Host Path <code>/mnt/ntfs-multimedia</code> → LXC Path <code>/mnt/media</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Isolation &amp; Access:</strong></p>
+<ul>
+<li><strong>Local:</strong> Server memiliki IP Statis dan terhubung via LAN untuk stabilitas.</li>
+<li><strong>Remote:</strong> Menggunakan <strong>Tailscale</strong> (Mesh VPN) untuk akses administrasi aman tanpa membuka port publik.</li>
+<li><strong>Public Exposure:</strong> Menggunakan <strong>Playit.gg</strong> untuk <em>tunneling</em> spesifik (seperti Minecraft Server) guna menembus CGNAT ISP.</li>
+</ul>
+</li>
+</ol>
+<h2 id="software-stack--services">Software Stack &amp; Services</h2>
+<p>Seluruh aplikasi diorkestrasi menggunakan <strong>Docker Compose</strong> dengan struktur direktori terpusat (<code>~/srv</code>) untuk kemudahan backup dan manajemen.</p>
+<h3 id="1-media--entertainment">1. Media &amp; Entertainment</h3>
+<ul>
+<li><strong>Jellyfin:</strong> Media server utama. Dikonfigurasi untuk <em>Direct Play</em> agar tidak membebani CPU dengan transcoding. Menggunakan penamaan file standar (S01E01) agar metadata otomatis terdeteksi.</li>
+<li><strong>Kavita:</strong> Server <em>e-book</em> dan majalah digital. Mendukung format PDF dan EPUB dengan <em>web-reader</em> yang responsif.</li>
+<li><strong>Transmission:</strong> BitTorrent client yang berjalan via Docker, dengan <em>volume mapping</em> langsung ke HDD eksternal.</li>
+<li><strong>Minecraft Server:</strong> Server Fabric versi 1.21.6 yang dioptimalkan untuk <em>low-latency multiplayer</em>.</li>
+</ul>
+<h3 id="2-automation--productivity">2. Automation &amp; Productivity</h3>
+<ul>
+<li><strong>n8n:</strong> Workflow automation tool. Digunakan untuk menghubungkan berbagai API dan mengotomatiskan tugas-tugas rutin.</li>
+<li><strong>Filebrowser:</strong> Web-based file manager untuk mengelola file server dari browser tanpa perlu akses SSH/FTP.</li>
+<li><strong>Uptime Kuma:</strong> Monitoring dashboard untuk memantau status <em>downtime</em> layanan internal maupun eksternal.</li>
+</ul>
+<h3 id="3-databases">3. Databases</h3>
+<ul>
+<li><strong>PostgreSQL &amp; MariaDB:</strong> Database backend terpusat. Layanan seperti n8n dan bot kustom dikonfigurasi untuk menggunakan instance database ini daripada SQLite bawaan demi performa yang lebih baik.</li>
+</ul>
+<h2 id="key-engineering-challenges">Key Engineering Challenges</h2>
+<h3 id="1-ntfs-permission-pada-linux-container">1. NTFS Permission pada Linux Container</h3>
+<p><strong>Masalah:</strong> Menghubungkan HDD berformat NTFS ke Docker Container Linux sering menyebabkan error <code>Permission Denied</code> karena ketidakcocokan sistem <em>file permission</em> (POSIX vs Windows).
+<strong>Solusi:</strong></p>
+<ul>
+<li>Menggunakan driver <code>ntfs-3g</code> pada Proxmox Host.</li>
+<li>Melakukan mounting dengan <code>umask=000</code> di <code>/etc/fstab</code> agar <em>readable/writable</em> oleh semua user.</li>
+<li>Mengatur <code>PUID</code> dan <code>PGID</code> (1000) pada container Docker agar sesuai dengan user <code>homelab</code> di host LXC.</li>
+</ul>
+<h3 id="2-resource-constraints-celeron-n4000">2. Resource Constraints (Celeron N4000)</h3>
+<p><strong>Masalah:</strong> CPU dual-core mudah mencapai 100% usage jika menjalankan proses berat.
+<strong>Solusi:</strong></p>
+<ul>
+<li>Menghindari <em>transcoding</em> video; memaksa klien untuk <em>Direct Play</em>.</li>
+<li>Membatasi log sistem dan mematikan servis yang tidak esensial.</li>
+<li>Menggunakan LXC alih-alih VM.</li>
+</ul>
+<h2 id="future-roadmap">Future Roadmap</h2>
+<p>Pengembangan infrastruktur ini masih terus berjalan. Beberapa rencana ke depan meliputi:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Implementasi <strong>Reverse Proxy</strong> (Nginx Proxy Manager) dengan SSL Certificate lokal.</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Automasi backup volume Docker ke Cloud Storage terenkripsi (Restic/Rclone).</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Migrasi penuh database n8n dari SQLite ke PostgreSQL.</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Implementasi Monitoring Stack (Prometheus + Grafana) untuk visualisasi metrik server yang lebih detail.</li>
+</ul> </article> <div class="mt-16 flex items-end justify-between border-t border-border pt-8"> <div class="flex flex-col gap-1"> <span class="font-mono text-[10px] text-muted-foreground">AUTHORIZED_BY</span> <span class="font-mono text-xs text-muted-foreground">ALVITO.DEV ADMIN</span> </div> <div class="flex flex-col gap-1 text-right"> <span class="font-mono text-[10px] text-muted-foreground">DATE_LOGGED</span> <span class="font-mono text-xs text-muted-foreground"> 21 JANUARY 2025 </span> </div> </div>  </div> </div>  </div> </div> </div>  </main> <footer class="border-t border-zinc-800 bg-zinc-950 py-8 mt-12 text-center md:text-left"> <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-zinc-600"> <div class="flex flex-col gap-1"> <span>&copy; 2026 ALVITO.DEV. ALL SYSTEMS NOMINAL.</span> <span>BUILT WITH ASTRO // DEPLOYED VIA GITHUB ACTIONS</span> </div> <div class="flex items-center gap-6"> <a href="https://github.com/alvitodev" target="_blank" class="hover:text-yellow-500 transition-colors">[GITHUB]</a> <a href="https://linkedin.com/in/alvito" target="_blank" class="hover:text-yellow-500 transition-colors">[LINKEDIN]</a> <a href="/rss.xml" class="hover:text-yellow-500 transition-colors">[RSS_FEED]</a> </div> <div class="text-right"> <p>SITE_REVISION: <span class="text-yellow-500">7bd091b</span></p> <p>LATENCY: <span class="text-green-500">LOW</span></p> </div> </div> </footer> </body></html>
