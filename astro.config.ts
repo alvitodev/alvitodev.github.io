@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import icon from 'astro-icon'
+import keystatic from '@keystatic/astro'
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import expressiveCode from 'astro-expressive-code'
@@ -69,7 +70,7 @@ export default defineConfig({
       },
       uiFontFamily: 'var(--font-sans)',
     },
-  }), mdx(), react(), sitemap(), icon(), mermaid(), markdoc()],
+  }), mdx(), react(), sitemap(), icon(), mermaid(), markdoc(), keystatic()],
   vite: {
     plugins: [tailwindcss() as any],
     define: {
