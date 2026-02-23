@@ -2,7 +2,7 @@ name: Deploy Astro to GitHub Pages
 
 on:
   push:
-    # CI/CD hanya akan berjalan saat ada push ke branch 'dev'
+    # CI/CD hanya akan berjalan saat ada push ke branch 'main'
     branches:
       - main
   workflow_dispatch:
